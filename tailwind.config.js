@@ -14,6 +14,9 @@ module.exports = {
             red: {
                 950: "#F51A1A",
             },
+            white: {
+                950: "#FFFFFF",
+            },
         },
     },
     plugins: [],

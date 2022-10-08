@@ -6,9 +6,13 @@ import cardIcon from "assets/icons/cardIcon.svg";
 import notificationIcon from "assets/icons/notificationIcon.svg";
 import searchIcon from "assets/icons/searchIcon.svg";
 import { Link } from "react-router-dom";
+import { UseWindowSize } from "functions/UseWindowSize";
+import { IsDesktop, IsMobile } from "functions/Platform";
+import Card from "components/Card/Card";
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
+    const [width] = UseWindowSize();
     const rootCls = cn(
         styles.Header,
         "w-full",
@@ -43,15 +47,23 @@ const Header: FC<HeaderProps> = () => {
             <Link to="/">
                 <img src={homeIcon} className={iconCls} />
             </Link>
-            <div className="relative">
-                <input type="text" className={inputCls} />
-                <img src={searchIcon} className="absolute right-5 top-2" />
-            </div>
+            {IsMobile(width) ? (
+                <img src={searchIcon} className={iconCls} />
+            ) : (
+                <div className="relative">
+                    <input
+                        type="text"
+                        className={inputCls}
+                        placeholder="Search user"
+                    />
+                    <img src={searchIcon} className="absolute right-5 top-2" />
+                </div>
+            )}
             <div className="flex">
                 <Link to="/cards">
                     <img src={cardIcon} className={iconCls} />
                 </Link>
-                <div className="relative">
+                <div className={styles.dropdown}>
                     <img
                         src={notificationIcon}
                         className={`${iconCls} ml-10`}
@@ -59,6 +71,8 @@ const Header: FC<HeaderProps> = () => {
                     <div className="w-5 animate-bounce bg-red-950 rounded-full absolute bottom-5 right-0">
                         <p className="font-bold flex justify-center">4</p>
                     </div>
+                    {/* use map() for rendering future notifications */}
+                    <Card className={styles.dropdownContent}>Hello</Card>
                 </div>
             </div>
         </div>
