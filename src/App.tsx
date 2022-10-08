@@ -1,11 +1,25 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
-
+import Header from "components/Header/Header";
+import { Routes, Route } from "react-router-dom";
+import Home from "pages/Home/Home";
+import Auth from "pages/Auth/Auth";
+import BankingCards from "pages/BankingCards/BankingCards";
+import GenerateCard from "pages/GenerateCard/GenerateCard";
+import Profile from "pages/Profile/Profile";
+import Footer from "components/Footer/Footer";
 function App() {
     return (
-        <div className="App">
-            <p className="font-bold">hello</p>
+        <div>
+            <Header />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/cards" element={<BankingCards />} />
+                <Route path="/generatecard" element={<GenerateCard />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="*" element={<Home />} />
+            </Routes>
+            <Footer />
         </div>
     );
 }
