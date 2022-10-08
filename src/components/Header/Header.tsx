@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { UseWindowSize } from "functions/UseWindowSize";
 import { IsDesktop, IsMobile } from "functions/Platform";
 import Card from "components/Card/Card";
+import NotificationItem from "components/NotificationItem/NotificationItem";
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
@@ -16,11 +17,10 @@ const Header: FC<HeaderProps> = () => {
     const rootCls = cn(
         styles.Header,
         "w-full",
-        "h-20",
         "flex",
         "justify-between",
         "bg-blue-940",
-        "py-4",
+        "py-3",
         "my-auto",
         "px-20"
     );
@@ -31,7 +31,7 @@ const Header: FC<HeaderProps> = () => {
         "w-52",
         "ease-in duration-200",
         "focus:w-96",
-        "h-12",
+        "h-11",
         "rounded-lg",
         "bg-slate-600",
         "text-pink-950",
@@ -41,6 +41,51 @@ const Header: FC<HeaderProps> = () => {
         "focus:drop-shadow-xl",
         "caret-pink-950"
     );
+
+    const notificationList = [
+        {
+            id: "1",
+            avatarLink:
+                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+            message: "just send you 400$",
+            name: "John",
+        },
+        {
+            id: "2",
+            avatarLink:
+                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+            message: "just send you 400$",
+            name: "John",
+        },
+        {
+            id: "3",
+            avatarLink:
+                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+            message: "just send you 400$",
+            name: "Johnaa",
+        },
+        {
+            id: "3",
+            avatarLink:
+                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+            message: "just send you 400$",
+            name: "Johnaa",
+        },
+        {
+            id: "3",
+            avatarLink:
+                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+            message: "just send you 400$",
+            name: "Johnaa",
+        },
+        {
+            id: "3",
+            avatarLink:
+                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+            message: "just send you 400$",
+            name: "Johnaa",
+        },
+    ];
 
     return (
         <div className={rootCls} data-testid="Header">
@@ -69,10 +114,24 @@ const Header: FC<HeaderProps> = () => {
                         className={`${iconCls} ml-10`}
                     />
                     <div className="w-5 animate-bounce bg-red-950 rounded-full absolute bottom-5 right-0">
-                        <p className="font-bold flex justify-center">4</p>
+                        <p className="font-bold flex justify-center">
+                            {notificationList.length}
+                        </p>
                     </div>
                     {/* use map() for rendering future notifications */}
-                    <Card className={styles.dropdownContent}>Hello</Card>
+
+                    <Card className={styles.dropdownContent}>
+                        {notificationList.map((item, index) => {
+                            return (
+                                <NotificationItem
+                                    id={item.id}
+                                    avatarLink={item.avatarLink}
+                                    message={item.message}
+                                    name={item.name}
+                                />
+                            );
+                        })}
+                    </Card>
                 </div>
             </div>
         </div>
