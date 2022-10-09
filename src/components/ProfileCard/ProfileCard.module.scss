@@ -1,1 +1,10 @@
-.ProfileCard {}
+.ProfileCard {
+}
+.avatar {
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.profileCard {
+    max-height: 35rem;
+}

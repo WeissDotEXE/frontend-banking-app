@@ -32,7 +32,10 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
 
     return (
         <Card className={rootCls}>
-            <RegularSubtitle className="text-3xl text-gray-950" bold={true}>
+            <RegularSubtitle
+                className="text-3xl mb-3 text-gray-950"
+                bold={true}
+            >
                 Your Balance
             </RegularSubtitle>
             <RegularSubtitle className="text-6xl" bold={true}>
@@ -67,7 +70,7 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
 
             <img
                 src={dropDownIcon}
-                className="absolute top-16 right-20 cursor-pointer"
+                className="absolute top-16 lg:top-16 right-10 lg:right-20 cursor-pointer"
                 onClick={() => setShowAccounts((v) => !v)}
             />
         </Card>

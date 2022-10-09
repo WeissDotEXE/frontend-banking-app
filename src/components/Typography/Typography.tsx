@@ -58,7 +58,7 @@ export type GeneralTypographyProps = {
 export const RegularSubtitle = (props: GeneralTypographyProps) => {
     const {
         color = "white",
-        size = "4xl",
+        size = "3xl",
         onClick,
         position = "text-center",
     } = props;

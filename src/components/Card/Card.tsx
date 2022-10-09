@@ -16,7 +16,8 @@ const Card: FC<CardProps> = (props: CardProps) => {
         className,
         "bg-white-950",
         "drop-shadow-2xl",
-        "p-6",
+        "py-4",
+        "px-6 lg:px-20",
         "rounded-lg"
     );
 

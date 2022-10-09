@@ -4,6 +4,7 @@ import cn from "classnames";
 import BalanceCard from "components/BalanceCard/BalanceCard";
 import TransactionsCard from "components/TransactionsCard/TransactionsCard";
 import ProfileCard from "components/ProfileCard/ProfileCard";
+import { RegularSubtitle } from "components/Typography/Typography";
 interface HomeProps {}
 
 const Home: FC<HomeProps> = () => {
@@ -15,15 +16,20 @@ const Home: FC<HomeProps> = () => {
         "mt-10"
     );
 
-    const leftCardsCls = cn("mr-20", "mb-10");
+    const leftCardsCls = cn("lg:mr-20", "mb-10");
 
     return (
-        <div className={rootCls} data-testid="Home">
-            <div>
-                <BalanceCard className={leftCardsCls} />
-                <TransactionsCard className={leftCardsCls} />
+        <div className="px-8 lg:px-0">
+            <RegularSubtitle className="text-center lg:text-left text-white-950 font-bold text-4xl lg:text-7xl lg:ml-16 mt-5">
+                Hello Jesse Jayce
+            </RegularSubtitle>
+            <div className={rootCls} data-testid="Home">
+                <div>
+                    <BalanceCard className={leftCardsCls} />
+                    <TransactionsCard className={leftCardsCls} />
+                </div>
+                <ProfileCard />
             </div>
-            <ProfileCard />
         </div>
     );
 };
