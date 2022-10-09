@@ -28,6 +28,8 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
     const accounsList = [
         { currency: "romanian leu", code: "gb", balance: 200 },
         { currency: "romanian leu", code: "gb", balance: 200 },
+        { currency: "romanian leu", code: "gb", balance: 200 },
+        { currency: "romanian leu", code: "gb", balance: 200 },
     ];
 
     return (
@@ -46,7 +48,7 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
                 item ? (
                     <animated.div
                         style={style}
-                        className="bg-white-950 p-6 drop-shadow-lg"
+                        className="bg-white-950 p-6 drop-shadow-lg h-52 overflow-auto"
                     >
                         {accounsList.map((item, index) => {
                             return (

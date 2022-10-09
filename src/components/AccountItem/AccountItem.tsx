@@ -27,7 +27,7 @@ const AccountItem: FC<AccountItemProps> = (props: AccountItemProps) => {
 
     return (
         <div className={rootCls} data-testid="AccountItem">
-            <img src={roFlag} />
+            <img src={roFlag} className="w-12 h-12 my-auto" />
             <div className="grid col-span-4 ">
                 <RegularSubtitle position="text-start" size="xl" bold>
                     {currency}

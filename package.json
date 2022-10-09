@@ -23,6 +23,7 @@
         "sass": "^1.55.0",
         "scss": "^0.2.4",
         "tailwind": "^4.0.0",
+        "tailwind-scrollbar": "^2.0.1",
         "typescript": "^4.8.4",
         "web-vitals": "^2.1.4"
     },
