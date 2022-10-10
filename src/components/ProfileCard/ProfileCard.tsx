@@ -40,7 +40,9 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
                     Jesse Jayce
                 </RegularSubtitle>
                 <div className="flex justify-center mt-14">
-                    <Button>Edit Profile</Button>
+                    <Button bgColor={"pink-950"} txtColor={"white-950"}>
+                        Edit Profile
+                    </Button>
                 </div>
                 <div className={informationsCls}>
                     <RegularSubtitle className="text-base lg:text-2xl font-bold">

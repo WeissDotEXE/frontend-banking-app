@@ -4,10 +4,12 @@ import cn from "classnames";
 interface ButtonProps {
     children: ReactNode;
     className?: string;
+    bgColor?: string;
+    txtColor?: string;
 }
 
 const Button: FC<ButtonProps> = (props: ButtonProps) => {
-    const { children, className } = props;
+    const { children, className, txtColor } = props;
 
     const rootCls = cn(
         styles.Button,
@@ -15,7 +17,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
         "rounded-lg",
         "text-center",
         `bg-pink-950`,
-        `text-white-950`,
+        `text-${txtColor}`,
         "p-4",
         "font-bold",
         "text-xl"
