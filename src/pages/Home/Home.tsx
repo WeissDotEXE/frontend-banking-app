@@ -5,6 +5,7 @@ import BalanceCard from "components/BalanceCard/BalanceCard";
 import TransactionsCard from "components/TransactionsCard/TransactionsCard";
 import ProfileCard from "components/ProfileCard/ProfileCard";
 import { RegularSubtitle } from "components/Typography/Typography";
+import FriendsCard from "components/FriendsCard/FriendsCard";
 interface HomeProps {}
 
 const Home: FC<HomeProps> = () => {
@@ -26,6 +27,7 @@ const Home: FC<HomeProps> = () => {
             <div className={rootCls} data-testid="Home">
                 <div>
                     <BalanceCard className={leftCardsCls} />
+                    <FriendsCard className={leftCardsCls} />
                     <TransactionsCard className={leftCardsCls} />
                 </div>
                 <ProfileCard />
