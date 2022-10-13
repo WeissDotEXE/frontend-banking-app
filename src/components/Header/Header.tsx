@@ -124,6 +124,7 @@ const Header: FC<HeaderProps> = () => {
                         {notificationList.map((item, index) => {
                             return (
                                 <NotificationItem
+                                    key={index}
                                     id={item.id}
                                     avatarLink={item.avatarLink}
                                     message={item.message}

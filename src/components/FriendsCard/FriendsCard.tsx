@@ -13,54 +13,67 @@ const FriendsCard: FC<FriendsCardProps> = (props: FriendsCardProps) => {
 
     const rootCls = cn(styles.FriendsCard, className);
 
+    const friendList = [
+        {
+            id: "id1",
+            name: "John John",
+            avatar_link:
+                "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000",
+        },
+        {
+            id: "id2",
+            name: "John John",
+            avatar_link:
+                "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000",
+        },
+        {
+            id: "id3",
+            name: "John John",
+            avatar_link:
+                "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000",
+        },
+        {
+            id: "id4",
+            name: "John John",
+            avatar_link:
+                "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000",
+        },
+        {
+            id: "id5",
+            name: "John John",
+            avatar_link:
+                "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000",
+        },
+        {
+            id: "id6",
+            name: "John John",
+            avatar_link:
+                "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000",
+        },
+        {
+            id: "id7",
+            name: "John John",
+            avatar_link:
+                "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000",
+        },
+    ];
+
     return (
         <Card className={rootCls} data-testid="FriendsCard">
             <RegularSubtitle bold color={"gray-950"} className="mb-10">
                 Friends
-            </RegularSubtitle>{" "}
-            <div className="flex overflow-auto">
-                <FriendItem
-                    id="id"
-                    name="John John"
-                    avatar_link="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"
-                    className="mr-10"
-                />
-                <FriendItem
-                    id="id"
-                    name="Johnas Michael Michael Michael"
-                    avatar_link="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"
-                    className="mr-10"
-                />
-                <FriendItem
-                    id="id"
-                    name="John JohnJohn John"
-                    avatar_link="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"
-                    className="mr-10"
-                />
-                <FriendItem
-                    id="id"
-                    name="John John"
-                    avatar_link="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"
-                    className="mr-10"
-                />
-                <FriendItem
-                    id="id"
-                    name="John John"
-                    avatar_link="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"
-                    className="mr-10"
-                />
-                <FriendItem
-                    id="id"
-                    name="John John"
-                    avatar_link="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"
-                    className="mr-10"
-                />
-                <FriendItem
-                    id="id"
-                    name="John John"
-                    avatar_link="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"
-                    className="mr-10"
-                />
+            </RegularSubtitle>
+            <div className="grid grid-cols-3 h-32 overflow-x-auto md:flex overflow-y-auto">
+                {friendList.map((item, index) => {
+                    return (
+                        <FriendItem
+                            id={item.id}
+                            key={index}
+                            name={item.name}
+                            avatar_link={item.avatar_link}
+                        />
+                    );
+                })}
             </div>
         </Card>
     );

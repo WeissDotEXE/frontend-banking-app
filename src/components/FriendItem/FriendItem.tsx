@@ -18,13 +18,19 @@ const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {
         className,
         "grid",
         "justify-items-center",
-        "w-54"
+        "md:w-54",
+        "mr-6"
     );
 
     return (
         <div className={rootCLs} data-testid="FriendItem">
-            <img src={avatar_link} className="" />
-            <RegularSubtitle size="xl">{name}</RegularSubtitle>
+            <img
+                src={avatar_link}
+                className="rounded-full w-20 md:w-96 md:h-54"
+            />
+            <RegularSubtitle size="lg" className="w-20 truncate">
+                {name}
+            </RegularSubtitle>
         </div>
     );
 };

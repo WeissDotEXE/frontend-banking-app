@@ -19,6 +19,7 @@ const Card: FC<CardProps> = (props: CardProps) => {
         "py-4",
         "px-6 lg:px-20",
         "rounded-lg"
+        // "w-full"
     );
 
     return (
