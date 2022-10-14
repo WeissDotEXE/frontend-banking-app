@@ -13,7 +13,13 @@ interface ProfileCardProps {
 
 const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
     const { className } = props;
-    const rootCls = cn(styles.profileCard, className, "relative");
+    const rootCls = cn(
+        styles.profileCard,
+        className,
+        "lg:fixed",
+        "lg:right-20",
+        "lg:w-2/5"
+    );
     const avatarCls = cn(
         styles.avatar,
         "rounded-full",
@@ -29,6 +35,9 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
         "justify-items-start",
         "mt-10"
     );
+
+    const informationsList = ["Email", "t@gmail.com", "IBAN", "Join Date"];
+
     return (
         <Card className={rootCls}>
             <img
@@ -45,6 +54,7 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
                     </Button>
                 </div>
                 <div className={informationsCls}>
+                    {}
                     <RegularSubtitle className="text-base lg:text-2xl font-bold">
                         Email
                     </RegularSubtitle>

@@ -9,7 +9,7 @@ interface ButtonProps {
 }
 
 const Button: FC<ButtonProps> = (props: ButtonProps) => {
-    const { children, className, txtColor } = props;
+    const { children, className, txtColor = "white-950" } = props;
 
     const rootCls = cn(
         styles.Button,

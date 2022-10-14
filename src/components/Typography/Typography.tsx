@@ -34,7 +34,8 @@ function Typography(props: {
                 `text-${props.color}`,
                 `text-${props.size}`,
                 `text-${props.position}`,
-                props.className && props.className
+                props.className && props.className,
+                onClick && "cursor-pointer"
             )}
             onClick={onClick}
         >

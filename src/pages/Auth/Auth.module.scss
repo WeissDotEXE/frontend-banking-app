@@ -1,1 +1,10 @@
-.Auth {}
+.Auth {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.right {
+    background: linear-gradient(233.85deg, #e10075 -7.9%, #3282b8 95.91%);
+}
