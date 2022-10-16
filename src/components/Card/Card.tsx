@@ -20,7 +20,6 @@ const Card: FC<CardProps> = (props: CardProps) => {
         !noPadding && "py-4",
         !noPadding && "px-6 lg:px-20",
         "rounded-xl"
-        // "w-full"
     );
 
     return (

@@ -19,7 +19,13 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
     const { className } = props;
     const [isRegister, setIsRegister] = useState(true);
 
-    const rootCls = cn(styles.Auth, className, "grid", "md:grid-cols-5");
+    const rootCls = cn(
+        styles.Auth,
+        className,
+        "grid",
+        "md:grid-cols-5",
+        "w-11/12 md:w-4/5"
+    );
 
     const backgroundCls = cn(
         styles.background,
@@ -38,10 +44,11 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
         styles.right,
         "flex",
         "flex-col",
-        "col-span-2",
+        "col-span-3 md:col-span-2",
         "justify-center",
         "items-center",
-        "rounded-r-xl"
+        "rounded-b-xl md:rounded-r-xl",
+        "p-4"
     );
 
     const registerFieldList = [
@@ -108,7 +115,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                     <RegularSubtitle color={"white-950"} bold className="mb-5">
                         Welcome!
                     </RegularSubtitle>
-                    <RegularSubtitle bold color={"white-950"}>
+                    <RegularSubtitle bold color={"white-950"} className="mb-5">
                         {isRegister
                             ? "Create an account to start using banking app."
                             : "Fill up the credentials and use Banking App"}
