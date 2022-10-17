@@ -7,12 +7,13 @@ import BankingCards from "pages/BankingCards/BankingCards";
 import GenerateCard from "pages/GenerateCard/GenerateCard";
 import Profile from "pages/Profile/Profile";
 import Footer from "components/Footer/Footer";
+import Welcome from "pages/Welcome/Welcome";
 function App() {
     return (
         <div>
             <Header />
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Welcome />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/cards" element={<BankingCards />} />
                 <Route path="/generatecard" element={<GenerateCard />} />
