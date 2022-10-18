@@ -13,7 +13,7 @@ function App() {
         <div>
             <Header />
             <Routes>
-                <Route path="/" element={<Welcome />} />
+                <Route path="/" element={<Home />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/cards" element={<BankingCards />} />
                 <Route path="/generatecard" element={<GenerateCard />} />

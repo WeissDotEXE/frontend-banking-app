@@ -6,6 +6,7 @@ import TransactionsCard from "components/TransactionsCard/TransactionsCard";
 import ProfileCard from "components/ProfileCard/ProfileCard";
 import { RegularSubtitle } from "components/Typography/Typography";
 import FriendsCard from "components/FriendsCard/FriendsCard";
+import TransactionModal from "components/TransactionModal/TransactionModal";
 interface HomeProps {}
 
 const Home: FC<HomeProps> = () => {
@@ -29,6 +30,13 @@ const Home: FC<HomeProps> = () => {
                     <BalanceCard className={leftCardsCls} />
                     <FriendsCard className={leftCardsCls} />
                     <TransactionsCard className={leftCardsCls} />
+                    <TransactionModal
+                        type="receive"
+                        amount={200}
+                        date="23/23/2022"
+                        key={"id"}
+                        name="Marcel"
+                    />
                 </div>
                 <ProfileCard />
             </div>
