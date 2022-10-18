@@ -4,26 +4,54 @@ import cn from "classnames";
 import Button from "components/Button/Button";
 import { RegularSubtitle } from "components/Typography/Typography";
 import backgroundVideo from "assets/videos/background.webm";
+import { Link } from "react-router-dom";
 interface WelcomeProps {}
 
 const Welcome: FC<WelcomeProps> = () => {
-    const rootCls = cn(styles.Welcome);
+    const rootCls = cn(styles.Welcome, "relative");
     const backgroundCls = cn(
         styles.Background,
-        "absolute",
+        "fixed",
         "top-0",
         "-left-1",
-        "h-auto",
-        "w-auto",
-        "obejct-cover"
+        "h-screen",
+        "w-screen",
+        "object-cover",
+        "brightness-50",
+        "z-0"
+    );
+
+    const contentCls = cn(
+        styles.Content,
+        "z-10",
+        "absolute",
+        "w-full",
+        "block",
+        "top-1/3",
+        "mx-auto"
     );
 
     return (
-        <div className={rootCls}>
-            <video className={backgroundCls}>
+        <div>
+            <video className={backgroundCls} autoPlay muted loop>
                 <source src={backgroundVideo} type="video/webm" />
             </video>
-            <RegularSubtitle>Hello</RegularSubtitle>
+            <div className={contentCls}>
+                <RegularSubtitle size={"6xl"} color={"white-950"} bold>
+                    Banking App
+                </RegularSubtitle>
+                <RegularSubtitle bold color={"white-950"}>
+                    App created by Tache Mihnea Cristian
+                </RegularSubtitle>
+                <a href="https://github.com/WeissDotEXE" target="_blank">
+                    <RegularSubtitle color={"pink-950"} bold>
+                        WeissDotExe
+                    </RegularSubtitle>
+                </a>
+                <Link to="/auth">
+                    <Button>Start Using App</Button>
+                </Link>
+            </div>
         </div>
     );
 };
