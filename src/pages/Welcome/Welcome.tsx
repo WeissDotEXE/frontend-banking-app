@@ -40,7 +40,7 @@ const Welcome: FC<WelcomeProps> = () => {
                 <RegularSubtitle size={"6xl"} color={"white-950"} bold>
                     Banking App
                 </RegularSubtitle>
-                <RegularSubtitle bold color={"white-950"}>
+                <RegularSubtitle bold color={"white-950"} className="my-8">
                     App created by Tache Mihnea Cristian
                 </RegularSubtitle>
                 <a href="https://github.com/WeissDotEXE" target="_blank">
@@ -48,9 +48,11 @@ const Welcome: FC<WelcomeProps> = () => {
                         WeissDotExe
                     </RegularSubtitle>
                 </a>
-                <Link to="/auth">
-                    <Button>Start Using App</Button>
-                </Link>
+                <div className="w-full flex justify-center mt-10">
+                    <Link to="/auth">
+                        <Button>Start Using App</Button>
+                    </Link>
+                </div>
             </div>
         </div>
     );
