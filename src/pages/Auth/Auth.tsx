@@ -6,18 +6,39 @@ import Card from "components/Card/Card";
 import authBackground from "assets/images/authBackground.png";
 import Button from "components/Button/Button";
 import { RegularSubtitle } from "components/Typography/Typography";
+import useAuth from "hooks/useAuth";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+
 interface AuthProps {
     className?: string;
+}
+
+interface LoginData {
+    username: string;
+    email: string;
+    password: string;
+    repeatPassword?: string;
 }
 
 interface InputProps {
     type: "email" | "text" | "password" | "file";
     label: string;
 }
+type authType = "register" | "login";
 
 const Auth: FC<AuthProps> = (props: AuthProps) => {
     const { className } = props;
     const [isRegister, setIsRegister] = useState(true);
+    const [authType, setAuthType] = useState<authType>("login");
+    const {
+        isLogin,
+        sendRequest,
+        errors,
+        response,
+        statusCode,
+        gotoLoginPage,
+    } = useAuth();
 
     const rootCls = cn(
         styles.Auth,
@@ -65,6 +86,68 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
         { type: "email", label: "Email", placeholder: "Email" },
         { type: "password", label: "Password", placeholder: "Email" },
     ];
+
+    const formik = useFormik({
+        initialValues: {
+            username: "",
+            email: "",
+            password: "",
+            repeatPassword: "",
+        },
+        validationSchema: Yup.object({
+            // username: Yup.string()
+            //     .max(15, 'Must be 15 characters or less')
+            //     .required('Username is required'),
+            email: Yup.string()
+                .required("Email is required")
+                .email("Invalid email adress"),
+            password: Yup.string().required("Password is required").min(6),
+            repeatPassword: Yup.string().min(6),
+        }),
+        onSubmit: async (values: LoginData) => {
+            if (
+                values.password !== values.repeatPassword &&
+                authType === "register"
+            ) {
+                // addNotificationHandler({
+                //     id: 'test',
+                //     message:
+                //     isError: true,
+                // })
+                errorNotification("Error! Passwords do not match");
+                return;
+            }
+
+            const statusCode = await sendRequest(
+                {
+                    email: values.email,
+                    password: values.password,
+                    ...(authType === "register" && {
+                        user_data: {
+                            display_name: values.username,
+                        },
+                    }),
+                },
+                authType
+            );
+            if (statusCode === 401) {
+                // addNotificationHandler({
+                //     id: 'test',
+                //     message: 'Username and password do not match',
+                //     isError: true,
+                // })
+                errorNotification("Username and password do not match");
+                return;
+            } else if (statusCode === 400) {
+                errorNotification("Incorrect Credentials");
+            }
+        },
+    });
+
+    const changeAuthTypeHandler = () => {
+        if (authType === "login") setAuthType("register");
+        else if (authType === "register") setAuthType("login");
+    };
 
     return (
         <div>
