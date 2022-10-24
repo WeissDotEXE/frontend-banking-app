@@ -9,6 +9,7 @@ import { RegularSubtitle } from "components/Typography/Typography";
 import useAuth from "hooks/useAuth";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import useNotify from "hooks/useNotify";
 
 interface AuthProps {
     className?: string;
@@ -39,6 +40,8 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
         statusCode,
         gotoLoginPage,
     } = useAuth();
+    const { errorNotification, successNotification, warningNotification } =
+        useNotify();
 
     const rootCls = cn(
         styles.Auth,
