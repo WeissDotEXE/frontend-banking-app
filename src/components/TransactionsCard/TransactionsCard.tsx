@@ -27,11 +27,11 @@ const TransactionsCard: FC<TransactionsCardProps> = (
                     type="deposit"
                     date="12/23"
                 />
-                <TransactionItem amount={60} id="ss" type="sent" date="12/23" />
+                <TransactionItem amount={60} id="ss" type="send" date="12/23" />
                 <TransactionItem
                     amount={60}
                     id="ss"
-                    type="received"
+                    type="receive"
                     date="12/23"
                 />
                 <TransactionItem
@@ -52,11 +52,11 @@ const TransactionsCard: FC<TransactionsCardProps> = (
                     type="deposit"
                     date="12/23"
                 />
-                <TransactionItem amount={60} id="ss" type="sent" date="12/23" />
+                <TransactionItem amount={60} id="ss" type="send" date="12/23" />
                 <TransactionItem
                     amount={60}
                     id="ss"
-                    type="received"
+                    type="receive"
                     date="12/23"
                 />
                 <TransactionItem

@@ -10,13 +10,14 @@ import Modal from "components/Modal/Modal";
 interface TransactionModalProps {
     date: string;
     amount: number;
-    type: "send" | "receive";
+    type: "send" | "receive" | "deposit";
     name: string;
     className?: string;
+    onClose: () => void;
 }
 
 const TransactionModal: FC<TransactionModalProps> = (props) => {
-    const { date, amount, type, name, className } = props;
+    const { date, amount, type, name, className, onClose } = props;
 
     const rootCls = cn(styles.TransactionModal);
 
@@ -28,7 +29,7 @@ const TransactionModal: FC<TransactionModalProps> = (props) => {
     ];
 
     return (
-        <Modal onClose={() => console.log("merge")}>
+        <Modal onClose={onClose}>
             <RegularSubtitle bold>Transaction Info</RegularSubtitle>
             <div className="my-10">
                 {staticDataList.map((item, index) => {

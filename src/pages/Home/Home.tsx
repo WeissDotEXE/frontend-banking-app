@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import styles from "./Home.module.scss";
 import cn from "classnames";
 import BalanceCard from "components/BalanceCard/BalanceCard";
@@ -30,13 +30,6 @@ const Home: FC<HomeProps> = () => {
                     <BalanceCard className={leftCardsCls} />
                     <FriendsCard className={leftCardsCls} />
                     <TransactionsCard className={leftCardsCls} />
-                    <TransactionModal
-                        type="receive"
-                        amount={200}
-                        date="23/23/2022"
-                        key={"id"}
-                        name="Marcel"
-                    />
                 </div>
                 <ProfileCard />
             </div>
