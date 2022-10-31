@@ -1,6 +1,5 @@
 import React, { FC, ReactNode, useEffect, Fragment } from "react";
 import styles from "./Modal.module.scss";
-import { Portal } from "react-portal";
 import cn from "classnames";
 import ReactDom from "react-dom";
 import closeIcon from "assets/icons/closeIcon.svg";
@@ -29,8 +28,6 @@ const Modal: FC<ModalProps> = (props: ModalProps) => {
 
     useEffect(() => {
         const keyDownHandler = (event: any) => {
-            console.log("User pressed: ", event.key);
-
             if (event.key === "Escape") {
                 event.preventDefault();
 
@@ -43,7 +40,7 @@ const Modal: FC<ModalProps> = (props: ModalProps) => {
         };
     }, []);
 
-    const modalContent = cn("bg-white", "rounded-lg", "z-0", className);
+    const modalContent = cn("bg-white", "rounded-lg", "z-10", className);
     const modalRoot = document.getElementById("portal") as HTMLElement;
 
     return ReactDom.createPortal(

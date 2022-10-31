@@ -5,7 +5,6 @@ import Card from "components/Card/Card";
 import { RegularSubtitle } from "components/Typography/Typography";
 import Button from "components/Button/Button";
 import downloadIcon from "assets/icons/downloadIcon.svg";
-import { Portal } from "react-portal";
 import Modal from "components/Modal/Modal";
 interface TransactionModalProps {
     date: string;

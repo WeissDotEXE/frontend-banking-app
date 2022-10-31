@@ -9,10 +9,11 @@ import Button from "components/Button/Button";
 
 interface ProfileCardProps {
     className?: string;
+    type: "profile" | "friend";
 }
 
 const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
-    const { className } = props;
+    const { className, type } = props;
     const rootCls = cn(
         styles.profileCard,
         className,
@@ -53,27 +54,28 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
                         Edit Profile
                     </Button>
                 </div>
-                <div className={informationsCls}>
-                    {}
-                    <RegularSubtitle className="text-base lg:text-2xl font-bold">
-                        Email
-                    </RegularSubtitle>
-                    <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg">
-                        t@gmail.com
-                    </RegularSubtitle>
-                    <RegularSubtitle className="text-base lg:text-2xl font-bold">
-                        IBAN
-                    </RegularSubtitle>
-                    <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg truncate w-2/3">
-                        RO4757842BRDE754u2148
-                    </RegularSubtitle>
-                    <RegularSubtitle className="text-base lg:text-2xl font-bold">
-                        Join Date
-                    </RegularSubtitle>
-                    <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg mb-20">
-                        26-aug-2021
-                    </RegularSubtitle>
-                </div>
+                {type === "profile" && (
+                    <div className={informationsCls}>
+                        <RegularSubtitle className="text-base lg:text-2xl font-bold">
+                            Email
+                        </RegularSubtitle>
+                        <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg">
+                            t@gmail.com
+                        </RegularSubtitle>
+                        <RegularSubtitle className="text-base lg:text-2xl font-bold">
+                            IBAN
+                        </RegularSubtitle>
+                        <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg truncate w-2/3">
+                            RO4757842BRDE754u2148
+                        </RegularSubtitle>
+                        <RegularSubtitle className="text-base lg:text-2xl font-bold">
+                            Join Date
+                        </RegularSubtitle>
+                        <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg mb-20">
+                            26-aug-2021
+                        </RegularSubtitle>
+                    </div>
+                )}
             </div>
         </Card>
     );

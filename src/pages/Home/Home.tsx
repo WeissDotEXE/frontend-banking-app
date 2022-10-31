@@ -31,7 +31,7 @@ const Home: FC<HomeProps> = () => {
                     <FriendsCard className={leftCardsCls} />
                     <TransactionsCard className={leftCardsCls} />
                 </div>
-                <ProfileCard />
+                <ProfileCard type="profile" />
             </div>
         </div>
     );

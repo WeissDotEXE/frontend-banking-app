@@ -18,8 +18,6 @@ const TransactionItem: FC<TransactionItemProps> = (
     props: TransactionItemProps
 ) => {
     const { id, type, amount, date, className } = props;
-
-    const [showDetails, setShowDetails] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
     const rootCls = cn(
@@ -39,12 +37,7 @@ const TransactionItem: FC<TransactionItemProps> = (
     };
 
     return (
-        <div
-            className={rootCls}
-            data-testid="TransactionItem"
-            onMouseEnter={() => setShowDetails(true)}
-            onMouseLeave={() => setTimeout(() => setShowDetails(false), 800)}
-        >
+        <div className={rootCls} data-testid="TransactionItem">
             <div className={`grid grid-cols-2 col-span-6 py-4`}>
                 <RegularSubtitle
                     bold
