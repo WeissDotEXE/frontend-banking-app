@@ -34,15 +34,16 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
 
     return (
         <Card className={rootCls}>
-            <RegularSubtitle
-                className="text-3xl mb-3 text-gray-950"
-                bold={true}
-            >
-                Your Balance
-            </RegularSubtitle>
-            <RegularSubtitle className="text-6xl" bold={true}>
-                $60.53
-            </RegularSubtitle>
+            <div className="flex justify-around w-full">
+                <RegularSubtitle className="text-4xl md:text-6xl" bold>
+                    $60.53
+                </RegularSubtitle>
+                <img
+                    src={dropDownIcon}
+                    className=" cursor-pointer"
+                    onClick={() => setShowAccounts((v) => !v)}
+                />
+            </div>
 
             {transition((style, item) =>
                 item ? (
@@ -73,12 +74,6 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
                     Send Money
                 </Button>
             </div>
-
-            <img
-                src={dropDownIcon}
-                className="absolute top-16 lg:top-16 right-10 lg:right-20 cursor-pointer"
-                onClick={() => setShowAccounts((v) => !v)}
-            />
         </Card>
     );
 };

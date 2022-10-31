@@ -40,7 +40,7 @@ const FriendModal: FC<FriendModalProps> = (props: FriendModalProps) => {
                 className={avatarCls}
                 src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"
             />
-            <div className="mt-20 ">
+            <div className="mt-10 ">
                 <div className="flex items-center justify-center">
                     <RegularSubtitle className="text-3xl font-bold">
                         {name}

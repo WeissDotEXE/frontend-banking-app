@@ -19,8 +19,8 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
         `bg-pink-950`,
         `text-${txtColor}`,
         "p-4",
-        "font-bold",
-        "text-xl"
+        "font-medium md:font-bold",
+        "text-md md:text-xl"
     );
 
     return (
