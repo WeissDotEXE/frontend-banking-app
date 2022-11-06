@@ -2,30 +2,78 @@ import React, { FC } from "react";
 import styles from "./BankingCards.module.scss";
 import cn from "classnames";
 import BankingCardItem from "components/BankingCardItem/BankingCardItem";
+import { RegularSubtitle } from "components/Typography/Typography";
+import Button from "components/Button/Button";
+import background from "assets/images/cardsBackground.svg";
 
 interface BankingCardsProps {
     className?: string;
 }
 
 const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
+    const rootCls = cn(styles.rootCls, "p-4 md:p-10");
+    const cardsCls = cn(styles.cards, "flex md:overflow-y-auto");
     return (
-        <div>
-            <BankingCardItem
-                id="hello"
-                type="premium"
-                cardNumber={7239648713264933}
-                name="John John"
-                expireDate="03/23"
-                processing="mastercard"
+        <div className={rootCls}>
+            <img
+                src={background}
+                className="absolute top-0 left-0 h-full w-full"
             />
-            <BankingCardItem
-                id="hello"
-                type="premium"
-                cardNumber={7239648713264933}
-                name="John John"
-                expireDate="03/23"
-                processing="visa"
-            />
+            <div className="flex justify-between mb-10">
+                <div className="">
+                    <RegularSubtitle
+                        position={"text-left"}
+                        bold
+                        color={"white-950"}
+                        className="text-7xl"
+                    >
+                        Your Cards
+                    </RegularSubtitle>
+                    <RegularSubtitle
+                        color={"gray-950"}
+                        bold
+                        className="text-3xl"
+                        position={"text-left"}
+                    >
+                        You have 3 cards
+                    </RegularSubtitle>
+                </div>
+                <Button>Generate card</Button>
+            </div>
+            <div className={cardsCls}>
+                <BankingCardItem
+                    id="hello"
+                    type="premium"
+                    cardNumber={7239648713264933}
+                    name="John John"
+                    expireDate="03/23"
+                    processing="visa"
+                />
+                <BankingCardItem
+                    id="hello"
+                    type="premium"
+                    cardNumber={7239648713264933}
+                    name="John John"
+                    expireDate="03/23"
+                    processing="mastercard"
+                />
+                <BankingCardItem
+                    id="hello"
+                    type="premium"
+                    cardNumber={7239648713264933}
+                    name="John John"
+                    expireDate="03/23"
+                    processing="visa"
+                />
+                <BankingCardItem
+                    id="hello"
+                    type="premium"
+                    cardNumber={7239648713264933}
+                    name="John John"
+                    expireDate="03/23"
+                    processing="mastercard"
+                />
+            </div>
         </div>
     );
 };

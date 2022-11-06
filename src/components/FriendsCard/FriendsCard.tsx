@@ -63,7 +63,7 @@ const FriendsCard: FC<FriendsCardProps> = (props: FriendsCardProps) => {
             <RegularSubtitle bold color={"gray-950"} className="mb-10">
                 Friends
             </RegularSubtitle>
-            <div className="grid grid-cols-3 h-32 overflow-x-auto md:flex overflow-y-auto">
+            <div className="grid grid-cols-3 h-32 overflow-x-auto md:flex md:overflow-y-auto">
                 {friendList.map((item, index) => {
                     return (
                         <FriendItem
