@@ -25,7 +25,7 @@ const BankingCardItem: FC<BankingCardItemProps> = (props) => {
         type === "premium" ? styles.premiumCard : styles.normalCard,
         className,
         "rounded-lg",
-        "w-1/3",
+        // "w-96",
         "h-72",
         "relative",
         "border-2",
@@ -38,7 +38,9 @@ const BankingCardItem: FC<BankingCardItemProps> = (props) => {
     const bottomPartCls = cn(
         styles.bottomPart,
         "absolute",
-        "bg-gradient-to-r from-blue-600 to-purple-600",
+        type === "premium"
+            ? "bg-gradient-to-r from-orange-500 via-purple-500 to-blue-500"
+            : "bg-gradient-to-r from-cyan-500 to-blue-500",
         "bottom-0",
         "left-0",
         "w-full",
@@ -56,7 +58,7 @@ const BankingCardItem: FC<BankingCardItemProps> = (props) => {
     return (
         <div className={rootCls} data-testid="BankingCards">
             <div className="text-gray-950 grid grid-cols-4 mt-10">
-                <div className="col-span-3">
+                <div className="col-span-3 flex flex-col ">
                     <RegularSubtitle bold position={"text-left"}>
                         Banking App
                     </RegularSubtitle>
@@ -64,7 +66,9 @@ const BankingCardItem: FC<BankingCardItemProps> = (props) => {
                         8237592175
                     </RegularSubtitle>
                 </div>
-                <img src={cardSim} />
+                <div className="flex items-center">
+                    <img src={cardSim} />
+                </div>
             </div>
             <div className={bottomPartCls}>
                 <RegularSubtitle bold>John John</RegularSubtitle>

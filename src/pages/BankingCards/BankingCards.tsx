@@ -13,7 +13,13 @@ interface BankingCardsProps {
 
 const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
     const rootCls = cn(styles.rootCls, "p-4 md:p-10", "w-full");
-    const cardsCls = cn(styles.cards, "flex", "overflow-auto");
+    const cardsCls = cn(
+        styles.cards,
+        "flex",
+        "overflow-auto",
+        "flex-nowrap",
+        "w-full"
+    );
     return (
         <div className={rootCls}>
             <img
@@ -54,7 +60,7 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
                 />
                 <BankingCardItem
                     id="hello"
-                    type="premium"
+                    type="normal"
                     cardNumber={7239648713264933}
                     name="John John"
                     expireDate="03/23"
