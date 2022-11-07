@@ -5,14 +5,15 @@ import BankingCardItem from "components/BankingCardItem/BankingCardItem";
 import { RegularSubtitle } from "components/Typography/Typography";
 import Button from "components/Button/Button";
 import background from "assets/images/cardsBackground.svg";
+import addIcon from "assets/icons/addIcon.svg";
 
 interface BankingCardsProps {
     className?: string;
 }
 
 const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
-    const rootCls = cn(styles.rootCls, "p-4 md:p-10");
-    const cardsCls = cn(styles.cards, "flex md:overflow-y-auto");
+    const rootCls = cn(styles.rootCls, "p-4 md:p-10", "w-full");
+    const cardsCls = cn(styles.cards, "flex", "overflow-auto");
     return (
         <div className={rootCls}>
             <img
@@ -38,25 +39,11 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
                         You have 3 cards
                     </RegularSubtitle>
                 </div>
-                <Button>Generate card</Button>
+                <Button className="flex items-center">
+                    Generate Card <img className="w-8 ml-3" src={addIcon} />
+                </Button>
             </div>
             <div className={cardsCls}>
-                <BankingCardItem
-                    id="hello"
-                    type="premium"
-                    cardNumber={7239648713264933}
-                    name="John John"
-                    expireDate="03/23"
-                    processing="visa"
-                />
-                <BankingCardItem
-                    id="hello"
-                    type="premium"
-                    cardNumber={7239648713264933}
-                    name="John John"
-                    expireDate="03/23"
-                    processing="mastercard"
-                />
                 <BankingCardItem
                     id="hello"
                     type="premium"

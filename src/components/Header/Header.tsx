@@ -22,7 +22,8 @@ const Header: FC<HeaderProps> = () => {
         "bg-blue-940",
         "py-3",
         "my-auto",
-        "px-20"
+        "px-20",
+        "relative z-10"
     );
     const iconCls = cn(styles.icon, "w-10", "h-10");
 
