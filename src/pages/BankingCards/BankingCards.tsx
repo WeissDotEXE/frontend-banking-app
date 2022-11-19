@@ -18,7 +18,7 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
         "flex",
         "overflow-auto",
         "flex-nowrap",
-        "w-full"
+        "h-auto"
     );
     return (
         <div className={rootCls}>
@@ -50,6 +50,62 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
                 </Button>
             </div>
             <div className={cardsCls}>
+                <BankingCardItem
+                    id="hello"
+                    type="premium"
+                    cardNumber={7239648713264933}
+                    name="John John"
+                    expireDate="03/23"
+                    processing="visa"
+                />
+                <BankingCardItem
+                    id="hello"
+                    type="normal"
+                    cardNumber={7239648713264933}
+                    name="John John"
+                    expireDate="03/23"
+                    processing="mastercard"
+                />
+                <BankingCardItem
+                    id="hello"
+                    type="premium"
+                    cardNumber={7239648713264933}
+                    name="John John"
+                    expireDate="03/23"
+                    processing="visa"
+                />
+                <BankingCardItem
+                    id="hello"
+                    type="premium"
+                    cardNumber={7239648713264933}
+                    name="John John"
+                    expireDate="03/23"
+                    processing="visa"
+                />
+                <BankingCardItem
+                    id="hello"
+                    type="normal"
+                    cardNumber={7239648713264933}
+                    name="John John"
+                    expireDate="03/23"
+                    processing="mastercard"
+                />
+                <BankingCardItem
+                    id="hello"
+                    type="premium"
+                    cardNumber={7239648713264933}
+                    name="John John"
+                    expireDate="03/23"
+                    processing="visa"
+                />
+                <BankingCardItem
+                    id="hello"
+                    type="normal"
+                    cardNumber={7239648713264933}
+                    name="John John"
+                    expireDate="03/23"
+                    processing="mastercard"
+                />
                 <BankingCardItem
                     id="hello"
                     type="premium"

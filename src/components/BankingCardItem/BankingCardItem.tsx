@@ -25,7 +25,7 @@ const BankingCardItem: FC<BankingCardItemProps> = (props) => {
         type === "premium" ? styles.premiumCard : styles.normalCard,
         className,
         "rounded-lg",
-        // "w-96",
+        "w-auto",
         "h-72",
         "relative",
         "border-2",
