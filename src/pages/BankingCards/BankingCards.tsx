@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import styles from "./BankingCards.module.scss";
 import cn from "classnames";
 import BankingCardItem from "components/BankingCardItem/BankingCardItem";
@@ -11,14 +11,25 @@ interface BankingCardsProps {
     className?: string;
 }
 
+interface BankingCardItemList {
+    id: string;
+    type: "premium" | "normal";
+    cardNumber: number;
+    name: string;
+    expireDate: string;
+    processing: "visa" | "mastercard";
+    className?: string;
+}
+
 const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
+    const [cardList, setCardList] = useState<BankingCardItemList[]>([]);
+
     const rootCls = cn(styles.rootCls, "p-4 md:p-10", "w-full");
     const cardsCls = cn(
         styles.cards,
-        "flex",
+        "lg:flex grid justify-items-center",
         "overflow-auto",
-        "flex-nowrap",
-        "h-auto"
+        "lg:flex-nowrap"
     );
     return (
         <div className={rootCls}>
@@ -26,13 +37,13 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
                 src={background}
                 className="absolute top-0 left-0 h-full w-full"
             />
-            <div className="flex justify-between mb-10">
-                <div className="">
+            <div className="md:flex justify-between mb-10">
+                <div className="flex justify-center items-center">
                     <RegularSubtitle
                         position={"text-left"}
                         bold
                         color={"white-950"}
-                        className="text-7xl"
+                        className="text-6xl"
                     >
                         Your Cards
                     </RegularSubtitle>
@@ -42,87 +53,44 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
                         className="text-3xl"
                         position={"text-left"}
                     >
-                        You have 3 cards
+                        {cardList.length > 0 &&
+                            `You have {cardList.length} cards`}
                     </RegularSubtitle>
                 </div>
-                <Button className="flex items-center">
-                    Generate Card <img className="w-8 ml-3" src={addIcon} />
-                </Button>
+                {cardList.length < 3 && (
+                    <div className="flex justify-center mt-10">
+                        <Button className="flex items-center">
+                            Generate Card{" "}
+                            <img className="w-8 ml-3" src={addIcon} />
+                        </Button>
+                    </div>
+                )}
             </div>
-            <div className={cardsCls}>
-                <BankingCardItem
-                    id="hello"
-                    type="premium"
-                    cardNumber={7239648713264933}
-                    name="John John"
-                    expireDate="03/23"
-                    processing="visa"
-                />
-                <BankingCardItem
-                    id="hello"
-                    type="normal"
-                    cardNumber={7239648713264933}
-                    name="John John"
-                    expireDate="03/23"
-                    processing="mastercard"
-                />
-                <BankingCardItem
-                    id="hello"
-                    type="premium"
-                    cardNumber={7239648713264933}
-                    name="John John"
-                    expireDate="03/23"
-                    processing="visa"
-                />
-                <BankingCardItem
-                    id="hello"
-                    type="premium"
-                    cardNumber={7239648713264933}
-                    name="John John"
-                    expireDate="03/23"
-                    processing="visa"
-                />
-                <BankingCardItem
-                    id="hello"
-                    type="normal"
-                    cardNumber={7239648713264933}
-                    name="John John"
-                    expireDate="03/23"
-                    processing="mastercard"
-                />
-                <BankingCardItem
-                    id="hello"
-                    type="premium"
-                    cardNumber={7239648713264933}
-                    name="John John"
-                    expireDate="03/23"
-                    processing="visa"
-                />
-                <BankingCardItem
-                    id="hello"
-                    type="normal"
-                    cardNumber={7239648713264933}
-                    name="John John"
-                    expireDate="03/23"
-                    processing="mastercard"
-                />
-                <BankingCardItem
-                    id="hello"
-                    type="premium"
-                    cardNumber={7239648713264933}
-                    name="John John"
-                    expireDate="03/23"
-                    processing="visa"
-                />
-                <BankingCardItem
-                    id="hello"
-                    type="normal"
-                    cardNumber={7239648713264933}
-                    name="John John"
-                    expireDate="03/23"
-                    processing="mastercard"
-                />
-            </div>
+
+            {cardList.length === 0 ? (
+                <RegularSubtitle
+                    bold
+                    color={"white-950"}
+                    position={"text-center"}
+                >
+                    No cards yet. Generate One
+                </RegularSubtitle>
+            ) : (
+                <div className={cardsCls}>
+                    {cardList.map((item, index) => {
+                        return (
+                            <BankingCardItem
+                                id={item.id}
+                                type={item.type}
+                                cardNumber={item.cardNumber}
+                                name={item.name}
+                                expireDate={item.expireDate}
+                                processing={item.processing}
+                            />
+                        );
+                    })}
+                </div>
+            )}
         </div>
     );
 };

@@ -25,14 +25,14 @@ const BankingCardItem: FC<BankingCardItemProps> = (props) => {
         type === "premium" ? styles.premiumCard : styles.normalCard,
         className,
         "rounded-lg",
-        "w-auto",
+        "w-96",
         "h-72",
         "relative",
         "border-2",
-        "mr-20",
-        "mb-2",
-        "p-4",
-        "backdrop-blur-md"
+        "lg:mr-20",
+        "my-8 lg:my-2",
+        "backdrop-blur-sm",
+        "cursor-pointer"
     );
 
     const bottomPartCls = cn(
@@ -57,13 +57,13 @@ const BankingCardItem: FC<BankingCardItemProps> = (props) => {
 
     return (
         <div className={rootCls} data-testid="BankingCards">
-            <div className="text-gray-950 grid grid-cols-4 mt-10">
+            <div className="text-gray-950 flex items-center justify-between px-6 mt-10">
                 <div className="col-span-3 flex flex-col ">
                     <RegularSubtitle bold position={"text-left"}>
                         Banking App
                     </RegularSubtitle>
                     <RegularSubtitle position={"text-left"} className="mt-3">
-                        8237592175
+                        {cardNumber}
                     </RegularSubtitle>
                 </div>
                 <div className="flex items-center">
@@ -71,8 +71,8 @@ const BankingCardItem: FC<BankingCardItemProps> = (props) => {
                 </div>
             </div>
             <div className={bottomPartCls}>
-                <RegularSubtitle bold>John John</RegularSubtitle>
-                <RegularSubtitle>01/24</RegularSubtitle>
+                <RegularSubtitle bold>{name}</RegularSubtitle>
+                <RegularSubtitle>{expireDate}</RegularSubtitle>
                 <img
                     src={
                         processing === "mastercard" ? mastercardIcon : visaIcon
