@@ -31,7 +31,10 @@ const Home: FC<HomeProps> = () => {
                     <FriendsCard className={leftCardsCls} />
                     <TransactionsCard className={leftCardsCls} />
                 </div>
-                <ProfileCard type="profile" />
+                <ProfileCard
+                    type="personal"
+                    className="lg:fixed lg:right-20 lg:w-2/5"
+                />
             </div>
         </div>
     );

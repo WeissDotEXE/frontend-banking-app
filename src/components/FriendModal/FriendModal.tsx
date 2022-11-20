@@ -36,23 +36,7 @@ const FriendModal: FC<FriendModalProps> = (props: FriendModalProps) => {
 
     return (
         <Modal onClose={onClose} className="relative">
-            <img
-                className={avatarCls}
-                src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"
-            />
-            <div className="mt-10 ">
-                <div className="flex items-center justify-center">
-                    <RegularSubtitle className="text-3xl font-bold">
-                        {name}
-                    </RegularSubtitle>
-                    <img src={deleteIcon} className="w-6 md:w-8 ml-2 my-4" />
-                </div>
-
-                <div className="flex justify-around">
-                    <Button>Send</Button>
-                    <Button>Request</Button>
-                </div>
-            </div>
+            <ProfileCard type="friend" className="drop-shadow-none" />
         </Modal>
     );
 };

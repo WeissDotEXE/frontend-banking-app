@@ -23,7 +23,9 @@ const Header: FC<HeaderProps> = () => {
         "py-3",
         "my-auto",
         "px-20",
-        "relative z-10"
+        "fixed",
+        "z-10",
+        "top-0"
     );
     const iconCls = cn(styles.icon, "w-10", "h-10");
 

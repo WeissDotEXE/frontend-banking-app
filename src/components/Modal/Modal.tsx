@@ -49,7 +49,7 @@ const Modal: FC<ModalProps> = (props: ModalProps) => {
             <Card className={modalCls}>
                 <img
                     className={cn(
-                        "cursor-pointer z-10 w-9 h-9 md:w-11 md:h-11 absolute right-3 top-3"
+                        "cursor-pointer z-10 w-9 h-9 md:w-11 md:h-11 absolute right-3 top-3 z-20"
                     )}
                     onClick={onClose}
                     src={closeIcon}

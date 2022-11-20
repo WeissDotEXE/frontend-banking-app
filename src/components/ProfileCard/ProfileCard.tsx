@@ -9,18 +9,12 @@ import Button from "components/Button/Button";
 
 interface ProfileCardProps {
     className?: string;
-    type: "profile" | "friend";
+    type: "profile" | "friend" | "personal";
 }
 
 const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
     const { className, type } = props;
-    const rootCls = cn(
-        styles.profileCard,
-        className,
-        "lg:fixed",
-        "lg:right-20",
-        "lg:w-2/5"
-    );
+    const rootCls = cn(styles.profileCard, className);
     const avatarCls = cn(
         styles.avatar,
         "rounded-full",
@@ -49,12 +43,53 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
                 <RegularSubtitle className="text-3xl font-bold">
                     Jesse Jayce
                 </RegularSubtitle>
-                <div className="flex justify-center mt-14">
-                    <Button bgColor={"pink-950"} txtColor={"white-950"}>
-                        Edit Profile
-                    </Button>
-                </div>
                 {type === "profile" && (
+                    <div className="flex justify-center mt-14">
+                        <Button bgColor={"pink-950"} txtColor={"white-950"}>
+                            Send Money
+                        </Button>
+                        <Button bgColor={"pink-950"} txtColor={"white-950"}>
+                            Add Friend
+                        </Button>
+                    </div>
+                )}
+                {type === "personal" && (
+                    <div className="flex justify-center mt-14">
+                        <Button bgColor={"pink-950"} txtColor={"white-950"}>
+                            Edit Profile
+                        </Button>
+                    </div>
+                )}
+                {type === "friend" && (
+                    <div className="flex justify-center mt-14">
+                        <Button bgColor={"pink-950"} txtColor={"white-950"}>
+                            Remove friend
+                        </Button>
+                    </div>
+                )}
+                {type === "personal" && (
+                    <div className={informationsCls}>
+                        <RegularSubtitle className="text-base lg:text-2xl font-bold">
+                            Email
+                        </RegularSubtitle>
+                        <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg">
+                            t@gmail.com
+                        </RegularSubtitle>
+                        <RegularSubtitle className="text-base lg:text-2xl font-bold">
+                            IBAN
+                        </RegularSubtitle>
+                        <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg truncate w-2/3">
+                            RO4757842BRDE754u2148
+                        </RegularSubtitle>
+                        <RegularSubtitle className="text-base lg:text-2xl font-bold">
+                            Join Date
+                        </RegularSubtitle>
+                        <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg mb-20">
+                            26-aug-2021
+                        </RegularSubtitle>
+                    </div>
+                )}
+                {type === "friend" && (
                     <div className={informationsCls}>
                         <RegularSubtitle className="text-base lg:text-2xl font-bold">
                             Email
