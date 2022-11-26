@@ -7,6 +7,8 @@ import ProfileCard from "components/ProfileCard/ProfileCard";
 import { RegularSubtitle } from "components/Typography/Typography";
 import FriendsCard from "components/FriendsCard/FriendsCard";
 import TransactionModal from "components/TransactionModal/TransactionModal";
+import { UseWindowSize } from "functions/UseWindowSize";
+import { IsMobile } from "functions/Platform";
 interface HomeProps {}
 
 const Home: FC<HomeProps> = () => {
@@ -17,6 +19,8 @@ const Home: FC<HomeProps> = () => {
         "lg:px-16",
         "mt-10"
     );
+
+    const [width, height] = UseWindowSize();
 
     const leftCardsCls = cn("lg:mr-20", "mb-10");
 
@@ -31,10 +35,12 @@ const Home: FC<HomeProps> = () => {
                     <FriendsCard className={leftCardsCls} />
                     <TransactionsCard className={leftCardsCls} />
                 </div>
-                <ProfileCard
-                    type="personal"
-                    className="lg:fixed lg:right-20 lg:w-2/5"
-                />
+                {!IsMobile(width) && (
+                    <ProfileCard
+                        type="personal"
+                        className="lg:fixed lg:right-20 lg:w-2/5"
+                    />
+                )}
             </div>
         </div>
     );
