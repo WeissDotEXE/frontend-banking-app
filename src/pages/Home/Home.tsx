@@ -9,6 +9,10 @@ import FriendsCard from "components/FriendsCard/FriendsCard";
 import TransactionModal from "components/TransactionModal/TransactionModal";
 import { UseWindowSize } from "functions/UseWindowSize";
 import { IsMobile } from "functions/Platform";
+import Button from "components/Button/Button";
+import { Icon } from "components/Icon/Icon";
+import colors from "colors.module.scss";
+
 interface HomeProps {}
 
 const Home: FC<HomeProps> = () => {
@@ -21,25 +25,40 @@ const Home: FC<HomeProps> = () => {
     );
 
     const [width, height] = UseWindowSize();
-    const [showProfile, setShowProfile] = useState(IsMobile(width));
+    const [showProfile, setShowProfile] = useState(false);
 
     const leftCardsCls = cn("lg:mr-20", "mb-10");
 
     return (
         <div className="px-8 lg:px-0">
-            <RegularSubtitle className="text-center lg:text-left text-white-950 font-bold text-4xl lg:text-7xl lg:ml-16 mt-5">
-                Hello Jesse Jayce
-            </RegularSubtitle>
+            <div className="flex items-center justify-around lg:justify-start">
+                <RegularSubtitle className="text-center truncate lg:text-left text-white-950 font-bold text-4xl lg:text-7xl lg:ml-16 mt-5">
+                    Hello Jesse Jayce
+                </RegularSubtitle>
+                {IsMobile(width) && (
+                    <Button className="p-2 rounded-full mt-5">
+                        <Icon
+                            name="avatarIcon"
+                            color={colors.white}
+                            className="justify-center items-center"
+                            onClick={() => setShowProfile((v) => !v)}
+                        />
+                    </Button>
+                )}
+            </div>
+            {showProfile && <ProfileCard type="personal" className="mt-24" />}
             <div className={rootCls} data-testid="Home">
                 <div>
                     <BalanceCard className={leftCardsCls} />
                     <FriendsCard className={leftCardsCls} />
                     <TransactionsCard className={leftCardsCls} />
                 </div>
-                <ProfileCard
-                    type="personal"
-                    className="lg:fixed lg:right-20 lg:w-2/5"
-                />
+                {!IsMobile(width) && (
+                    <ProfileCard
+                        type="personal"
+                        className="lg:fixed lg:right-20 lg:w-2/5"
+                    />
+                )}
             </div>
         </div>
     );
