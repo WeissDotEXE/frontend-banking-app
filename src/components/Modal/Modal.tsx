@@ -2,7 +2,7 @@ import React, { FC, ReactNode, useEffect, Fragment } from "react";
 import styles from "./Modal.module.scss";
 import cn from "classnames";
 import ReactDom from "react-dom";
-import closeIcon from "assets/icons/closeIcon.svg";
+import { Icon } from "components/Icon/Icon";
 import Card from "components/Card/Card";
 
 interface ModalProps {
@@ -47,12 +47,9 @@ const Modal: FC<ModalProps> = (props: ModalProps) => {
         <Fragment>
             <div className={overlayCls} onClick={onClose}></div>
             <Card className={modalCls}>
-                <img
-                    className={cn(
-                        "cursor-pointer z-10 w-9 h-9 md:w-11 md:h-11 absolute right-3 top-3 z-20"
-                    )}
-                    onClick={onClose}
-                    src={closeIcon}
+                <Icon
+                    name="closeIcon"
+                    className="cursor-pointer z-10 w-9 h-9 md:w-11 md:h-11 absolute right-3 top-3 z-20"
                 />
                 <div className={modalContent}>{children}</div>
             </Card>

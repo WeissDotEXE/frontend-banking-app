@@ -5,8 +5,8 @@ import BankingCardItem from "components/BankingCardItem/BankingCardItem";
 import { RegularSubtitle } from "components/Typography/Typography";
 import Button from "components/Button/Button";
 import background from "assets/images/cardsBackground.svg";
-import addIcon from "assets/icons/addIcon.svg";
-
+import { Icon } from "components/Icon/Icon";
+import colors from "colors.module.scss";
 interface BankingCardsProps {
     className?: string;
 }
@@ -58,12 +58,14 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
                     </RegularSubtitle>
                 </div>
                 {cardList.length < 3 && (
-                    <div className="flex justify-center mt-10">
-                        <Button className="flex items-center">
-                            Generate Card{" "}
-                            <img className="w-8 ml-3" src={addIcon} />
-                        </Button>
-                    </div>
+                    <Button className="flex items-center">
+                        Generate Card{" "}
+                        <Icon
+                            name="addIcon"
+                            className="w-8 ml-4"
+                            color={colors.white}
+                        />
+                    </Button>
                 )}
             </div>
 

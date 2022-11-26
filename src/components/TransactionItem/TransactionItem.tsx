@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import styles from "./TransactionItem.module.scss";
 import cn from "classnames";
 import { RegularSubtitle } from "components/Typography/Typography";
-import infoIcon from "assets/icons/infoIcon.svg";
+import { Icon } from "components/Icon/Icon";
 import { useTransition, animated } from "react-spring";
 import TransactionModal from "components/TransactionModal/TransactionModal";
 
@@ -58,7 +58,7 @@ const TransactionItem: FC<TransactionItemProps> = (
                 onClick={showDetailsHandler}
                 className="bg-black hover:bg-pink-950 duration-500 p-1 rounded-r-lg flex justify-center cursor-pointer"
             >
-                <img src={infoIcon} className="mx-auto my-auto" />
+                <Icon name="infoIcon" className="mx-auto my-auto" />
             </div>
 
             {showModal && (

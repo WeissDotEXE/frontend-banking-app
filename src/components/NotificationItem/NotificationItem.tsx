@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import styles from "./NotificationItem.module.scss";
 import cn from "classnames";
-import closeIcon from "assets/icons/closeIcon.svg";
+import { Icon } from "components/Icon/Icon";
 interface NotificationItemProps {
     id: string;
     name: string;
@@ -44,7 +44,7 @@ const NotificationItem: FC<NotificationItemProps> = (
             >
                 {name} {message}
             </p>
-            <img src={closeIcon} className="col-span-1 cursor-pointer" />
+            <Icon name="closeIcon" className="col-span-1 cursor-pointer" />
         </div>
     );
 };

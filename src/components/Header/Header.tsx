@@ -1,10 +1,7 @@
 import React, { FC } from "react";
 import styles from "./Header.module.scss";
 import cn from "classnames";
-import homeIcon from "assets/icons/homeIcon.svg";
-import cardIcon from "assets/icons/cardIcon.svg";
-import notificationIcon from "assets/icons/notificationIcon.svg";
-import searchIcon from "assets/icons/searchIcon.svg";
+import { Icon } from "components/Icon/Icon";
 import { Link } from "react-router-dom";
 import { UseWindowSize } from "functions/UseWindowSize";
 import { IsDesktop, IsMobile } from "functions/Platform";
@@ -93,10 +90,10 @@ const Header: FC<HeaderProps> = () => {
     return (
         <div className={rootCls} data-testid="Header">
             <Link to="/">
-                <img src={homeIcon} className={iconCls} />
+                <Icon name="homeIcon" className={iconCls} />
             </Link>
             {IsMobile(width) ? (
-                <img src={searchIcon} className={iconCls} />
+                <Icon name="searchIcon" className={iconCls} />
             ) : (
                 <div className="relative">
                     <input
@@ -104,16 +101,19 @@ const Header: FC<HeaderProps> = () => {
                         className={inputCls}
                         placeholder="Search user"
                     />
-                    <img src={searchIcon} className="absolute right-5 top-2" />
+                    <Icon
+                        name="searchIcon"
+                        className="absolute right-5 top-2"
+                    />
                 </div>
             )}
             <div className="flex">
                 <Link to="/cards">
-                    <img src={cardIcon} className={iconCls} />
+                    <Icon name="cardIcon" className={iconCls} />
                 </Link>
                 <div className={styles.dropdown}>
-                    <img
-                        src={notificationIcon}
+                    <Icon
+                        name="notificationIcon"
                         className={`${iconCls} ml-10`}
                     />
                     <div className="w-5 animate-bounce bg-red-950 rounded-full absolute bottom-5 right-0">

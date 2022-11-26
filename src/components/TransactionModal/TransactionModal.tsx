@@ -4,8 +4,8 @@ import cn from "classnames";
 import Card from "components/Card/Card";
 import { RegularSubtitle } from "components/Typography/Typography";
 import Button from "components/Button/Button";
-import downloadIcon from "assets/icons/downloadIcon.svg";
 import Modal from "components/Modal/Modal";
+import { Icon } from "components/Icon/Icon";
 interface TransactionModalProps {
     date: string;
     amount: number;
@@ -50,7 +50,8 @@ const TransactionModal: FC<TransactionModalProps> = (props) => {
             </div>
             <div className="flex justify-center">
                 <Button className="flex items-center">
-                    Download Invoice <img src={downloadIcon} className="ml-4" />
+                    Download Invoice
+                    <Icon name="downloadIcon" className="ml-4" />
                 </Button>
             </div>
         </Modal>

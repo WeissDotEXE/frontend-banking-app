@@ -2,9 +2,7 @@ import React, { FC } from "react";
 import styles from "./BankingCardItem.module.scss";
 import cn from "classnames";
 import { RegularSubtitle } from "components/Typography/Typography";
-import cardSim from "assets/icons/cardSimIcon.svg";
-import visaIcon from "assets/icons/visaIcon.svg";
-import mastercardIcon from "assets/icons/mastercardIcon.svg";
+import { Icon } from "components/Icon/Icon";
 
 interface BankingCardItemProps {
     id: string;
@@ -67,17 +65,18 @@ const BankingCardItem: FC<BankingCardItemProps> = (props) => {
                     </RegularSubtitle>
                 </div>
                 <div className="flex items-center">
-                    <img src={cardSim} />
+                    <Icon name="cardSimIcon" />
                 </div>
             </div>
             <div className={bottomPartCls}>
                 <RegularSubtitle bold>{name}</RegularSubtitle>
                 <RegularSubtitle>{expireDate}</RegularSubtitle>
-                <img
-                    src={
-                        processing === "mastercard" ? mastercardIcon : visaIcon
-                    }
-                />
+
+                {processing === "mastercard" ? (
+                    <Icon name="mastercardIcon" />
+                ) : (
+                    <Icon name="visaIcon" />
+                )}
             </div>
         </div>
     );

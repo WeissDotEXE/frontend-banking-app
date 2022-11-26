@@ -21,6 +21,7 @@ const Home: FC<HomeProps> = () => {
     );
 
     const [width, height] = UseWindowSize();
+    const [showProfile, setShowProfile] = useState(IsMobile(width));
 
     const leftCardsCls = cn("lg:mr-20", "mb-10");
 
@@ -35,12 +36,10 @@ const Home: FC<HomeProps> = () => {
                     <FriendsCard className={leftCardsCls} />
                     <TransactionsCard className={leftCardsCls} />
                 </div>
-                {!IsMobile(width) && (
-                    <ProfileCard
-                        type="personal"
-                        className="lg:fixed lg:right-20 lg:w-2/5"
-                    />
-                )}
+                <ProfileCard
+                    type="personal"
+                    className="lg:fixed lg:right-20 lg:w-2/5"
+                />
             </div>
         </div>
     );

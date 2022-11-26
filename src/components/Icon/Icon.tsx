@@ -5,6 +5,7 @@ type IconTypes = {
     color?: string;
     stroke?: string;
     className?: string;
+    onClick?: () => void;
 };
 
 export type IconNames =
@@ -23,36 +24,41 @@ export type IconNames =
     | "searchIcon"
     | "visaIcon";
 
-type IconProps = { color?: string; stroke?: string };
+type IconProps = { color?: string; stroke?: string; onClick?: () => void };
 
-const getIcon = (name: IconNames, color?: string, stroke?: string) => {
+const getIcon = (
+    name: IconNames,
+    color?: string,
+    stroke?: string,
+    onClick?: () => void
+) => {
     switch (name) {
         case "addIcon":
-            return <AddIcon color={color} />;
+            return <AddIcon color={color} onClick={onClick} />;
         case "avatarIcon":
-            return <AvatarIcon color={color} />;
+            return <AvatarIcon color={color} onClick={onClick} />;
         case "cardIcon":
-            return <CardIcon color={color} />;
+            return <CardIcon color={color} onClick={onClick} />;
         case "cardSimIcon":
             return <CardSimIcon />;
         case "closeIcon":
-            return <CloseIcon color={color} />;
+            return <CloseIcon color={color} onClick={onClick} />;
         case "deleteIcon":
-            return <DeleteIcon color={color} />;
+            return <DeleteIcon color={color} onClick={onClick} />;
         case "downloadIcon":
-            return <DownloadIcon color={color} />;
+            return <DownloadIcon color={color} onClick={onClick} />;
         case "dropDownIcon":
-            return <DropDownIcon color={color} />;
+            return <DropDownIcon color={color} onClick={onClick} />;
         case "homeIcon":
-            return <HomeIcon color={color} />;
+            return <HomeIcon color={color} onClick={onClick} />;
         case "infoIcon":
-            return <InfoIcon color={color} />;
+            return <InfoIcon color={color} onClick={onClick} />;
         case "mastercardIcon":
             return <MastercardIcon />;
         case "notificationIcon":
-            return <NotificationIcon color={color} />;
+            return <NotificationIcon color={color} onClick={onClick} />;
         case "searchIcon":
-            return <SearchIcon color={color} />;
+            return <SearchIcon color={color} onClick={onClick} />;
         case "visaIcon":
             return <VisaIcon />;
     }
@@ -63,12 +69,14 @@ export const Icon = ({
     color,
     className = "icon",
     stroke,
+    onClick,
 }: IconTypes) => {
     const component = getIcon(name, color, stroke);
     return (
         <div
             style={{ display: "flex", justifyContent: "center" }}
             className={className}
+            onClick={onClick}
         >
             {component}
         </div>

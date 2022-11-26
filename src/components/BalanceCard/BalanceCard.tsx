@@ -7,9 +7,9 @@ import Card from "components/Card/Card";
 import axios from "axios";
 import { RegularSubtitle } from "components/Typography/Typography";
 import Button from "components/Button/Button";
-import dropDownIcon from "assets/icons/dropDownIcon.svg";
 import { useTransition, animated } from "react-spring";
 import AccountItem from "components/AccountItem/AccountItem";
+import { Icon } from "components/Icon/Icon";
 
 interface BalanceCardProps {
     className?: string;
@@ -38,9 +38,9 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
                 <RegularSubtitle className="text-4xl md:text-6xl" bold>
                     $60.53
                 </RegularSubtitle>
-                <img
-                    src={dropDownIcon}
-                    className=" cursor-pointer"
+                <Icon
+                    name="dropDownIcon"
+                    className="cursor-pointer"
                     onClick={() => setShowAccounts((v) => !v)}
                 />
             </div>
