@@ -6,26 +6,33 @@ interface ButtonProps {
     className?: string;
     bgColor?: string;
     txtColor?: string;
+    disable?: boolean;
 }
 
 const Button: FC<ButtonProps> = (props: ButtonProps) => {
-    const { children, className, txtColor = "white-950" } = props;
+    const {
+        children,
+        className,
+        txtColor = "white-950",
+        disable = false,
+    } = props;
 
     const rootCls = cn(
         styles.Button,
         className,
         "rounded-lg",
         "text-center",
-        `bg-pink-950`,
+        `${disable ? "bg-pink-disable" : "bg-pink-950"}`,
         `text-${txtColor}`,
         "p-4",
         "mx-2",
         "font-medium md:font-bold",
-        "text-md md:text-xl"
+        "text-md md:text-xl",
+        `${disable && "cursor-not-allowed"}`
     );
 
     return (
-        <button className={rootCls} data-testid="Button">
+        <button className={rootCls} data-testid="Button" disabled={disable}>
             {children}
         </button>
     );

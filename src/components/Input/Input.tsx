@@ -4,7 +4,7 @@ import cn from "classnames";
 import { RegularSubtitle } from "components/Typography/Typography";
 
 interface InputProps {
-    type: "email" | "text" | "password" | "file" | any;
+    type: "email" | "text" | "password" | "file" | "number" | any;
     placeholder: string;
     className?: string;
     label: string;

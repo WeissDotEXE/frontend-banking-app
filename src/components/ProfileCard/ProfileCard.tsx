@@ -1,3 +1,6 @@
+//TO DO
+//1. fetch data about user using userID in localhost?
+
 //this card will fetch data about whatever user is in database
 import React, { FC } from "react";
 import styles from "./ProfileCard.module.scss";
@@ -10,10 +13,11 @@ import Button from "components/Button/Button";
 interface ProfileCardProps {
     className?: string;
     type: "profile" | "friend" | "personal";
+    isFriend?: boolean;
 }
 
 const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
-    const { className, type } = props;
+    const { className, type, isFriend } = props;
     const rootCls = cn(styles.profileCard, className);
     const avatarCls = cn(
         styles.avatar,
@@ -48,7 +52,11 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
                         <Button bgColor={"pink-950"} txtColor={"white-950"}>
                             Send Money
                         </Button>
-                        <Button bgColor={"pink-950"} txtColor={"white-950"}>
+                        <Button
+                            bgColor={"pink-950"}
+                            txtColor={"white-950"}
+                            disable={isFriend}
+                        >
                             Add Friend
                         </Button>
                     </div>
@@ -67,50 +75,30 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
                         </Button>
                     </div>
                 )}
-                {type === "personal" && (
-                    <div className={informationsCls}>
-                        <RegularSubtitle className="text-base lg:text-2xl font-bold">
-                            Email
-                        </RegularSubtitle>
-                        <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg">
-                            t@gmail.com
-                        </RegularSubtitle>
-                        <RegularSubtitle className="text-base lg:text-2xl font-bold">
-                            IBAN
-                        </RegularSubtitle>
-                        <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg truncate w-2/3">
-                            RO4757842BRDE754u2148
-                        </RegularSubtitle>
-                        <RegularSubtitle className="text-base lg:text-2xl font-bold">
-                            Join Date
-                        </RegularSubtitle>
-                        <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg mb-20">
-                            26-aug-2021
-                        </RegularSubtitle>
-                    </div>
-                )}
-                {type === "friend" && (
-                    <div className={informationsCls}>
-                        <RegularSubtitle className="text-base lg:text-2xl font-bold">
-                            Email
-                        </RegularSubtitle>
-                        <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg">
-                            t@gmail.com
-                        </RegularSubtitle>
-                        <RegularSubtitle className="text-base lg:text-2xl font-bold">
-                            IBAN
-                        </RegularSubtitle>
-                        <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg truncate w-2/3">
-                            RO4757842BRDE754u2148
-                        </RegularSubtitle>
-                        <RegularSubtitle className="text-base lg:text-2xl font-bold">
-                            Join Date
-                        </RegularSubtitle>
-                        <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg mb-20">
-                            26-aug-2021
-                        </RegularSubtitle>
-                    </div>
-                )}
+
+                {type === "friend" ||
+                    ("personl" && (
+                        <div className={informationsCls}>
+                            <RegularSubtitle className="text-base lg:text-2xl font-bold">
+                                Email
+                            </RegularSubtitle>
+                            <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg">
+                                t@gmail.com
+                            </RegularSubtitle>
+                            <RegularSubtitle className="text-base lg:text-2xl font-bold">
+                                IBAN
+                            </RegularSubtitle>
+                            <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg truncate w-2/3">
+                                RO4757842BRDE754u2148
+                            </RegularSubtitle>
+                            <RegularSubtitle className="text-base lg:text-2xl font-bold">
+                                Join Date
+                            </RegularSubtitle>
+                            <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg mb-20">
+                                26-aug-2021
+                            </RegularSubtitle>
+                        </div>
+                    ))}
             </div>
         </Card>
     );
