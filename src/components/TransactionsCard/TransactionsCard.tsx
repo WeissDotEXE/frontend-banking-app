@@ -1,6 +1,5 @@
 //TO DO
 //1. fetch transactions based on user id
-//2. store transactions into a state list called transactionList
 //3. add loading id using pulse animation from tailwind
 
 import React, { FC, useState } from "react";
