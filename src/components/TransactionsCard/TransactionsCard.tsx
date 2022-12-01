@@ -1,4 +1,9 @@
-import React, { FC } from "react";
+//TO DO
+//1. fetch transactions based on user id
+//2. store transactions into a state list called transactionList
+//3. add loading id using pulse animation from tailwind
+
+import React, { FC, useState } from "react";
 import styles from "./TransactionsCard.module.scss";
 import cn from "classnames";
 import Card from "components/Card/Card";
@@ -9,68 +14,48 @@ interface TransactionsCardProps {
     className?: string;
 }
 
+interface transactionItem {
+    id: string;
+    amount: number;
+    type: "deposit" | "receive";
+    date: string;
+}
+
 const TransactionsCard: FC<TransactionsCardProps> = (
     props: TransactionsCardProps
 ) => {
     const { className } = props;
     const rootCls = cn(styles.TransactionCard, className);
 
+    const [transactionList, setTransactionList] = useState<transactionItem[]>(
+        []
+    );
+
     return (
         <Card className={rootCls}>
-            <RegularSubtitle bold color={"gray-950"} className="my-4">
+            <RegularSubtitle bold className="my-4">
                 Transactions
             </RegularSubtitle>
             <div className="h-96 overflow-auto scrollbar-thin">
-                <TransactionItem
-                    amount={60}
-                    id="ss"
-                    type="deposit"
-                    date="12/23"
-                />
-                <TransactionItem amount={60} id="ss" type="send" date="12/23" />
-                <TransactionItem
-                    amount={60}
-                    id="ss"
-                    type="receive"
-                    date="12/23"
-                />
-                <TransactionItem
-                    amount={60}
-                    id="ss"
-                    type="deposit"
-                    date="12/23"
-                />
-                <TransactionItem
-                    amount={60}
-                    id="ss"
-                    type="deposit"
-                    date="12/23"
-                />
-                <TransactionItem
-                    amount={60}
-                    id="ss"
-                    type="deposit"
-                    date="12/23"
-                />
-                <TransactionItem amount={60} id="ss" type="send" date="12/23" />
-                <TransactionItem
-                    amount={60}
-                    id="ss"
-                    type="receive"
-                    date="12/23"
-                />
-                <TransactionItem
-                    amount={60}
-                    id="ss"
-                    type="deposit"
-                    date="12/23"
-                />
-                <TransactionItem
-                    amount={60}
-                    id="ss"
-                    type="deposit"
-                    date="12/23"
-                />
+                {transactionList.length > 0 ? (
+                    transactionList.map(
+                        (item: transactionItem, index: number) => (
+                            <TransactionItem
+                                key={index}
+                                id={item.id}
+                                amount={item.amount}
+                                type={item.type}
+                                date={item.date}
+                            />
+                        )
+                    )
+                ) : (
+                    <div className="flex justify-center items-center h-full">
+                        <RegularSubtitle color={"gray-950"}>
+                            No transactions yet.
+                        </RegularSubtitle>
+                    </div>
+                )}
             </div>
         </Card>
     );

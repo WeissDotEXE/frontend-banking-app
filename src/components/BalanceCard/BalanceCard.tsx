@@ -34,7 +34,10 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
 
     return (
         <Card className={rootCls}>
-            <div className="flex justify-around w-full">
+            <RegularSubtitle bold className="mb-2">
+                Balance
+            </RegularSubtitle>
+            <div className="flex justify-around items-center w-full">
                 <RegularSubtitle className="text-4xl md:text-6xl" bold>
                     $60.53
                 </RegularSubtitle>
