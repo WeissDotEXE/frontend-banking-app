@@ -5,6 +5,8 @@ type IconTypes = {
     color?: string;
     stroke?: string;
     className?: string;
+    width?: number;
+    height?: number;
     onClick?: () => void;
 };
 
@@ -22,14 +24,23 @@ export type IconNames =
     | "mastercardIcon"
     | "notificationIcon"
     | "searchIcon"
-    | "visaIcon";
+    | "visaIcon"
+    | "transferMoneyIcon";
 
-type IconProps = { color?: string; stroke?: string; onClick?: () => void };
+type IconProps = {
+    color?: string;
+    stroke?: string;
+    onClick?: () => void;
+    width?: number;
+    height?: number;
+};
 
 const getIcon = (
     name: IconNames,
     color?: string,
     stroke?: string,
+    height?: number,
+    width?: number,
     onClick?: () => void
 ) => {
     switch (name) {
@@ -61,6 +72,14 @@ const getIcon = (
             return <SearchIcon color={color} onClick={onClick} />;
         case "visaIcon":
             return <VisaIcon />;
+        case "transferMoneyIcon":
+            return (
+                <TransferMoneyIcon
+                    color={color}
+                    width={width}
+                    height={height}
+                />
+            );
     }
 };
 
@@ -70,8 +89,10 @@ export const Icon = ({
     className = "icon",
     stroke,
     onClick,
+    height,
+    width,
 }: IconTypes) => {
-    const component = getIcon(name, color, stroke);
+    const component = getIcon(name, color, stroke, height, width);
     return (
         <div
             style={{ display: "flex", justifyContent: "center" }}
@@ -428,6 +449,23 @@ const VisaIcon = () => {
                     <rect width="79" height="26" fill="white" />
                 </clipPath>
             </defs>
+        </svg>
+    );
+};
+
+const TransferMoneyIcon = ({ color = "black", width, height }: IconProps) => {
+    return (
+        <svg
+            width={width}
+            height={height}
+            viewBox="0 0 23 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M17.12 3.88C16.5577 3.31774 15.7952 3.00187 15 3.00187C14.2048 3.00187 13.4423 3.31774 12.88 3.88C12.3177 4.44226 12.0019 5.20485 12.0019 6C12.0019 6.79515 12.3177 7.55774 12.88 8.12C13.1584 8.3984 13.4889 8.61924 13.8527 8.76991C14.2164 8.92058 14.6063 8.99813 15 8.99813C15.3937 8.99813 15.7836 8.92058 16.1473 8.76991C16.5111 8.61924 16.8416 8.3984 17.12 8.12C17.3984 7.8416 17.6192 7.51109 17.7699 7.14734C17.9206 6.78359 17.9981 6.39372 17.9981 6C17.9981 5.60628 17.9206 5.21641 17.7699 4.85266C17.6192 4.48891 17.3984 4.1584 17.12 3.88M7 0V12H23V0H7ZM21 8C20.47 8 19.96 8.21 19.59 8.59C19.21 8.96 19 9.47 19 10H11C11 9.47 10.79 8.96 10.41 8.59C10.04 8.21 9.53 8 9 8V4C9.53 4 10.04 3.79 10.41 3.41C10.79 3.04 11 2.53 11 2H19C19 2.53 19.21 3.04 19.59 3.41C19.96 3.79 20.47 4 21 4V8ZM5 2H3C2.45 2 2 1.55 2 1C2 0.45 2.45 0 3 0H5V2ZM5 7H2C1.45 7 1 6.55 1 6C1 5.45 1.45 5 2 5H5V7ZM5 12H1C0.448 12 0 11.55 0 11C0 10.45 0.448 10 1 10H5V12Z"
+                fill={color}
+            />
         </svg>
     );
 };

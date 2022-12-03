@@ -8,6 +8,7 @@ interface ButtonProps {
     txtColor?: string;
     disable?: boolean;
     type: "button" | "submit" | "reset";
+    onClick?: () => void;
 }
 
 const Button: FC<ButtonProps> = (props: ButtonProps) => {
@@ -17,6 +18,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
         txtColor = "white-950",
         disable = false,
         type = "button",
+        onClick,
     } = props;
 
     const rootCls = cn(
@@ -39,6 +41,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
             data-testid="Button"
             disabled={disable}
             type={type}
+            onClick={onClick}
         >
             {children}
         </button>

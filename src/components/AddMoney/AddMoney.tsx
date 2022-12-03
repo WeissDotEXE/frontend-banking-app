@@ -11,14 +11,16 @@ import Input from "components/Input/Input";
 import Card from "components/Card/Card";
 import { RegularSubtitle } from "components/Typography/Typography";
 import Button from "components/Button/Button";
+import { Icon } from "components/Icon/Icon";
 
 interface AddMoneyProps {
     id: string;
     name: string;
+    closeHandler: () => void;
 }
 
 const AddMoney: FC<AddMoneyProps> = (props: AddMoneyProps) => {
-    const { id, name } = props;
+    const { id, name, closeHandler } = props;
 
     const accounts: string[] = ["Euro", "GBP", "Dollar"];
 
@@ -26,7 +28,14 @@ const AddMoney: FC<AddMoneyProps> = (props: AddMoneyProps) => {
 
     return (
         <Card className={rootCls} data-testid="AddMoney">
-            <RegularSubtitle>Send Money to {name}</RegularSubtitle>
+            <Icon
+                name="closeIcon"
+                className="absolute right-5 cursor-pointer"
+                onClick={closeHandler}
+            />
+            <RegularSubtitle className="mt-6">
+                Send Money to {name}
+            </RegularSubtitle>
             <Input label="Amount" placeholder="Amount" type={"number"} />
             <Input
                 label="Account"

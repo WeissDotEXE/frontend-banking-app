@@ -14,10 +14,11 @@ interface ProfileCardProps {
     className?: string;
     type: "profile" | "friend" | "personal";
     isFriend?: boolean;
+    sendMoneyHandler?: () => void;
 }
 
 const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
-    const { className, type, isFriend } = props;
+    const { className, type, isFriend, sendMoneyHandler } = props;
     const rootCls = cn(styles.profileCard, className);
     const avatarCls = cn(
         styles.avatar,
@@ -53,6 +54,7 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
                             bgColor={"pink-950"}
                             txtColor={"white-950"}
                             type="button"
+                            onClick={sendMoneyHandler}
                         >
                             Send Money
                         </Button>
