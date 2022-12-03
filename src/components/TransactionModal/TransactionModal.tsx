@@ -49,7 +49,7 @@ const TransactionModal: FC<TransactionModalProps> = (props) => {
                 })}
             </div>
             <div className="flex justify-center">
-                <Button className="flex items-center">
+                <Button type="button" className="flex items-center">
                     Download Invoice
                     <Icon name="downloadIcon" className="ml-4" />
                 </Button>

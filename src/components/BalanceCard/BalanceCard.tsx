@@ -70,10 +70,18 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
                 )
             )}
             <div className="flex mt-6 justify-around">
-                <Button bgColor={"pink-950"} txtColor={"white-950"}>
+                <Button
+                    bgColor={"pink-950"}
+                    txtColor={"white-950"}
+                    type="button"
+                >
                     Add Money
                 </Button>
-                <Button bgColor={"pink-950"} txtColor={"white-950"}>
+                <Button
+                    bgColor={"pink-950"}
+                    txtColor={"white-950"}
+                    type="button"
+                >
                     Send Money
                 </Button>
             </div>

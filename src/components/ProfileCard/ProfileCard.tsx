@@ -49,13 +49,18 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
                 </RegularSubtitle>
                 {type === "profile" && (
                     <div className="flex justify-center mt-14">
-                        <Button bgColor={"pink-950"} txtColor={"white-950"}>
+                        <Button
+                            bgColor={"pink-950"}
+                            txtColor={"white-950"}
+                            type="button"
+                        >
                             Send Money
                         </Button>
                         <Button
                             bgColor={"pink-950"}
                             txtColor={"white-950"}
                             disable={isFriend}
+                            type="button"
                         >
                             Add Friend
                         </Button>
@@ -63,14 +68,22 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
                 )}
                 {type === "personal" && (
                     <div className="flex justify-center mt-14">
-                        <Button bgColor={"pink-950"} txtColor={"white-950"}>
+                        <Button
+                            type="button"
+                            bgColor={"pink-950"}
+                            txtColor={"white-950"}
+                        >
                             Edit Profile
                         </Button>
                     </div>
                 )}
                 {type === "friend" && (
                     <div className="flex justify-center mt-14">
-                        <Button bgColor={"pink-950"} txtColor={"white-950"}>
+                        <Button
+                            bgColor={"pink-950"}
+                            txtColor={"white-950"}
+                            type="button"
+                        >
                             Remove friend
                         </Button>
                     </div>

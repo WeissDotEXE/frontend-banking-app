@@ -179,7 +179,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                                 />
                             );
                         })}
-                    <Button className="w-full mt-10">
+                    <Button className="w-full mt-10" type="submit">
                         {isRegister ? "Register" : "Log In"}
                     </Button>
                     <div className="flex justify-center mt-4">

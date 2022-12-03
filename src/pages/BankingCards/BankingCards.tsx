@@ -58,7 +58,7 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
                     </RegularSubtitle>
                 </div>
                 {cardList.length < 3 && (
-                    <Button className="flex items-center">
+                    <Button type="button" className="flex items-center">
                         Generate Card{" "}
                         <Icon
                             name="addIcon"

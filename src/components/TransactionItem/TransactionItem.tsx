@@ -67,7 +67,7 @@ const TransactionItem: FC<TransactionItemProps> = (
                     amount={amount}
                     date={date}
                     key={id}
-                    name="Marcel"
+                    name="John"
                     onClose={() => setShowModal(!showModal)}
                 />
             )}

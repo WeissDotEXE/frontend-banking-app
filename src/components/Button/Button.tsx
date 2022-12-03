@@ -7,6 +7,7 @@ interface ButtonProps {
     bgColor?: string;
     txtColor?: string;
     disable?: boolean;
+    type: "button" | "submit" | "reset";
 }
 
 const Button: FC<ButtonProps> = (props: ButtonProps) => {
@@ -15,6 +16,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
         className,
         txtColor = "white-950",
         disable = false,
+        type = "button",
     } = props;
 
     const rootCls = cn(
@@ -32,7 +34,12 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
     );
 
     return (
-        <button className={rootCls} data-testid="Button" disabled={disable}>
+        <button
+            className={rootCls}
+            data-testid="Button"
+            disabled={disable}
+            type={type}
+        >
             {children}
         </button>
     );

@@ -25,7 +25,7 @@ const User: FC<UserProps> = () => {
     return (
         <div className={rootCls} data-testid="User">
             <ProfileCard type="profile" className="" isFriend={false} />
-            <AddMoney name="Marcel" id={id!} />
+            <AddMoney name="John" id={id!} />
         </div>
     );
 };

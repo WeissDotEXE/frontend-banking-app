@@ -4,16 +4,21 @@ import cn from "classnames";
 import { RegularSubtitle } from "components/Typography/Typography";
 
 interface InputProps {
-    type: "email" | "text" | "password" | "file" | "number" | any;
+    type: "email" | "text" | "password" | "file" | "number" | "select" | any;
     placeholder: string;
     className?: string;
     label: string;
+    options?: string[];
 }
 
 const Input: FC<InputProps> = (props: InputProps) => {
-    const { type, className, label, placeholder } = props;
+    const { type, className, label, placeholder, options } = props;
 
     const rootCls = cn(styles.Input, className);
+    const optionCls = cn(
+        styles.option,
+        "text-pink-950 bg-gray-300 p-4 w-full outline-pink-950 "
+    );
 
     return (
         <div className={rootCls}>
@@ -25,11 +30,21 @@ const Input: FC<InputProps> = (props: InputProps) => {
             >
                 {label}
             </RegularSubtitle>
-            <input
-                className="text-pink-950 bg-gray-300 p-4 w-full outline-pink-950 "
-                type={type}
-                placeholder={placeholder}
-            />
+            {type !== "select" ? (
+                <input
+                    className="text-pink-950 bg-gray-300 p-4 w-full outline-pink-950 "
+                    type={type}
+                    placeholder={placeholder}
+                />
+            ) : (
+                <select className={optionCls} placeholder="Select Account">
+                    {options?.map((item, index) => (
+                        <option key={index} className={optionCls} value={item}>
+                            {item}
+                        </option>
+                    ))}
+                </select>
+            )}
         </div>
     );
 };

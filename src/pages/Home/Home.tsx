@@ -36,7 +36,7 @@ const Home: FC<HomeProps> = () => {
                     Hello Jesse Jayce
                 </RegularSubtitle>
                 {IsMobile(width) && (
-                    <Button className="p-2 rounded-full mt-5">
+                    <Button type="button" className="p-2 rounded-full mt-5">
                         <Icon
                             name="avatarIcon"
                             color={colors.white}

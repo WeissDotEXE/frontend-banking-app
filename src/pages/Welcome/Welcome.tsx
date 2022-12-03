@@ -50,7 +50,7 @@ const Welcome: FC<WelcomeProps> = () => {
                 </a>
                 <div className="w-full flex justify-center mt-10">
                     <Link to="/auth">
-                        <Button>Start Using App</Button>
+                        <Button type="button">Start Using App</Button>
                     </Link>
                 </div>
             </div>
