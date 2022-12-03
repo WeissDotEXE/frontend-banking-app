@@ -3,6 +3,7 @@
 // 2. create a POST request for sending money to specific user based on his id.
 // 3. disable button as long as POST request is happening
 // 4. add notification for letting user know about transaction status
+// 5. test
 
 import React, { FC } from "react";
 import styles from "./AddMoney.module.scss";
