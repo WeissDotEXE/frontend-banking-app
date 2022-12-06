@@ -9,10 +9,22 @@ interface InputProps {
     className?: string;
     label: string;
     options?: string[];
+    value: any;
+    name: string;
+    onChange: (e: any) => void;
 }
 
 const Input: FC<InputProps> = (props: InputProps) => {
-    const { type, className, label, placeholder, options } = props;
+    const {
+        type,
+        className,
+        label,
+        placeholder,
+        options,
+        onChange,
+        name,
+        value,
+    } = props;
 
     const rootCls = cn(styles.Input, className);
     const optionCls = cn(
@@ -35,9 +47,17 @@ const Input: FC<InputProps> = (props: InputProps) => {
                     className="text-pink-950 bg-gray-300 p-4 w-full outline-pink-950 "
                     type={type}
                     placeholder={placeholder}
+                    name={name}
+                    onChange={onChange}
+                    value={value}
                 />
             ) : (
-                <select className={optionCls} placeholder="Select Account">
+                <select
+                    className={optionCls}
+                    placeholder="Select Account"
+                    onChange={onChange}
+                    name={name}
+                >
                     {options?.map((item, index) => (
                         <option key={index} className={optionCls} value={item}>
                             {item}

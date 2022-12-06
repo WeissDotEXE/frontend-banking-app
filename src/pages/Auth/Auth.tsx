@@ -76,18 +76,34 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
     );
 
     const registerFieldList = [
-        { type: "text", label: "Username", placeholder: "Username" },
-        { type: "email", label: "Email", placeholder: "Email" },
-        { type: "password", label: "Password", placeholder: "Password" },
+        {
+            type: "text",
+            label: "Username",
+            placeholder: "Username",
+            name: "username",
+        },
+        { type: "email", label: "Email", placeholder: "Email", name: "email" },
+        {
+            type: "password",
+            label: "Password",
+            placeholder: "Password",
+            name: "password",
+        },
         {
             type: "password",
             label: "Repeat Password",
             placeholder: "Repead Password",
+            name: "repeatPassword",
         },
     ];
     const loginFieldList = [
-        { type: "email", label: "Email", placeholder: "Email" },
-        { type: "password", label: "Password", placeholder: "Email" },
+        { type: "email", label: "Email", placeholder: "Email", name: "email" },
+        {
+            type: "password",
+            label: "Password",
+            placeholder: "Email",
+            name: "password",
+        },
     ];
 
     const formik = useFormik({
@@ -165,6 +181,9 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                                     type={item.type}
                                     label={item.label}
                                     placeholder={item.placeholder}
+                                    onChange={formik.handleChange}
+                                    name={item.name}
+                                    value={formik.values}
                                 />
                             );
                         })}
@@ -176,6 +195,9 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                                     type={item.type}
                                     label={item.label}
                                     placeholder={item.placeholder}
+                                    onChange={formik.handleChange}
+                                    value={formik.values}
+                                    name={item.name}
                                 />
                             );
                         })}
