@@ -30,6 +30,7 @@ const BankingCardItem: FC<BankingCardItemProps> = (props) => {
         "lg:mr-20",
         "my-8 lg:my-2",
         "backdrop-blur-sm",
+        type === "normal" && "bg-white-950",
         "cursor-pointer"
     );
 

@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import styles from "./Input.module.scss";
 import cn from "classnames";
 import { RegularSubtitle } from "components/Typography/Typography";
+import { Formik } from "formik";
 
 interface InputProps {
     type: "email" | "text" | "password" | "file" | "number" | "select" | any;
@@ -57,6 +58,7 @@ const Input: FC<InputProps> = (props: InputProps) => {
                     placeholder="Select Account"
                     onChange={onChange}
                     name={name}
+                    value={options}
                 >
                     {options?.map((item, index) => (
                         <option key={index} className={optionCls} value={item}>
