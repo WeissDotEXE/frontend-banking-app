@@ -9,6 +9,7 @@ import Button from "components/Button/Button";
 import { Icon } from "components/Icon/Icon";
 import BackgroundImg from "assets/images/generateCardBackground.png";
 import BankingCardsItem from "components/BankingCardItem/BankingCardItem";
+import { RegularSubtitle } from "components/Typography/Typography";
 interface GenerateCardProps {}
 
 interface CardData {
@@ -42,20 +43,29 @@ const GenerateCard: FC<GenerateCardProps> = () => {
 
     const contentCls = cn(
         styles.content,
-        "flex",
+        "lg:flex",
         "relative",
-        "z-10",
+        "z-0",
         "justify-around",
         "items-center"
     );
 
-    const formCls = cn(styles.form, "relative", "z-10", "");
+    const formCls = cn(
+        styles.form,
+        "relative",
+        "z-10",
+        "rounded-lg",
+        "-mt-8 lg:mt-2",
+        "p-8"
+    );
 
     return (
         <div className={rootCls} data-testid="GenerateCard">
-            <img src={BackgroundImg} className={BackgroundCls} />
             <div className={contentCls}>
                 <form onSubmit={formik.handleSubmit} className={formCls}>
+                    <RegularSubtitle bold color={"white-950"} size="4xl">
+                        Generate Your Card
+                    </RegularSubtitle>
                     <Input
                         type={"select"}
                         label="Card Type"
@@ -64,6 +74,8 @@ const GenerateCard: FC<GenerateCardProps> = () => {
                         name="cardType"
                         onChange={formik.handleChange}
                         value={formik.values.type}
+                        labelColor={"white-950"}
+                        className="my-10"
                     />
                     <Input
                         type={"select"}
@@ -73,19 +85,31 @@ const GenerateCard: FC<GenerateCardProps> = () => {
                         name="paymentProcessing"
                         onChange={formik.handleChange}
                         value={formik.values.paymentProcessing}
+                        labelColor={"white-950"}
+                        className="my-10"
                     />
-                    <Button type="submit">
-                        Generate <Icon name="addIcon" />
-                    </Button>
+                    <RegularSubtitle bold color={"white-950"}>
+                        Preview
+                    </RegularSubtitle>
+                    <div className=" w-full flex justify-center items-center mb-10">
+                        <BankingCardsItem
+                            cardNumber={324234}
+                            expireDate="23/33"
+                            id="23"
+                            name="John John"
+                            type={"normal"}
+                            processing={"visa"}
+                        />
+                    </div>
+                    <div className="flex justify-center items-center">
+                        <Button
+                            type="submit"
+                            className="flex justify-even items-center"
+                        >
+                            Generate <Icon name="secureIcon" className="ml-4" />
+                        </Button>
+                    </div>
                 </form>
-                <BankingCardsItem
-                    cardNumber={324234}
-                    expireDate="23/33"
-                    id="23"
-                    name="John John"
-                    type={"normal"}
-                    processing={"visa"}
-                />
             </div>
         </div>
     );

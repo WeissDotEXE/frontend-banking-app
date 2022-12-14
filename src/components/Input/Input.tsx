@@ -11,6 +11,13 @@ interface InputProps {
     label: string;
     options?: string[];
     value: any;
+    labelColor?:
+        | "white-950"
+        | "red-950"
+        | "gray-950"
+        | "blue-950"
+        | "blue-940"
+        | "pink-950";
     name: string;
     onChange: (e: any) => void;
 }
@@ -25,19 +32,20 @@ const Input: FC<InputProps> = (props: InputProps) => {
         onChange,
         name,
         value,
+        labelColor = "pink-950",
     } = props;
 
     const rootCls = cn(styles.Input, className);
     const optionCls = cn(
         styles.option,
-        "text-pink-950 bg-gray-300 p-4 w-full outline-pink-950 "
+        "text-pink-950 bg-gray-300 p-4 w-full outline-pink-950 rounded-lg"
     );
 
     return (
         <div className={rootCls}>
             <RegularSubtitle
                 className="mt-4 mb-2"
-                color={"pink-950"}
+                color={labelColor}
                 bold
                 position={"text-left"}
             >

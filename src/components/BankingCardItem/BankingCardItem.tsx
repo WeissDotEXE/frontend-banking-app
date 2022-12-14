@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import styles from "./BankingCardItem.module.scss";
 import cn from "classnames";
 import { RegularSubtitle } from "components/Typography/Typography";
@@ -27,12 +27,13 @@ const BankingCardItem: FC<BankingCardItemProps> = (props) => {
         "h-72",
         "relative",
         "border-2",
-        "lg:mr-20",
         "my-8 lg:my-2",
         "backdrop-blur-sm",
         type === "normal" && "bg-white-950",
         "cursor-pointer"
     );
+
+    const [cardNumberFormated, setCardNumberFormated] = useState();
 
     const bottomPartCls = cn(
         styles.bottomPart,
