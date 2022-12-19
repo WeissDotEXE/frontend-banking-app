@@ -44,7 +44,7 @@ const useNotify = () => {
             type: "error",
             title: "Error",
             message,
-            backgroundColor: "bg-yellow-400",
+            backgroundColor: "bg-red-950",
         };
         setNotifyList((prevNotify) => [...prevNotify, error]);
         console.log("error works");
@@ -55,7 +55,7 @@ const useNotify = () => {
             type: "warning",
             title: "Warning",
             message,
-            backgroundColor: "bg-blue-600",
+            backgroundColor: "bg-yellow-950",
         };
         setNotifyList((prevNotify) => [...prevNotify, warning]);
     };

@@ -10,6 +10,9 @@ import { Icon } from "components/Icon/Icon";
 import BackgroundImg from "assets/images/generateCardBackground.png";
 import BankingCardsItem from "components/BankingCardItem/BankingCardItem";
 import { RegularSubtitle } from "components/Typography/Typography";
+import NotificationItem from "components/NotificationItem/NotificationItem";
+import NotifyItem from "components/NotifyItem/NotifyItem";
+import useNotify from "hooks/useNotify";
 interface GenerateCardProps {}
 
 interface CardData {
@@ -19,6 +22,13 @@ interface CardData {
 
 const GenerateCard: FC<GenerateCardProps> = () => {
     const rootCls = cn(styles.GenerateCard, "relative");
+    const {
+        successNotification,
+        errorNotification,
+        warningNotification,
+        notifyList,
+        closeNotificationHandler,
+    } = useNotify();
 
     const formik = useFormik({
         initialValues: {
@@ -88,6 +98,7 @@ const GenerateCard: FC<GenerateCardProps> = () => {
                         labelColor={"white-950"}
                         className="my-10"
                     />
+
                     <RegularSubtitle bold color={"white-950"}>
                         Preview
                     </RegularSubtitle>
@@ -101,6 +112,7 @@ const GenerateCard: FC<GenerateCardProps> = () => {
                             processing={"visa"}
                         />
                     </div>
+
                     <div className="flex justify-center items-center">
                         <Button
                             type="submit"
@@ -110,6 +122,11 @@ const GenerateCard: FC<GenerateCardProps> = () => {
                         </Button>
                     </div>
                 </form>
+                <NotifyItem
+                    notificationList={notifyList}
+                    handleClick={closeNotificationHandler}
+                    position={"bottom-right"}
+                />
             </div>
         </div>
     );

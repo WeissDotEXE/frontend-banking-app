@@ -21,6 +21,12 @@ module.exports = {
                 gray: {
                     950: "#8F8F8F",
                 },
+                green: {
+                    950: "#029E24",
+                },
+                yellow: {
+                    950: "#FFA200",
+                },
             },
         },
     },
