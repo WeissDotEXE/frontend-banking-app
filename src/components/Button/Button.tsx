@@ -17,7 +17,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
         className,
         txtColor = "white-950",
         disable = false,
-        type = "button",
+        type,
         onClick,
     } = props;
 

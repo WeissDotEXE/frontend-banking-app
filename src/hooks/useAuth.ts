@@ -28,6 +28,8 @@ const useAuth = () => {
         authType: string
     ) => {
         try {
+            console.log("credentials");
+
             const res = await axios.post(`${BASE_LOGIN_URL}/${authType}`, {
                 ...(authType === "register" && {
                     email: credentials.email,

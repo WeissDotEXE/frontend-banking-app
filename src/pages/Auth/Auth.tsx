@@ -31,7 +31,6 @@ type authType = "register" | "login";
 const Auth: FC<AuthProps> = (props: AuthProps) => {
     const { className } = props;
     const [isRegister, setIsRegister] = useState(true);
-    const [authType, setAuthType] = useState<authType>("login");
     const {
         isLogin,
         sendRequest,
@@ -48,7 +47,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
         className,
         "grid",
         "md:grid-cols-5",
-        "w-11/12 md:w-4/5"
+        "w-10/12 md:w-7/12"
     );
 
     const backgroundCls = cn(
@@ -62,9 +61,9 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
         "z-0"
     );
 
-    const leftCls = cn(styles.left, "col-span-3", "p-10");
+    const rightCls = cn(styles.left, "col-span-3", "p-10");
 
-    const rightCls = cn(
+    const leftCls = cn(
         styles.right,
         "flex",
         "flex-col",
@@ -74,37 +73,6 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
         "rounded-b-xl md:rounded-r-xl",
         "p-4"
     );
-
-    const registerFieldList = [
-        {
-            type: "text",
-            label: "Username",
-            placeholder: "Username",
-            name: "username",
-        },
-        { type: "email", label: "Email", placeholder: "Email", name: "email" },
-        {
-            type: "password",
-            label: "Password",
-            placeholder: "Password",
-            name: "password",
-        },
-        {
-            type: "password",
-            label: "Repeat Password",
-            placeholder: "Repead Password",
-            name: "repeatPassword",
-        },
-    ];
-    const loginFieldList = [
-        { type: "email", label: "Email", placeholder: "Email", name: "email" },
-        {
-            type: "password",
-            label: "Password",
-            placeholder: "Email",
-            name: "password",
-        },
-    ];
 
     const formik = useFormik({
         initialValues: {
@@ -124,87 +92,158 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
             repeatPassword: Yup.string().min(6),
         }),
         onSubmit: async (values: LoginData) => {
-            if (
-                values.password !== values.repeatPassword &&
-                authType === "register"
-            ) {
-                // addNotificationHandler({
-                //     id: 'test',
-                //     message:
-                //     isError: true,
-                // })
-                errorNotification("Error! Passwords do not match");
-                return;
-            }
-
-            const statusCode = await sendRequest(
-                {
+            if (isRegister) {
+                if (values.repeatPassword !== values.password) {
+                    errorNotification("Passwords must be the same");
+                    return;
+                }
+                console.log({
+                    username: values.username,
                     email: values.email,
                     password: values.password,
-                    ...(authType === "register" && {
-                        user_data: {
-                            display_name: values.username,
-                        },
-                    }),
-                },
-                authType
-            );
-            if (statusCode === 401) {
-                // addNotificationHandler({
-                //     id: 'test',
-                //     message: 'Username and password do not match',
-                //     isError: true,
-                // })
-                errorNotification("Username and password do not match");
-                return;
-            } else if (statusCode === 400) {
-                errorNotification("Incorrect Credentials");
+                });
+            } else {
+                console.log({ email: values.email, password: values.password });
             }
+
+            // const statusCode = await sendRequest(
+            //     {
+            //         email: values.email,
+            //         password: values.password,
+            //         ...(authType === "register" && {
+            //             user_data: {
+            //                 display_name: values.username,
+            //             },
+            //         }),
+            //     },
+            //     authType
+            // );
+            // if (statusCode === 401) {
+            //     // addNotificationHandler({
+            //     //     id: 'test',
+            //     //     message: 'Username and password do not match',
+            //     //     isError: true,
+            //     // })
+            //     errorNotification("Username and password do not match");
+            //     return;
+            // } else if (statusCode === 400) {
+            //     errorNotification("Incorrect Credentials");
+            // }
         },
     });
-
-    const changeAuthTypeHandler = () => {
-        if (authType === "login") setAuthType("register");
-        else if (authType === "register") setAuthType("login");
-    };
+    const registerFieldList = [
+        {
+            type: "text",
+            label: "Username",
+            placeholder: "Username",
+            name: "username",
+            value: formik.values.username,
+            onChange: formik.handleChange,
+            error: formik.errors.username,
+        },
+        {
+            type: "email",
+            label: "Email",
+            placeholder: "Email",
+            name: "email",
+            value: formik.values.email,
+            onChange: formik.handleChange,
+            error: formik.errors.email,
+        },
+        {
+            type: "password",
+            label: "Password",
+            placeholder: "Password",
+            name: "password",
+            value: formik.values.password,
+            onChange: formik.handleChange,
+            error: formik.errors.password,
+        },
+        {
+            type: "password",
+            label: "Repeat Password",
+            placeholder: "Repead Password",
+            name: "repeatPassword",
+            value: formik.values.repeatPassword,
+            onChange: formik.handleChange,
+            error: formik.errors.repeatPassword,
+        },
+    ];
+    const loginFieldList = [
+        {
+            type: "email",
+            label: "Email",
+            placeholder: "Email",
+            name: "email",
+            value: formik.values.email,
+            onChange: formik.handleChange,
+            error: formik.errors.email,
+        },
+        {
+            type: "password",
+            label: "Password",
+            placeholder: "Password",
+            name: "password",
+            value: formik.values.password,
+            onChange: formik.handleChange,
+            error: formik.errors.password,
+        },
+    ];
 
     return (
         <div>
             <img src={authBackground} className={backgroundCls} />
             <Card className={rootCls} data-testid="Auth" noPadding>
                 <div className={leftCls}>
-                    {isRegister &&
-                        registerFieldList.map((item, index) => {
-                            return (
-                                <Input
-                                    key={index}
-                                    type={item.type}
-                                    label={item.label}
-                                    placeholder={item.placeholder}
-                                    onChange={formik.handleChange}
-                                    name={item.name}
-                                    value={formik.values}
-                                />
-                            );
-                        })}
-                    {!isRegister &&
-                        loginFieldList.map((item, index) => {
-                            return (
-                                <Input
-                                    key={index}
-                                    type={item.type}
-                                    label={item.label}
-                                    placeholder={item.placeholder}
-                                    onChange={formik.handleChange}
-                                    value={formik.values}
-                                    name={item.name}
-                                />
-                            );
-                        })}
+                    <RegularSubtitle color={"white-950"} bold className="mb-5">
+                        Welcome!
+                    </RegularSubtitle>
+                    <RegularSubtitle bold color={"white-950"} className="mb-5">
+                        {isRegister
+                            ? "Create an account to start using banking app."
+                            : "Fill up the credentials and use Banking App"}
+                    </RegularSubtitle>
+                </div>
+                <form className={rightCls} onSubmit={formik.handleSubmit}>
+                    {isRegister
+                        ? registerFieldList.map((item, index) => {
+                              return (
+                                  <div key={index}>
+                                      <Input
+                                          type={item.type}
+                                          label={item.label}
+                                          placeholder={item.placeholder}
+                                          onChange={formik.handleChange}
+                                          name={item.name}
+                                          value={item.value}
+                                      />
+                                      <p className="text-red-600 flex w-full text-center mx-auto">
+                                          {item.error}
+                                      </p>
+                                  </div>
+                              );
+                          })
+                        : loginFieldList.map((item, index) => {
+                              return (
+                                  <div key={index}>
+                                      <Input
+                                          type={item.type}
+                                          label={item.label}
+                                          placeholder={item.placeholder}
+                                          onChange={formik.handleChange}
+                                          name={item.name}
+                                          value={item.value}
+                                      />
+                                      <p className="text-red-600 flex w-full text-center mx-auto">
+                                          {item.error}
+                                      </p>
+                                  </div>
+                              );
+                          })}
                     <Button className="w-full mt-10" type="submit">
                         {isRegister ? "Register" : "Log In"}
                     </Button>
-                    <div className="flex justify-center mt-4">
+                    <div className="flex justify-center text-center mx-auto mt-4">
                         <RegularSubtitle size={"xl"} className="mr-3">
                             {isRegister
                                 ? "Have an account?"
@@ -218,17 +257,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                             {isRegister ? "Log in" : "Sign Up"}
                         </RegularSubtitle>
                     </div>
-                </div>
-                <div className={rightCls}>
-                    <RegularSubtitle color={"white-950"} bold className="mb-5">
-                        Welcome!
-                    </RegularSubtitle>
-                    <RegularSubtitle bold color={"white-950"} className="mb-5">
-                        {isRegister
-                            ? "Create an account to start using banking app."
-                            : "Fill up the credentials and use Banking App"}
-                    </RegularSubtitle>
-                </div>
+                </form>
             </Card>
         </div>
     );
