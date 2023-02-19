@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import styles from "./Header.module.scss";
 import cn from "classnames";
 import { Icon } from "components/Icon/Icon";
@@ -11,6 +11,7 @@ interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
     const [width] = UseWindowSize();
+    const [showNotifications, setShowNotifications] = useState(false);
     const rootCls = cn(
         styles.Header,
         "w-full",
@@ -24,7 +25,13 @@ const Header: FC<HeaderProps> = () => {
         "z-10",
         "top-0"
     );
-    const iconCls = cn(styles.icon, "w-10", "h-10");
+    const iconCls = cn(
+        styles.icon,
+        "w-10",
+        "h-10",
+        "justify-center",
+        "items-center"
+    );
 
     const inputCls = cn(
         styles.input,
@@ -43,6 +50,27 @@ const Header: FC<HeaderProps> = () => {
     );
 
     const notificationList = [
+        {
+            id: "1",
+            avatarLink:
+                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+            message: "just send you 400$",
+            name: "John",
+        },
+        {
+            id: "2",
+            avatarLink:
+                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+            message: "just send you 400$",
+            name: "John",
+        },
+        {
+            id: "3",
+            avatarLink:
+                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+            message: "just send you 400$",
+            name: "Johnaa",
+        },
         {
             id: "1",
             avatarLink:
@@ -87,6 +115,18 @@ const Header: FC<HeaderProps> = () => {
         },
     ];
 
+    const dropDownCls = cn(
+        styles.dropdown,
+        "absolute",
+        "top-14",
+        "w-80",
+        "overflow-x-auto",
+        "h-96",
+        "-right -1/3 md:right-0",
+        "lg:px-6",
+        "drop-shadow-2xl"
+    );
+
     return (
         <div className={rootCls} data-testid="Header">
             <Link to="/">
@@ -107,35 +147,43 @@ const Header: FC<HeaderProps> = () => {
                     />
                 </div>
             )}
-            <div className="flex">
+            <div className="flex relative">
                 <Link to="/cards">
                     <Icon name="cardIcon" className={iconCls} />
                 </Link>
-                <div className={styles.dropdown}>
-                    <Icon
-                        name="notificationIcon"
-                        className={`${iconCls} ml-10`}
-                    />
-                    <div className="w-5 animate-bounce bg-red-950 rounded-full absolute bottom-5 right-0">
-                        <p className="font-bold flex justify-center">
-                            {notificationList.length}
-                        </p>
+                <div>
+                    <div
+                        onClick={() => setShowNotifications(!showNotifications)}
+                    >
+                        <Icon
+                            name="notificationIcon"
+                            className={`${iconCls} ml-10 cursor-pointer`}
+                        />
+                        {!showNotifications && (
+                            <div className="w-5  text-white-950 cursor-pointer  bg-red-950 rounded-full absolute bottom-5 right-0">
+                                <p className="font-normal flex justify-center">
+                                    {notificationList.length}
+                                </p>
+                            </div>
+                        )}
                     </div>
                     {/* use map() for rendering future notifications */}
 
-                    <Card className={styles.dropdownContent}>
-                        {notificationList.map((item, index) => {
-                            return (
-                                <NotificationItem
-                                    key={index}
-                                    id={item.id}
-                                    avatarLink={item.avatarLink}
-                                    message={item.message}
-                                    name={item.name}
-                                />
-                            );
-                        })}
-                    </Card>
+                    {showNotifications && (
+                        <Card className={dropDownCls}>
+                            {notificationList.map((item, index) => {
+                                return (
+                                    <NotificationItem
+                                        key={index}
+                                        id={item.id}
+                                        avatarLink={item.avatarLink}
+                                        message={item.message}
+                                        name={item.name}
+                                    />
+                                );
+                            })}
+                        </Card>
+                    )}
                 </div>
             </div>
         </div>
