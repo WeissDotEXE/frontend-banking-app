@@ -2,16 +2,21 @@ import React, { FC, useState } from "react";
 import styles from "./Header.module.scss";
 import cn from "classnames";
 import { Icon } from "components/Icon/Icon";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { UseWindowSize } from "functions/UseWindowSize";
 import { IsDesktop, IsMobile } from "functions/Platform";
 import Card from "components/Card/Card";
 import NotificationItem from "components/NotificationItem/NotificationItem";
+import colors from "colors.module.scss";
+
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
     const [width] = UseWindowSize();
     const [showNotifications, setShowNotifications] = useState(false);
+    const location = useLocation();
+    console.log(location);
+
     const rootCls = cn(
         styles.Header,
         "w-full",
@@ -131,6 +136,13 @@ const Header: FC<HeaderProps> = () => {
         <div className={rootCls} data-testid="Header">
             <Link to="/">
                 <Icon name="homeIcon" className={iconCls} />
+                <div className="flex mt-1 justify-center">
+                    <div
+                        className={` h-2 w-2 rounded-full ${
+                            location.pathname === "/" && "bg-pink-950"
+                        }`}
+                    ></div>
+                </div>
             </Link>
             {IsMobile(width) ? (
                 <Icon name="searchIcon" className={iconCls} />
@@ -150,6 +162,13 @@ const Header: FC<HeaderProps> = () => {
             <div className="flex relative">
                 <Link to="/cards">
                     <Icon name="cardIcon" className={iconCls} />
+                    <div className="flex mt-1 justify-center">
+                        <div
+                            className={` h-2 w-2 rounded-full ${
+                                location.pathname === "/cards" && "bg-pink-950"
+                            }`}
+                        ></div>
+                    </div>
                 </Link>
                 <div>
                     <div
