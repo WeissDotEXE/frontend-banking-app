@@ -10,6 +10,7 @@ import useAuth from "hooks/useAuth";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import useNotify from "hooks/useNotify";
+import axios from "axios";
 
 interface AuthProps {
     className?: string;
@@ -97,13 +98,24 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                     errorNotification("Passwords must be the same");
                     return;
                 }
-                console.log({
+
+                let credentials = {
                     username: values.username,
                     email: values.email,
                     password: values.password,
-                });
+                    repeatPassword: values.repeatPassword,
+                };
+                const response = await sendRequest(credentials, "register");
+                console.log(response);
             } else {
-                console.log({ email: values.email, password: values.password });
+                let credentials = {
+                    username: values.username,
+                    email: values.email,
+                    password: values.password,
+                    repeatPassword: values.repeatPassword,
+                };
+                const response = await sendRequest(credentials, "login");
+                console.log(response);
             }
 
             // const statusCode = await sendRequest(

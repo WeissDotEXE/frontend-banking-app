@@ -13,7 +13,7 @@ interface authCredentials {
 }
 
 const useAuth = () => {
-    const BASE_LOGIN_URL = process.env.REACT_APP_LOGIN_URL;
+    const BASE_LOGIN_URL = process.env.REACT_APP_AUTH_URL;
 
     const [response, setResponse] = useState();
     const [isLogin, setIsLogin] = useState(true);
@@ -25,15 +25,14 @@ const useAuth = () => {
 
     const sendRequest = async (
         credentials: authCredentials,
-        authType: string
+        authType: "login" | "register"
     ) => {
         try {
-            console.log("credentials");
-
             const res = await axios.post(`${BASE_LOGIN_URL}/${authType}`, {
                 ...(authType === "register" && {
                     email: credentials.email,
                     password: credentials.password,
+                    repeatPassword: credentials.repeatPassword,
                     username: credentials.username,
                 }),
                 ...(authType === "login" && {
@@ -44,8 +43,8 @@ const useAuth = () => {
             console.log(res.status); //nu se executa
 
             if (res.data) {
-                localStorage.setItem("jwtToken", res.data.jwt_token);
-                localStorage.setItem("userId", res.data.user.id);
+                localStorage.setItem("jwtToken", res.data.token);
+                localStorage.setItem("userId", res.data.data._id);
                 localStorage.setItem("isLogged", "true");
                 dispatch(setJwtToken(res.data.jwt_token));
                 //user will be redirect to feed if no error occure

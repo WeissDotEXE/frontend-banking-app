@@ -15,7 +15,6 @@ const Header: FC<HeaderProps> = () => {
     const [width] = UseWindowSize();
     const [showNotifications, setShowNotifications] = useState(false);
     const location = useLocation();
-    console.log(location);
 
     const rootCls = cn(
         styles.Header,
