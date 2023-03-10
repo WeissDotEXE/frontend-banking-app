@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "pages/Home/Home";
 import Auth from "pages/Auth/Auth";
@@ -9,9 +9,11 @@ import Footer from "components/Footer/Footer";
 import Welcome from "pages/Welcome/Welcome";
 import Navigation from "components/Navigation/Navigation";
 function App() {
+    const token = localStorage.getItem("jwtToken");
+
     return (
         <div className="mt-20">
-            <Navigation />
+            <Navigation token={token} />
         </div>
     );
 }

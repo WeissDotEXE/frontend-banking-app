@@ -8,10 +8,11 @@ import GenerateCard from "pages/GenerateCard/GenerateCard";
 import User from "pages/User/User";
 import Header from "components/Header/Header";
 
-interface NavigationProps {}
+interface NavigationProps {
+    token: string | null;
+}
 
-const Navigation: FC<NavigationProps> = () => {
-    const token = localStorage.getItem("jwtToken");
+const Navigation: FC<NavigationProps> = ({ token }: NavigationProps) => {
     console.log(token);
 
     return (

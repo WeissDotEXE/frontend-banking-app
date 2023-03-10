@@ -1,10 +1,9 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { removeJwtToken, setJwtToken } from "../redux/slices/tokenSlice";
+import { redirect } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { AxiosResponse, AxiosError } from "axios";
-
 interface authCredentials {
     fullName?: string;
     email: string;
@@ -19,8 +18,7 @@ const useAuth = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [errors, setErrors] = useState<boolean>(false);
     const [statusCode, setStatusCode] = useState<number>();
-    const push = useNavigate();
-
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const sendRequest = async (
@@ -42,17 +40,14 @@ const useAuth = () => {
                 }),
             });
 
-            console.log(res.status);
-
             if (res.data) {
                 localStorage.setItem("jwtToken", res.data.token);
                 localStorage.setItem("userId", res.data.data._id);
-                localStorage.setItem("isLogged", "true");
                 dispatch(setJwtToken(res.data.jwt_token));
                 //user will be redirect to feed if no error occure
-                push(`/`);
+                navigate("/");
             }
-            return 200;
+            return res.data;
         } catch (error: any) {
             setStatusCode(error.response.status);
             return error.response.status;
@@ -64,11 +59,11 @@ const useAuth = () => {
         localStorage.removeItem("persist:root");
         localStorage.removeItem("userId");
         localStorage.removeItem("isLogged");
-        push("/"); // redirect to home page
+        redirect("/auth"); // redirect to home page
         dispatch(removeJwtToken(""));
     };
     const gotoLoginPage = () => {
-        push("/auth");
+        redirect("/auth");
     };
 
     return {

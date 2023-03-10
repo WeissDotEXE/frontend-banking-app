@@ -10,7 +10,7 @@ import useAuth from "hooks/useAuth";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import useNotify from "hooks/useNotify";
-import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 interface AuthProps {
     className?: string;
@@ -27,11 +27,11 @@ interface InputProps {
     type: "email" | "text" | "password" | "file";
     label: string;
 }
-type authType = "register" | "login";
 
 const Auth: FC<AuthProps> = (props: AuthProps) => {
     const { className } = props;
     const [isRegister, setIsRegister] = useState(true);
+
     const {
         isLogin,
         sendRequest,
@@ -93,54 +93,37 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
             repeatPassword: Yup.string().min(6),
         }),
         onSubmit: async (values: LoginData) => {
-            if (isRegister) {
-                if (values.repeatPassword !== values.password) {
-                    errorNotification("Passwords must be the same");
-                    return;
+            try {
+                let response;
+                if (isRegister) {
+                    if (values.repeatPassword !== values.password) {
+                        errorNotification("Passwords must be the same");
+                        return;
+                    }
+
+                    let credentials = {
+                        fullName: values.fullName,
+                        email: values.email,
+                        password: values.password,
+                        repeatPassword: values.repeatPassword,
+                    };
+                    response = await sendRequest(credentials, "register");
+                    console.log(response);
+                } else {
+                    let credentials = {
+                        fullName: values.fullName,
+                        email: values.email,
+                        password: values.password,
+                        repeatPassword: values.repeatPassword,
+                    };
+                    response = await sendRequest(credentials, "login");
+                    console.log(response);
+                    if (response && response.status === "success")
+                        return <Navigate to="/" replace={true} />;
                 }
-
-                let credentials = {
-                    fullName: values.fullName,
-                    email: values.email,
-                    password: values.password,
-                    repeatPassword: values.repeatPassword,
-                };
-                const response = await sendRequest(credentials, "register");
-                console.log(response);
-            } else {
-                let credentials = {
-                    fullName: values.fullName,
-                    email: values.email,
-                    password: values.password,
-                    repeatPassword: values.repeatPassword,
-                };
-                const response = await sendRequest(credentials, "login");
-                console.log(response);
+            } catch (error) {
+                console.log(error);
             }
-
-            // const statusCode = await sendRequest(
-            //     {
-            //         email: values.email,
-            //         password: values.password,
-            //         ...(authType === "register" && {
-            //             user_data: {
-            //                 display_name: values.username,
-            //             },
-            //         }),
-            //     },
-            //     authType
-            // );
-            // if (statusCode === 401) {
-            //     // addNotificationHandler({
-            //     //     id: 'test',
-            //     //     message: 'Username and password do not match',
-            //     //     isError: true,
-            //     // })
-            //     errorNotification("Username and password do not match");
-            //     return;
-            // } else if (statusCode === 400) {
-            //     errorNotification("Incorrect Credentials");
-            // }
         },
     });
     const registerFieldList = [
@@ -252,7 +235,13 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                                   </div>
                               );
                           })}
-                    <Button className="w-full mt-10" type="submit">
+                    <Button
+                        // to do -- this is a temporary method for reloading
+                        //page for redirecting to home page
+                        onClick={() => window.location.reload()}
+                        className="w-full mt-10"
+                        type="submit"
+                    >
                         {isRegister ? "Register" : "Log In"}
                     </Button>
                     <div className="flex justify-center text-center mx-auto mt-4">
