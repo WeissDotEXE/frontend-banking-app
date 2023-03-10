@@ -17,7 +17,7 @@ interface AuthProps {
 }
 
 interface LoginData {
-    username: string;
+    fullName: string;
     email: string;
     password: string;
     repeatPassword?: string;
@@ -77,7 +77,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
 
     const formik = useFormik({
         initialValues: {
-            username: "",
+            fullName: "",
             email: "",
             password: "",
             repeatPassword: "",
@@ -100,7 +100,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                 }
 
                 let credentials = {
-                    username: values.username,
+                    fullName: values.fullName,
                     email: values.email,
                     password: values.password,
                     repeatPassword: values.repeatPassword,
@@ -109,7 +109,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                 console.log(response);
             } else {
                 let credentials = {
-                    username: values.username,
+                    fullName: values.fullName,
                     email: values.email,
                     password: values.password,
                     repeatPassword: values.repeatPassword,
@@ -146,12 +146,12 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
     const registerFieldList = [
         {
             type: "text",
-            label: "Username",
-            placeholder: "Username",
-            name: "username",
-            value: formik.values.username,
+            label: "Full Name",
+            placeholder: "Full Name",
+            name: "fullName",
+            value: formik.values.fullName,
             onChange: formik.handleChange,
-            error: formik.errors.username,
+            error: formik.errors.fullName,
         },
         {
             type: "email",

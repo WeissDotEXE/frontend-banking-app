@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { AxiosResponse, AxiosError } from "axios";
 
 interface authCredentials {
-    username?: string;
+    fullName?: string;
     email: string;
     password: string;
     repeatPassword?: string;
@@ -33,14 +33,16 @@ const useAuth = () => {
                     email: credentials.email,
                     password: credentials.password,
                     repeatPassword: credentials.repeatPassword,
-                    username: credentials.username,
+                    fullName: credentials.fullName,
                 }),
+
                 ...(authType === "login" && {
                     email: credentials.email,
                     password: credentials.password,
                 }),
             });
-            console.log(res.status); //nu se executa
+
+            console.log(res.status);
 
             if (res.data) {
                 localStorage.setItem("jwtToken", res.data.token);
