@@ -12,6 +12,7 @@ import { IsMobile } from "functions/Platform";
 import Button from "components/Button/Button";
 import { Icon } from "components/Icon/Icon";
 import colors from "colors.module.scss";
+import axios from "axios";
 
 interface HomeProps {}
 
@@ -26,8 +27,17 @@ const Home: FC<HomeProps> = () => {
 
     const [width, height] = UseWindowSize();
     const [showProfile, setShowProfile] = useState(false);
+    const [userId, setUserId] = useState(localStorage.getItem("userId"));
 
     const leftCardsCls = cn("lg:mr-20", "mb-10");
+
+    const getUserData = async () => {
+        try {
+            const response = axios.get(`${process.env.BASE_URL}/user`);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <div className="px-8 lg:px-0">

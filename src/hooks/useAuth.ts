@@ -12,7 +12,7 @@ interface authCredentials {
 }
 
 const useAuth = () => {
-    const BASE_LOGIN_URL = process.env.REACT_APP_AUTH_URL;
+    const BASE_LOGIN_URL = process.env.REACT_APP_BASE_URL;
 
     const [response, setResponse] = useState();
     const [isLogin, setIsLogin] = useState(true);
@@ -26,7 +26,7 @@ const useAuth = () => {
         authType: "login" | "register"
     ) => {
         try {
-            const res = await axios.post(`${BASE_LOGIN_URL}/${authType}`, {
+            const res = await axios.post(`${BASE_LOGIN_URL}/auth/${authType}`, {
                 ...(authType === "register" && {
                     email: credentials.email,
                     password: credentials.password,

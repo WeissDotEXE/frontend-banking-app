@@ -10,8 +10,6 @@ import {
     position,
 } from "./TypesPropsTypography";
 
-// TODO: the goal is to implement components that use this as a reference and to use them in the code
-
 function Typography(props: {
     children: React.ReactNode;
     color?: color;
@@ -19,7 +17,6 @@ function Typography(props: {
     font?: fonts;
     size?: size;
     position?: position;
-    // TODO: remove custom style, className is the way to go
     customStyle?: Array<any>;
     className?: string;
     onClick?: () => void;

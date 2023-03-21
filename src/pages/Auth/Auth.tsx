@@ -31,6 +31,7 @@ interface InputProps {
 const Auth: FC<AuthProps> = (props: AuthProps) => {
     const { className } = props;
     const [isRegister, setIsRegister] = useState(true);
+    const [isLoadingResponse, setIsLoadingResponse] = useState(false);
 
     const {
         isLogin,
@@ -48,7 +49,9 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
         className,
         "grid",
         "md:grid-cols-5",
-        "w-10/12 md:w-7/12"
+        "w-10/12 md:w-7/12",
+        "h-4/5",
+        "overflow-auto"
     );
 
     const backgroundCls = cn(
@@ -71,7 +74,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
         "col-span-3 md:col-span-2",
         "justify-center",
         "items-center",
-        "rounded-b-xl md:rounded-r-xl",
+        "rounded-xl md:rounded-l-xl md:rounded-r-none",
         "p-4"
     );
 
@@ -94,6 +97,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
         }),
         onSubmit: async (values: LoginData) => {
             try {
+                setIsLoadingResponse(true);
                 let response;
                 if (isRegister) {
                     if (values.repeatPassword !== values.password) {
@@ -121,8 +125,11 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                     if (response && response.status === "success")
                         return <Navigate to="/" replace={true} />;
                 }
+                setIsLoadingResponse(false);
             } catch (error) {
                 console.log(error);
+            } finally {
+                setIsLoadingResponse(false);
             }
         },
     });
@@ -236,13 +243,15 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                               );
                           })}
                     <Button
-                        // to do -- this is a temporary method for reloading
-                        //page for redirecting to home page
-                        onClick={() => window.location.reload()}
-                        className="w-full mt-10"
+                        className="w-full mt-10 bg-pink-disable"
                         type="submit"
+                        disable={isLoadingResponse}
                     >
-                        {isRegister ? "Register" : "Log In"}
+                        {isLoadingResponse
+                            ? "Loading..."
+                            : isRegister
+                            ? "Register"
+                            : "Log In"}
                     </Button>
                     <div className="flex justify-center text-center mx-auto mt-4">
                         <RegularSubtitle size={"xl"} className="mr-3">
