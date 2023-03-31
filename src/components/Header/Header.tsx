@@ -11,6 +11,14 @@ import colors from "colors.module.scss";
 
 interface HeaderProps {}
 
+interface NotificationType {
+    id: string;
+    name: string;
+    avatarLink: string;
+    message: string;
+    type?: "friendRequest" | "requestMoney" | "receiveMoney";
+}
+
 const Header: FC<HeaderProps> = () => {
     const [width] = UseWindowSize();
     const [showNotifications, setShowNotifications] = useState(false);
@@ -53,13 +61,14 @@ const Header: FC<HeaderProps> = () => {
         "caret-pink-950"
     );
 
-    const notificationList = [
+    const notificationList: NotificationType[] = [
         {
             id: "1",
             avatarLink:
                 "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
             message: "just send you 400$",
             name: "John",
+            type: "friendRequest",
         },
         {
             id: "2",
@@ -67,6 +76,7 @@ const Header: FC<HeaderProps> = () => {
                 "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
             message: "just send you 400$",
             name: "John",
+            type: "receiveMoney",
         },
         {
             id: "3",
@@ -74,6 +84,7 @@ const Header: FC<HeaderProps> = () => {
                 "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
             message: "just send you 400$",
             name: "Johnaa",
+            type: "friendRequest",
         },
         {
             id: "1",
@@ -81,6 +92,7 @@ const Header: FC<HeaderProps> = () => {
                 "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
             message: "just send you 400$",
             name: "John",
+            type: "receiveMoney",
         },
         {
             id: "2",
@@ -88,6 +100,7 @@ const Header: FC<HeaderProps> = () => {
                 "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
             message: "just send you 400$",
             name: "John",
+            type: "friendRequest",
         },
         {
             id: "3",
@@ -95,6 +108,7 @@ const Header: FC<HeaderProps> = () => {
                 "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
             message: "just send you 400$",
             name: "Johnaa",
+            type: "receiveMoney",
         },
         {
             id: "3",
@@ -102,6 +116,7 @@ const Header: FC<HeaderProps> = () => {
                 "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
             message: "just send you 400$",
             name: "Johnaa",
+            type: "requestMoney",
         },
         {
             id: "3",
@@ -109,13 +124,7 @@ const Header: FC<HeaderProps> = () => {
                 "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
             message: "just send you 400$",
             name: "Johnaa",
-        },
-        {
-            id: "3",
-            avatarLink:
-                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
-            message: "just send you 400$",
-            name: "Johnaa",
+            type: "requestMoney",
         },
     ];
 
@@ -197,6 +206,7 @@ const Header: FC<HeaderProps> = () => {
                                         avatarLink={item.avatarLink}
                                         message={item.message}
                                         name={item.name}
+                                        type={item.type}
                                     />
                                 );
                             })}

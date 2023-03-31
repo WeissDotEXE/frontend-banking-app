@@ -2,27 +2,31 @@ import React, { FC, useState } from "react";
 import styles from "./NotificationItem.module.scss";
 import cn from "classnames";
 import { Icon } from "components/Icon/Icon";
+import Button from "components/Button/Button";
 interface NotificationItemProps {
     id: string;
     name: string;
     avatarLink: string;
     message: string;
+    type?: "friendRequest" | "requestMoney" | "receiveMoney";
 }
+
+const FriendRequestNotification = () => {};
 
 const NotificationItem: FC<NotificationItemProps> = (
     props: NotificationItemProps
 ) => {
-    const { id, avatarLink, message, name } = props;
+    const { id, avatarLink, message, name, type } = props;
     const rootCls = cn(
         styles.NotificationItem,
         "grid",
         "grid-cols-6",
         "bg-white-950",
-        "border-b-2",
         "py-6",
-        "border-slate-500",
         "w-full",
-        "items-center"
+        "items-center",
+        type === "receiveMoney" && "border-b-2",
+        "border-slate-500"
     );
     const avatarCls = cn(
         styles.avatar,
@@ -33,19 +37,55 @@ const NotificationItem: FC<NotificationItemProps> = (
         "col-span-2"
     );
 
+    const buttonsCls = cn(
+        styles.buttons,
+        "flex",
+        "justify-center",
+        "items-center",
+        "border-b-2",
+        "border-slate-500",
+        "pb-4"
+    );
+
     const [showMore, setShowMore] = useState(false);
 
     return (
-        <div className={rootCls} data-testid="NotificationItem">
-            <img src={avatarLink} className={avatarCls} />
-            <p
-                className={`${!showMore && "truncate"} col-span-3`}
-                onClick={() => setShowMore(!showMore)}
-            >
-                {name} {message}
-            </p>
-            <Icon name="closeIcon" className="col-span-1 cursor-pointer" />
-        </div>
+        <>
+            <div className={rootCls} data-testid="NotificationItem">
+                <img src={avatarLink} className={avatarCls} />
+                <p
+                    className={`${!showMore && "truncate"} col-span-3`}
+                    onClick={() => setShowMore(!showMore)}
+                >
+                    {name} {message}
+                </p>
+
+                <Icon name="closeIcon" className="col-span-1 cursor-pointer" />
+            </div>
+            {type === "friendRequest" && (
+                <div className={buttonsCls}>
+                    <Button type="button" onClick={() => console.log("accept")}>
+                        Accept
+                    </Button>
+                    <Button
+                        type="button"
+                        onClick={() => console.log("decline")}
+                    >
+                        Decline
+                    </Button>
+                </div>
+            )}
+            {type === "requestMoney" && (
+                <div className={buttonsCls}>
+                    <Button
+                        type="button"
+                        onClick={() => console.log("send money")}
+                    >
+                        Send Money
+                    </Button>
+                </div>
+            )}
+        </>
     );
 };
 
