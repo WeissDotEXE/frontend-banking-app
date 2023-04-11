@@ -8,15 +8,15 @@ import ProfileCard from "components/ProfileCard/ProfileCard";
 import deleteIcon from "assets/icons/deleteIcon.svg";
 
 interface FriendModalProps {
-    name: string;
-    avatar_link: string;
-    id: string;
+    fullName: string;
+    avatarImg: string;
+    _id: string;
     onClose: () => void;
     className?: string;
 }
 
 const FriendModal: FC<FriendModalProps> = (props: FriendModalProps) => {
-    const { name, avatar_link, id, onClose, className } = props;
+    const { fullName, avatarImg, _id, onClose, className } = props;
 
     const rootCls = cn(
         styles.profileCard,
@@ -35,6 +35,8 @@ const FriendModal: FC<FriendModalProps> = (props: FriendModalProps) => {
     );
 
     return (
+        //!!!!!!!!!!
+        // change this with custom div and later delete type from profileCard
         <Modal onClose={onClose} className="relative">
             <ProfileCard type="friend" className="drop-shadow-none" />
         </Modal>

@@ -3,12 +3,13 @@ import styles from "./NotificationItem.module.scss";
 import cn from "classnames";
 import { Icon } from "components/Icon/Icon";
 import Button from "components/Button/Button";
+import notificationEnum from "../../enums/notificationEnum";
 interface NotificationItemProps {
     id: string;
     name: string;
     avatarLink: string;
     message: string;
-    type?: "friendRequest" | "requestMoney" | "receiveMoney";
+    type: Number
 }
 
 const FriendRequestNotification = () => {};
@@ -25,7 +26,7 @@ const NotificationItem: FC<NotificationItemProps> = (
         "py-6",
         "w-full",
         "items-center",
-        type === "receiveMoney" && "border-b-2",
+        type === notificationEnum.sendMoney && "border-b-2",
         "border-slate-500"
     );
     const avatarCls = cn(
@@ -62,7 +63,7 @@ const NotificationItem: FC<NotificationItemProps> = (
 
                 <Icon name="closeIcon" className="col-span-1 cursor-pointer" />
             </div>
-            {type === "friendRequest" && (
+            {type === notificationEnum.friendRequest && (
                 <div className={buttonsCls}>
                     <Button type="button" onClick={() => console.log("accept")}>
                         Accept
@@ -75,7 +76,7 @@ const NotificationItem: FC<NotificationItemProps> = (
                     </Button>
                 </div>
             )}
-            {type === "requestMoney" && (
+            {type === notificationEnum.requestMoney && (
                 <div className={buttonsCls}>
                     <Button
                         type="button"

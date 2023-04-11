@@ -5,14 +5,14 @@ import { RegularSubtitle } from "components/Typography/Typography";
 import FriendModal from "components/FriendModal/FriendModal";
 
 interface FriendItemProps {
+    _id: string;
+    fullName: string;
+    avatarImg: string;
     className?: string;
-    id: string;
-    name: string;
-    avatar_link: string;
 }
 
 const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {
-    const { id, name, avatar_link, className } = props;
+    const { _id, fullName, avatarImg, className } = props;
 
     const [showModal, setShowModal] = useState(false);
 
@@ -36,18 +36,15 @@ const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {
             data-testid="FriendItem"
             onClick={showDetailsHandler}
         >
-            <img
-                src={avatar_link}
-                className="rounded-full w-20 md:w-96 md:h-54"
-            />
+            <img src={avatarImg} className="rounded-full w-20 md:h-54" />
             <RegularSubtitle size="lg" className="w-20 truncate">
-                {name}
+                {fullName}
             </RegularSubtitle>
             {showModal && (
                 <FriendModal
-                    avatar_link={avatar_link}
-                    id={id}
-                    name={name}
+                    avatarImg={avatarImg}
+                    _id={_id}
+                    fullName={fullName}
                     onClose={() => setShowModal(!showModal)}
                 />
             )}
