@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -16,7 +16,6 @@ interface NotificationProps {
     notificationList: {
         id: string;
         message: string;
-
         backgroundColor: string;
     }[];
     position: string;
@@ -44,7 +43,7 @@ const useNotify = () => {
             type: "error",
             title: "Error",
             message,
-            backgroundColor: "bg-red-950",
+            backgroundColor: "bg-red-950"
         };
         setNotifyList((prevNotify) => [...prevNotify, error]);
         console.log("error works");
@@ -55,7 +54,7 @@ const useNotify = () => {
             type: "warning",
             title: "Warning",
             message,
-            backgroundColor: "bg-yellow-950",
+            backgroundColor: "bg-yellow-950"
         };
         setNotifyList((prevNotify) => [...prevNotify, warning]);
     };
@@ -65,7 +64,7 @@ const useNotify = () => {
             type: "success",
             title: "Success",
             message,
-            backgroundColor: "bg-green-600",
+            backgroundColor: "bg-green-600"
         };
         setNotifyList((prevNotify) => [...prevNotify, succes]);
     };
@@ -87,7 +86,7 @@ const useNotify = () => {
         successNotification,
         closeNotificationHandler,
         notifyList,
-        deleteFirstElementFromArr,
+        deleteFirstElementFromArr
     };
 };
 

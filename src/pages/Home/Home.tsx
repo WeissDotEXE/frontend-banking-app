@@ -14,7 +14,8 @@ import { Icon } from "components/Icon/Icon";
 import colors from "colors.module.scss";
 import axios from "axios";
 
-interface HomeProps {}
+interface HomeProps {
+}
 
 const Home: FC<HomeProps> = () => {
     const rootCls = cn(
@@ -25,12 +26,12 @@ const Home: FC<HomeProps> = () => {
         "mt-10"
     );
 
-    const [width, height] = UseWindowSize();
+    const [width] = UseWindowSize();
     const [showProfile, setShowProfile] = useState(false);
-    const [userId, setUserId] = useState(localStorage.getItem("userId"));
 
     const leftCardsCls = cn("lg:mr-20", "mb-10");
 
+    //todo replace with correct link
     const getUserData = async () => {
         try {
             const response = axios.get(`${process.env.BASE_URL}/user`);
@@ -42,8 +43,9 @@ const Home: FC<HomeProps> = () => {
     return (
         <div className="px-8 lg:px-0">
             <div className="flex items-center justify-around lg:justify-start">
-                <RegularSubtitle className="text-center truncate lg:text-left text-white-950 font-bold text-4xl lg:text-7xl lg:ml-16 mt-5">
-                    Hello Jesse Jayce
+                <RegularSubtitle
+                    className="text-center truncate lg:text-left text-white-950 font-bold text-4xl lg:text-6xl lg:ml-16 mt-5">
+                    Hello John John
                 </RegularSubtitle>
                 {IsMobile(width) && (
                     <Button type="button" className="p-2 rounded-full mt-5">

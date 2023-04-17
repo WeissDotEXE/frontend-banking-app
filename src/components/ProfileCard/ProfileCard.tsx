@@ -6,7 +6,6 @@ import React, { FC } from "react";
 import styles from "./ProfileCard.module.scss";
 import cn from "classnames";
 import Card from "components/Card/Card";
-import axios from "axios";
 import { RegularSubtitle } from "components/Typography/Typography";
 import Button from "components/Button/Button";
 
@@ -36,17 +35,16 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
         "mt-10"
     );
 
-    const informationsList = ["Email", "t@gmail.com", "IBAN", "Join Date"];
-
     return (
         <Card className={rootCls}>
             <img
+                alt=""
                 className={avatarCls}
                 src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"
             />
             <div className="mt-20 ">
                 <RegularSubtitle className="text-3xl font-bold">
-                    Jesse Jayce
+                    John John
                 </RegularSubtitle>
                 {type === "profile" && (
                     <div className="flex justify-center mt-14">

@@ -4,10 +4,9 @@ import cn from "classnames";
 import { Icon } from "components/Icon/Icon";
 import { Link, useLocation } from "react-router-dom";
 import { UseWindowSize } from "functions/UseWindowSize";
-import { IsDesktop, IsMobile } from "functions/Platform";
+import { IsMobile } from "functions/Platform";
 import Card from "components/Card/Card";
 import NotificationItem from "components/NotificationItem/NotificationItem";
-import colors from "colors.module.scss";
 
 interface HeaderProps {}
 
@@ -16,7 +15,7 @@ interface NotificationType {
     name: string;
     avatarLink: string;
     message: string;
-    type?: "friendRequest" | "requestMoney" | "receiveMoney";
+    type: number;
 }
 
 const Header: FC<HeaderProps> = () => {
@@ -72,6 +71,34 @@ const Header: FC<HeaderProps> = () => {
         "lg:px-6",
         "drop-shadow-2xl"
     );
+
+    const notificationList: NotificationType[] = [
+        {
+            id: "1",
+            avatarLink:
+                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+            message: "just send you 400$",
+            name: "John",
+            type: 0,
+        },
+
+        {
+            id: "3",
+            avatarLink:
+                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+            message: "just send you 400$",
+            name: "Johnaa",
+            type: 2,
+        },
+        {
+            id: "3",
+            avatarLink:
+                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+            message: "just send you 400$",
+            name: "Johnaa",
+            type: 2,
+        },
+    ];
 
     return (
         <div className={rootCls} data-testid="Header">

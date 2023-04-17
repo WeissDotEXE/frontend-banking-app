@@ -4,15 +4,17 @@ import cn from "classnames";
 import { Icon } from "components/Icon/Icon";
 import Button from "components/Button/Button";
 import notificationEnum from "../../enums/notificationEnum";
+
 interface NotificationItemProps {
     id: string;
     name: string;
     avatarLink: string;
     message: string;
-    type: Number
+    type: number;
 }
 
-const FriendRequestNotification = () => {};
+const FriendRequestNotification = () => {
+};
 
 const NotificationItem: FC<NotificationItemProps> = (
     props: NotificationItemProps
@@ -53,7 +55,7 @@ const NotificationItem: FC<NotificationItemProps> = (
     return (
         <>
             <div className={rootCls} data-testid="NotificationItem">
-                <img src={avatarLink} className={avatarCls} />
+                <img alt={""} src={avatarLink} className={avatarCls} />
                 <p
                     className={`${!showMore && "truncate"} col-span-3`}
                     onClick={() => setShowMore(!showMore)}
