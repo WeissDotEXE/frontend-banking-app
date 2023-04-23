@@ -2,7 +2,7 @@
 //1. fetch transactions based on user id
 //3. add loading id using pulse animation from tailwind
 
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styles from "./TransactionsCard.module.scss";
 import cn from "classnames";
 import Card from "components/Card/Card";
@@ -29,6 +29,20 @@ const TransactionsCard: FC<TransactionsCardProps> = (
     const [transactionList, setTransactionList] = useState<transactionItem[]>(
         []
     );
+
+    const getTransactionHandler=async()=>{
+        try{
+            const userId=localStorage.getItem("userId");
+            const response=await axios.get(`${process.env.REACT_APP_BASE_URL}/user/transactions/${userId}`);
+            setTransactionList(response.data.data);
+        }catch (error){
+            console.log(error);
+        }
+    }
+
+    useEffect(()=>{
+       getTransactionHandler()
+    },[])
 
     return (
         <Card className={rootCls}>
