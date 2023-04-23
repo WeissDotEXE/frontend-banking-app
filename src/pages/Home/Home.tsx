@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styles from "./Home.module.scss";
 import cn from "classnames";
 import BalanceCard from "components/BalanceCard/BalanceCard";
@@ -31,14 +31,21 @@ const Home: FC<HomeProps> = () => {
 
     const leftCardsCls = cn("lg:mr-20", "mb-10");
 
+    const userId = localStorage.getItem("userId");
+
     //todo replace with correct link
     const getUserData = async () => {
         try {
-            const response = axios.get(`${process.env.BASE_URL}/user`);
+            const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user/${userId}`);
+            console.log(response);
         } catch (error) {
             console.log(error);
         }
     };
+
+    useEffect(()=>{
+        getUserData();
+    },[])
 
     return (
         <div className="px-8 lg:px-0">

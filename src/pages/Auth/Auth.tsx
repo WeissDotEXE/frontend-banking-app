@@ -23,10 +23,6 @@ interface LoginData {
     repeatPassword?: string;
 }
 
-interface InputProps {
-    type: "email" | "text" | "password" | "file";
-    label: string;
-}
 
 const Auth: FC<AuthProps> = (props: AuthProps) => {
     const { className } = props;
@@ -243,7 +239,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                               );
                           })}
                     <Button
-                        className="w-full mt-10 bg-pink-disable"
+                        className={`w-full mt-10 ${isLoadingResponse&& 'bg-pink-disable'}`}
                         type="submit"
                         disable={isLoadingResponse}
                     >

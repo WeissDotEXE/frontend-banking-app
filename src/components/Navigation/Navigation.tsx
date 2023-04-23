@@ -1,6 +1,5 @@
-import React, { FC, useEffect, useState } from "react";
-import styles from "./Navigation.module.scss";
-import { Routes, Route, redirect, Navigate } from "react-router-dom";
+import React, { FC } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "pages/Home/Home";
 import Auth from "pages/Auth/Auth";
 import BankingCards from "pages/BankingCards/BankingCards";
@@ -8,16 +7,13 @@ import GenerateCard from "pages/GenerateCard/GenerateCard";
 import User from "pages/User/User";
 import Header from "components/Header/Header";
 
-interface NavigationProps {
-    token: string | null;
-}
+const Navigation: FC = () => {
 
-const Navigation: FC<NavigationProps> = ({ token }: NavigationProps) => {
-    console.log(token);
+    const token =localStorage.getItem("jwtToken");
 
     return (
         <div>
-            {token && <Header />}
+            {!!token && <Header />}
             <Routes>
                 <Route
                     path="/"

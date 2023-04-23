@@ -15,8 +15,18 @@ interface FriendsCardProps {
 
 interface friendItem {
     _id: string;
-    fullName: string;
-    avatarImg: string;
+    recipientId:{
+        _id:string,
+        avatarImg:string,
+        email:string,
+        fullName:string,
+    }
+    receiverId:{
+        _id:string,
+        avatarImg:string,
+        email:string,
+        fullName:string,
+    }
 }
 
 const FriendsCard: FC<FriendsCardProps> = (props: FriendsCardProps) => {
@@ -30,20 +40,26 @@ const FriendsCard: FC<FriendsCardProps> = (props: FriendsCardProps) => {
     const api = `${BASE_LOGIN_URL}/friends/getFriends/${localStorage.getItem(
         "userId"
     )}`;
-    const token = localStorage.getItem("jwtToken");
 
     const getFriendsHandler = async () => {
-        const friends = await axios.get(api, {
-            headers: { Authorization: `Bearer ${token}` },
-        });
-        console.log(friends.data.data.friends);
+        const friends = await axios.get(api)
+        console.log(friends.data.data);
 
-        setFriendsList(friends.data.data.friends);
+        setFriendsList(friends.data.data);
     };
 
     useEffect(() => {
         getFriendsHandler();
-    }, []);
+    },[]);
+
+
+    const friendIdDeceider=(item:friendItem):string=>{
+       if(item.recipientId._id===localStorage.getItem("userId")){
+           return 'recipientId'
+
+       }
+        return 'requesterId'
+    }
 
     return (
         <Card className={rootCls} data-testid="FriendsCard">
@@ -53,12 +69,15 @@ const FriendsCard: FC<FriendsCardProps> = (props: FriendsCardProps) => {
             {friendsList && friendsList!.length > 0 ? (
                 <div className="grid grid-cols-3 h-32 overflow-x-auto md:flex md:overflow-y-auto">
                     {friendsList!.map((item, index) => {
+                        // @ts-ignore
                         return (
                             <FriendItem
                                 _id={item._id}
                                 key={index}
-                                fullName={item.fullName}
-                                avatarImg={item.avatarImg}
+                                //@ts-ignore
+                                fullName={item[friendIdDeceider(item)].fullName}
+                                //@ts-ignore
+                                avatarImg={item[friendIdDeceider(item)].avatarImg}
                             />
                         );
                     })}
