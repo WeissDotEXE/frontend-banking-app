@@ -1,11 +1,8 @@
 import React, { FC } from "react";
 import styles from "./FriendModal.module.scss";
 import cn from "classnames";
-import { RegularSubtitle } from "components/Typography/Typography";
 import Modal from "components/Modal/Modal";
-import Button from "components/Button/Button";
 import ProfileCard from "components/ProfileCard/ProfileCard";
-import deleteIcon from "assets/icons/deleteIcon.svg";
 
 interface FriendModalProps {
     fullName: string;
@@ -14,7 +11,7 @@ interface FriendModalProps {
     onClose: () => void;
     className?: string;
 }
-
+//todo resolve modal close by clicking outside of the card/close button
 const FriendModal: FC<FriendModalProps> = (props: FriendModalProps) => {
     const { fullName, avatarImg, _id, onClose, className } = props;
 
@@ -35,8 +32,8 @@ const FriendModal: FC<FriendModalProps> = (props: FriendModalProps) => {
     );
 
     return (
-        //!!!!!!!!!!
-        // change this with custom div and later delete type from profileCard
+        //todo replace with a custom div and CHANGE ProfileCard props to match only profile data
+        //and not both use cases
         <Modal onClose={onClose} className="relative">
             <ProfileCard type="friend" className="drop-shadow-none" />
         </Modal>

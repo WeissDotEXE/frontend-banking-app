@@ -33,7 +33,7 @@ const Home: FC<HomeProps> = () => {
 
     const userId = localStorage.getItem("userId");
 
-    //todo replace with correct link
+
     const getUserData = async () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user/${userId}`);
@@ -47,11 +47,15 @@ const Home: FC<HomeProps> = () => {
         getUserData();
     },[])
 
+    //todo get user data and pass it to the profileCard
+
+
     return (
         <div className="px-8 lg:px-0">
             <div className="flex items-center justify-around lg:justify-start">
                 <RegularSubtitle
                     className="text-center truncate lg:text-left text-white-950 font-bold text-4xl lg:text-6xl lg:ml-16 mt-5">
+                    {/*todo replace with fullName from response*/}
                     Hello John John
                 </RegularSubtitle>
                 {IsMobile(width) && (

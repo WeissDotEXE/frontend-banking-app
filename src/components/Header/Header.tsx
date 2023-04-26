@@ -72,6 +72,7 @@ const Header: FC<HeaderProps> = () => {
         "drop-shadow-2xl"
     );
 
+    //todo get notifications from backend
     const notificationList: NotificationType[] = [
         {
             id: "1",

@@ -35,6 +35,8 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
         "mt-10"
     );
 
+    //todo replace data from home response data
+
     return (
         <Card className={rootCls}>
             <img

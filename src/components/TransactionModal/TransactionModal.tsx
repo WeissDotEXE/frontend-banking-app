@@ -20,12 +20,15 @@ const TransactionModal: FC<TransactionModalProps> = (props) => {
 
     const rootCls = cn(styles.TransactionModal);
 
+    //todo change what data is shown based on transaction type(deposit/user transaction)
+    //todo fix date not showing data (date is undefined based on console.log)
     const staticDataList = [
         { title: "Type: ", data: type },
         { title: "Date: ", data: date },
         { title: type === "receive" ? "Sent From: " : "Send To: ", data: name },
         { title: "Amount: ", data: amount },
     ];
+
 
     return (
         <Modal onClose={onClose}>

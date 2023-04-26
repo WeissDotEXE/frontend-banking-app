@@ -52,6 +52,8 @@ const NotificationItem: FC<NotificationItemProps> = (
 
     const [showMore, setShowMore] = useState(false);
 
+
+
     return (
         <>
             <div className={rootCls} data-testid="NotificationItem">
@@ -62,18 +64,21 @@ const NotificationItem: FC<NotificationItemProps> = (
                 >
                     {name} {message}
                 </p>
-
+                {/*todo implement delete notification when click on close icon*/}
                 <Icon name="closeIcon" className="col-span-1 cursor-pointer" />
             </div>
             {type === notificationEnum.friendRequest && (
                 <div className={buttonsCls}>
-                    <Button type="button" onClick={() => console.log("accept")}>
+                    <Button type="button" onClick={() => console.log("accept friend request")}>
                         Accept
                     </Button>
+                    {/*todo implement accept friend request by sending request to backend*/}
                     <Button
                         type="button"
-                        onClick={() => console.log("decline")}
+                        onClick={() => console.log("decline friend request")}
                     >
+                        {/*todo implement decline friend request by sending request to backend
+                        */}
                         Decline
                     </Button>
                 </div>
