@@ -30,7 +30,6 @@ const Modal: FC<ModalProps> = (props: ModalProps) => {
         const keyDownHandler = (event: any) => {
             if (event.key === "Escape") {
                 event.preventDefault();
-
                 onClose!();
             }
         };
@@ -50,6 +49,7 @@ const Modal: FC<ModalProps> = (props: ModalProps) => {
                 <Icon
                     name="closeIcon"
                     className="cursor-pointer z-10 w-9 h-9 md:w-11 md:h-11 absolute right-3 top-3 z-20"
+                    onClick={onClose}
                 />
                 <div className={modalContent}>{children}</div>
             </Card>

@@ -26,14 +26,10 @@ const User: FC<UserProps> = () => {
 
     const [showAddMoney, setShowAddMoney] = useState(false);
 
+    //todo create custom card for user page ( when searching for user)
     return (
         <div className={rootCls} data-testid="User">
-            <ProfileCard
-                type="profile"
-                className={`${showAddMoney && "mt-52 md:mt-0"}`}
-                isFriend={false}
-                sendMoneyHandler={() => setShowAddMoney(true)}
-            />
+
             {showAddMoney && (
                 <Icon
                     name="transferMoneyIcon"

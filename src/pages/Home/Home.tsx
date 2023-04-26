@@ -14,10 +14,15 @@ import { Icon } from "components/Icon/Icon";
 import colors from "colors.module.scss";
 import axios from "axios";
 
-interface HomeProps {
+export interface userDataInterface {
+    _id: string,
+    fullName: string,
+    email: string,
+    avatarImg: string,
+    joinDate: string
 }
 
-const Home: FC<HomeProps> = () => {
+const Home: FC = () => {
     const rootCls = cn(
         styles.Home,
         "grid",
@@ -25,6 +30,8 @@ const Home: FC<HomeProps> = () => {
         "lg:px-16",
         "mt-10"
     );
+
+    const [userData, setUserData] = useState<userDataInterface>();
 
     const [width] = UseWindowSize();
     const [showProfile, setShowProfile] = useState(false);
@@ -37,26 +44,23 @@ const Home: FC<HomeProps> = () => {
     const getUserData = async () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user/${userId}`);
-            console.log(response);
+            console.log(response.data.data);
+            setUserData(response.data.data)
         } catch (error) {
             console.log(error);
         }
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         getUserData();
-    },[])
-
-    //todo get user data and pass it to the profileCard
-
+    }, []);
 
     return (
         <div className="px-8 lg:px-0">
             <div className="flex items-center justify-around lg:justify-start">
                 <RegularSubtitle
                     className="text-center truncate lg:text-left text-white-950 font-bold text-4xl lg:text-6xl lg:ml-16 mt-5">
-                    {/*todo replace with fullName from response*/}
-                    Hello John John
+                    Hello {userData?.fullName}
                 </RegularSubtitle>
                 {IsMobile(width) && (
                     <Button type="button" className="p-2 rounded-full mt-5">
@@ -69,7 +73,7 @@ const Home: FC<HomeProps> = () => {
                     </Button>
                 )}
             </div>
-            {showProfile && <ProfileCard type="personal" className="mt-24" />}
+            {showProfile && <ProfileCard userData={userData!} className="mt-24" />}
             <div className={rootCls} data-testid="Home">
                 <div>
                     <BalanceCard className={leftCardsCls} />
@@ -78,8 +82,8 @@ const Home: FC<HomeProps> = () => {
                 </div>
                 {!IsMobile(width) && (
                     <ProfileCard
-                        type="personal"
                         className="lg:fixed lg:right-20 lg:w-2/5"
+                        userData={userData!}
                     />
                 )}
             </div>
