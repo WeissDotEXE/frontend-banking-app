@@ -30,7 +30,6 @@ function App() {
     }, function (error) {
         // Any status codes that falls outside the range of 2xx cause this function to trigger
         // Do something with response error
-        console.log(error.response.data.message.name);
         if(error.response.status===400 && error.response.data.message.name==="JsonWebTokenError"){
             localStorage.removeItem("jwtToken");
             localStorage.removeItem("userId");

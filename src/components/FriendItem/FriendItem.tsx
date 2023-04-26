@@ -9,10 +9,11 @@ interface FriendItemProps {
     fullName: string;
     avatarImg: string;
     className?: string;
+    refreshData:()=>void;
 }
 
 const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {
-    const { _id, fullName, avatarImg, className } = props;
+    const { _id, fullName, avatarImg, className,refreshData } = props;
 
     const [showModal, setShowModal] = useState(false);
 
@@ -34,10 +35,10 @@ const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {
         <>
             <div
                 className={rootCLs}
-                data-testid="FriendItem"
+                data-testid="FriendItGem"
                 onClick={showDetailsHandler}
             >
-                <img src={avatarImg} className="rounded-full w-20 md:h-54" />
+                <img src={avatarImg} className="rounded-full w-20 md:h-54" alt={""} />
                 <RegularSubtitle size="lg" className="w-20 truncate">
                     {fullName}
                 </RegularSubtitle>
@@ -49,9 +50,9 @@ const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {
                     _id={_id}
                     fullName={fullName}
                     onClose={() => {
-                        console.log("closed");
                         setShowModal(false);
                     }}
+                    refreshData={refreshData}
                 />
             )}
         </>

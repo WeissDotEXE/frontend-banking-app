@@ -77,6 +77,7 @@ const FriendsCard: FC<FriendsCardProps> = (props: FriendsCardProps) => {
                                 fullName={item[friendIdDeceider(item)].fullName}
                                 //@ts-ignore
                                 avatarImg={item[friendIdDeceider(item)].avatarImg}
+                                refreshData={getFriendsHandler}
                             />
                         );
                     })}
