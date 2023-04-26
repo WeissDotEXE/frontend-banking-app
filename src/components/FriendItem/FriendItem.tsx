@@ -20,7 +20,7 @@ const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {
         styles.FriendItem,
         className,
         "grid",
-        "justify-items-center",
+        // "justify-items-center",
         "md:w-54",
         "mr-6",
         "cursor-pointer"
@@ -31,24 +31,30 @@ const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {
     };
 
     return (
-        <div
-            className={rootCLs}
-            data-testid="FriendItem"
-            onClick={showDetailsHandler}
-        >
-            <img src={avatarImg} className="rounded-full w-20 md:h-54" />
-            <RegularSubtitle size="lg" className="w-20 truncate">
-                {fullName}
-            </RegularSubtitle>
+        <>
+            <div
+                className={rootCLs}
+                data-testid="FriendItem"
+                onClick={showDetailsHandler}
+            >
+                <img src={avatarImg} className="rounded-full w-20 md:h-54" />
+                <RegularSubtitle size="lg" className="w-20 truncate">
+                    {fullName}
+                </RegularSubtitle>
+
+            </div>
             {showModal && (
                 <FriendModal
                     avatarImg={avatarImg}
                     _id={_id}
                     fullName={fullName}
-                    onClose={() => setShowModal(!showModal)}
+                    onClose={() => {
+                        console.log("closed");
+                        setShowModal(false);
+                    }}
                 />
             )}
-        </div>
+        </>
     );
 };
 

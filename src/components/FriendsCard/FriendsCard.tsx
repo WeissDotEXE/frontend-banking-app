@@ -69,7 +69,6 @@ const FriendsCard: FC<FriendsCardProps> = (props: FriendsCardProps) => {
             {friendsList && friendsList!.length > 0 ? (
                 <div className="grid grid-cols-3 h-32 overflow-x-auto md:flex md:overflow-y-auto">
                     {friendsList!.map((item, index) => {
-                        // @ts-ignore
                         return (
                             <FriendItem
                                 _id={item._id}
