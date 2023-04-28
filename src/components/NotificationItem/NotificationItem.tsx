@@ -4,6 +4,7 @@ import cn from "classnames";
 import { Icon } from "components/Icon/Icon";
 import Button from "components/Button/Button";
 import notificationEnum from "../../enums/notificationEnum";
+import axios from "axios";
 
 interface NotificationItemProps {
     id: string;
@@ -11,6 +12,7 @@ interface NotificationItemProps {
     avatarLink: string;
     message: string;
     type: number;
+    refreshData: () => void;
 }
 
 const FriendRequestNotification = () => {
@@ -19,7 +21,7 @@ const FriendRequestNotification = () => {
 const NotificationItem: FC<NotificationItemProps> = (
     props: NotificationItemProps
 ) => {
-    const { id, avatarLink, message, name, type } = props;
+    const { id, avatarLink, message, name, type, refreshData } = props;
     const rootCls = cn(
         styles.NotificationItem,
         "grid",
@@ -52,7 +54,18 @@ const NotificationItem: FC<NotificationItemProps> = (
 
     const [showMore, setShowMore] = useState(false);
 
-
+    const deleteNotification = async () => {
+        try {
+            //delete notification
+            console.log(id);
+            const response = await axios.delete(`${process.env.REACT_APP_BASE_URL}/notification/deleteone/${id}`);
+            if (response.status === 204) {
+                refreshData();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <>
@@ -64,8 +77,7 @@ const NotificationItem: FC<NotificationItemProps> = (
                 >
                     {name} {message}
                 </p>
-                {/*todo implement delete notification when click on close icon*/}
-                <Icon name="closeIcon" className="col-span-1 cursor-pointer" />
+                <Icon name="closeIcon" className="col-span-1 cursor-pointer" onClick={deleteNotification} />
             </div>
             {type === notificationEnum.friendRequest && (
                 <div className={buttonsCls}>

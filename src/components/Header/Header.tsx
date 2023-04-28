@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styles from "./Header.module.scss";
 import cn from "classnames";
 import { Icon } from "components/Icon/Icon";
@@ -7,13 +7,15 @@ import { UseWindowSize } from "functions/UseWindowSize";
 import { IsMobile } from "functions/Platform";
 import Card from "components/Card/Card";
 import NotificationItem from "components/NotificationItem/NotificationItem";
+import * as process from "process";
+import axios from "axios";
 
 interface HeaderProps {}
 
 interface NotificationType {
-    id: string;
-    name: string;
-    avatarLink: string;
+    _id: string;
+    fullName: string;
+    avatarImg: string;
     message: string;
     type: number;
 }
@@ -21,6 +23,7 @@ interface NotificationType {
 const Header: FC<HeaderProps> = () => {
     const [width] = UseWindowSize();
     const [showNotifications, setShowNotifications] = useState(false);
+    const [notificationList,setNotificationList]=useState<NotificationType[]>([]);
     const location = useLocation();
 
     const rootCls = cn(
@@ -72,34 +75,17 @@ const Header: FC<HeaderProps> = () => {
         "drop-shadow-2xl"
     );
 
-    //todo get notifications from backend
-    const notificationList: NotificationType[] = [
-        {
-            id: "1",
-            avatarLink:
-                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
-            message: "just send you 400$",
-            name: "John",
-            type: 0,
-        },
 
-        {
-            id: "3",
-            avatarLink:
-                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
-            message: "just send you 400$",
-            name: "Johnaa",
-            type: 2,
-        },
-        {
-            id: "3",
-            avatarLink:
-                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
-            message: "just send you 400$",
-            name: "Johnaa",
-            type: 2,
-        },
-    ];
+    const userId=localStorage.getItem("userId");
+    const getNotificationsHandler=async()=>{
+        const response=await axios.get(`${process.env.REACT_APP_BASE_URL}/notification/${userId}`)
+        setNotificationList(response.data.data)
+    }
+
+    useEffect(()=>{
+        getNotificationsHandler();
+    },[])
+
 
     return (
         <div className={rootCls} data-testid="Header">
@@ -159,15 +145,16 @@ const Header: FC<HeaderProps> = () => {
 
                     {showNotifications && (
                         <Card className={dropDownCls}>
-                            {notificationList.map((item, index) => {
+                            {notificationList && notificationList.map((item, index) => {
                                 return (
                                     <NotificationItem
                                         key={index}
-                                        id={item.id}
-                                        avatarLink={item.avatarLink}
+                                        id={item._id}
+                                        avatarLink={item.avatarImg}
                                         message={item.message}
-                                        name={item.name}
+                                        name={item.fullName}
                                         type={item.type}
+                                        refreshData={getNotificationsHandler}
                                     />
                                 );
                             })}
