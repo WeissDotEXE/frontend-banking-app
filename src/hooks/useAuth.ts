@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { removeJwtToken, setJwtToken } from "../redux/slices/tokenSlice";
 import { redirect } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 interface authCredentials {
@@ -14,12 +13,10 @@ interface authCredentials {
 const useAuth = () => {
     const BASE_LOGIN_URL = process.env.REACT_APP_BASE_URL;
 
-    const [response, setResponse] = useState();
-    const [isLogin, setIsLogin] = useState(true);
+
     const [errors, setErrors] = useState<boolean>(false);
     const [statusCode, setStatusCode] = useState<number>();
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const sendRequest = async (
         credentials: authCredentials,
@@ -43,7 +40,6 @@ const useAuth = () => {
             if (res.data) {
                 localStorage.setItem("jwtToken", res.data.token);
                 localStorage.setItem("userId", res.data.data._id);
-                dispatch(setJwtToken(res.data.jwt_token));
                 //user will be redirect to feed if no error occure
                 navigate("/");
             }
@@ -60,15 +56,12 @@ const useAuth = () => {
         localStorage.removeItem("userId");
         localStorage.removeItem("isLogged");
         redirect("/auth"); // redirect to home page
-        dispatch(removeJwtToken(""));
     };
     const gotoLoginPage = () => {
         redirect("/auth");
     };
 
     return {
-        response,
-        isLogin,
         sendRequest,
         errors,
         logoutUser,

@@ -10,6 +10,7 @@ interface FriendItemProps {
     avatarImg: string;
     className?: string;
     refreshData:()=>void;
+    status:number
 }
 
 const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {

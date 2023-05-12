@@ -9,8 +9,10 @@ import Card from "components/Card/Card";
 import NotificationItem from "components/NotificationItem/NotificationItem";
 import * as process from "process";
 import axios from "axios";
+import { RegularSubtitle } from "../Typography/Typography";
 
-interface HeaderProps {}
+interface HeaderProps {
+}
 
 interface NotificationType {
     _id: string;
@@ -18,12 +20,15 @@ interface NotificationType {
     avatarImg: string;
     message: string;
     type: number;
+    senderId: string,
+    friendDocumentId?: string | undefined
 }
 
 const Header: FC<HeaderProps> = () => {
     const [width] = UseWindowSize();
     const [showNotifications, setShowNotifications] = useState(false);
-    const [notificationList,setNotificationList]=useState<NotificationType[]>([]);
+    const [notificationList, setNotificationList] = useState<NotificationType[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
     const location = useLocation();
 
     const rootCls = cn(
@@ -72,19 +77,23 @@ const Header: FC<HeaderProps> = () => {
         "h-96",
         "-right -1/3 md:right-0",
         "lg:px-6",
-        "drop-shadow-2xl"
+        "drop-shadow-2xl",
+        notificationList.length === 0 && "flex"
     );
 
 
-    const userId=localStorage.getItem("userId");
-    const getNotificationsHandler=async()=>{
-        const response=await axios.get(`${process.env.REACT_APP_BASE_URL}/notification/${userId}`)
-        setNotificationList(response.data.data)
-    }
+    const userId = localStorage.getItem("userId");
+    const getNotificationsHandler = async () => {
+        setIsLoading(true);
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/notification/${userId}`);
+        console.log(response.data.data);
+        setNotificationList(response.data.data);
+        setIsLoading(false);
+    };
 
-    useEffect(()=>{
+    useEffect(() => {
         getNotificationsHandler();
-    },[])
+    }, []);
 
 
     return (
@@ -133,8 +142,9 @@ const Header: FC<HeaderProps> = () => {
                             name="notificationIcon"
                             className={`${iconCls} ml-10 cursor-pointer`}
                         />
-                        {!showNotifications && (
-                            <div className="w-5  text-white-950 cursor-pointer  bg-red-950 rounded-full absolute bottom-5 right-0">
+                        {!showNotifications && notificationList.length !== 0 && (
+                            <div
+                                className="w-5  text-white-950 cursor-pointer  bg-red-950 rounded-full absolute bottom-5 right-0">
                                 <p className="font-normal flex justify-center">
                                     {notificationList.length}
                                 </p>
@@ -145,21 +155,36 @@ const Header: FC<HeaderProps> = () => {
 
                     {showNotifications && (
                         <Card className={dropDownCls}>
-                            {notificationList && notificationList.map((item, index) => {
-                                return (
-                                    <NotificationItem
-                                        key={index}
-                                        id={item._id}
-                                        avatarLink={item.avatarImg}
-                                        message={item.message}
-                                        name={item.fullName}
-                                        type={item.type}
-                                        refreshData={getNotificationsHandler}
-                                    />
-                                );
-                            })}
+
+                            {isLoading ?
+                                <div className={"h-full w-full flex justify-center items-center align-middle"}>
+                                    <Icon className={"animate-spin"} name={"loadingIcon"} />
+                                </div> : notificationList && notificationList.length !== 0 ? notificationList.map((item, index) => {
+                                        return (
+                                            <NotificationItem
+                                                key={index}
+                                                id={item._id}
+                                                avatarLink={item.avatarImg}
+                                                message={item.message}
+                                                name={item.fullName}
+                                                type={item.type}
+                                                refreshData={getNotificationsHandler}
+                                                senderId={item.senderId}
+                                                friendDocumentId={item?.friendDocumentId}
+                                            />
+                                        );
+                                    }) :
+                                    <div
+                                        className={"flex flex-col justify-center items-center text-center ml-8 w-full"}>
+                                        <RegularSubtitle>No Notification</RegularSubtitle>
+                                        <Icon name="refreshIcon" className={"hover:cursor-pointer"} color={"black"}
+                                              onClick={getNotificationsHandler} />
+                                    </div>
+                            }
+
                         </Card>
                     )}
+
                 </div>
             </div>
         </div>

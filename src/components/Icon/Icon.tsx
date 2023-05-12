@@ -29,7 +29,9 @@ export type IconNames =
     | "secureIcon"
     | "warningIcon"
     | "successIcon"
-    | "errorIcon";
+    | "errorIcon"
+    | "refreshIcon"
+    | "loadingIcon"
 
 type IconProps = {
     color?: string;
@@ -87,23 +89,27 @@ const getIcon = (
         case "secureIcon":
             return <SecureIcon color={color} width={width} height={height} />;
         case "successIcon":
-            return <SuccesIcon color={color} width={width} height={height} />;
+            return <SuccessIcon color={color} width={width} height={height} />;
         case "warningIcon":
             return <WarningIcon color={color} width={width} height={height} />;
         case "errorIcon":
             return <ErrorIcon color={color} width={width} height={height} />;
+        case "refreshIcon":
+            return <RefreshIcon color={color} width={width} height={height} />;
+        case "loadingIcon":
+            return <LoadingIcon color={color} width={width} height={height} />;
     }
 };
 
 export const Icon = ({
-    name,
-    color,
-    className = "icon",
-    stroke,
-    onClick,
-    height,
-    width,
-}: IconTypes) => {
+                         name,
+                         color,
+                         className = "icon",
+                         stroke,
+                         onClick,
+                         height,
+                         width
+                     }: IconTypes) => {
     const component = getIcon(name, color, stroke, height, width);
     return (
         <div
@@ -483,10 +489,10 @@ const TransferMoneyIcon = ({ color = "black", width, height }: IconProps) => {
 };
 
 const SecureIcon = ({
-    color = "white",
-    width = 30,
-    height = 30,
-}: IconProps) => {
+                        color = "white",
+                        width = 30,
+                        height = 30
+                    }: IconProps) => {
     return (
         <svg
             width={width.toString()}
@@ -503,11 +509,11 @@ const SecureIcon = ({
     );
 };
 
-const SuccesIcon = ({ color = colors.green, width, height }: IconProps) => {
+const SuccessIcon = ({ color = colors.green, width=32, height=32 }: IconProps) => {
     return (
         <svg
-            width="32"
-            height="32"
+            width={width}
+            height={height}
             viewBox="0 0 32 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -532,11 +538,11 @@ const SuccesIcon = ({ color = colors.green, width, height }: IconProps) => {
     );
 };
 
-const WarningIcon = ({ color = colors.yellow, width, height }: IconProps) => {
+const WarningIcon = ({ color = colors.yellow, width=40, height=40 }: IconProps) => {
     return (
         <svg
-            width="40"
-            height="40"
+            width={width}
+            height={width}
             viewBox="0 0 40 40"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -550,11 +556,11 @@ const WarningIcon = ({ color = colors.yellow, width, height }: IconProps) => {
     );
 };
 
-const ErrorIcon = ({ color = colors.red, width, height }: IconProps) => {
+const ErrorIcon = ({ color = colors.red, width=31, height=31 }: IconProps) => {
     return (
         <svg
-            width="31"
-            height="31"
+            width={width}
+            height={height}
             viewBox="0 0 31 31"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -565,4 +571,34 @@ const ErrorIcon = ({ color = colors.red, width, height }: IconProps) => {
             />
         </svg>
     );
+};
+
+const RefreshIcon = ({ color = colors.white, width = 40, height = 40 }: IconProps) => {
+    return (
+        <svg width={width} height={height} viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M36.0353 12.9645C34.5243 11.4432 32.7271 10.236 30.7472 9.41252C28.7674 8.58905 26.6442 8.16562 24.4999 8.16663C15.4758 8.16663 8.18701 15.4758 8.18701 24.5C8.18701 33.5241 15.4758 40.8333 24.4999 40.8333C32.1153 40.8333 38.4649 35.627 40.282 28.5833H36.0353C35.1943 30.9711 33.633 33.039 31.5668 34.5018C29.5007 35.9645 27.0315 36.7501 24.4999 36.75C17.742 36.75 12.2499 31.2579 12.2499 24.5C12.2499 17.742 17.742 12.25 24.4999 12.25C27.8891 12.25 30.9108 13.6587 33.1158 15.8841L26.5416 22.4583H40.8333V8.16663L36.0353 12.9645Z"
+                fill={color} />
+        </svg>
+
+    );
+};
+
+const LoadingIcon = ({ color = colors.black, width = 50, height = 50 }: IconProps) => {
+    return <svg width={width} height={height} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clipPath="url(#clip0_1310_4)">
+            <path opacity="0.1" fillRule="evenodd" clipRule="evenodd"
+                  d="M12 4.5C10.0109 4.5 8.10322 5.29018 6.6967 6.6967C5.29018 8.10322 4.5 10.0109 4.5 12C4.5 13.9891 5.29018 15.8968 6.6967 17.3033C8.10322 18.7098 10.0109 19.5 12 19.5C13.9891 19.5 15.8968 18.7098 17.3033 17.3033C18.7098 15.8968 19.5 13.9891 19.5 12C19.5 10.0109 18.7098 8.10322 17.3033 6.6967C15.8968 5.29018 13.9891 4.5 12 4.5ZM1.5 12C1.5 6.201 6.201 1.5 12 1.5C17.799 1.5 22.5 6.201 22.5 12C22.5 17.799 17.799 22.5 12 22.5C6.201 22.5 1.5 17.799 1.5 12Z"
+                  fill={color} />
+            <path fillRule="evenodd" clipRule="evenodd"
+                  d="M12 4.50001C10.0664 4.49567 8.2066 5.24251 6.81301 6.58301C6.52428 6.84997 6.14228 6.99287 5.74923 6.98096C5.35618 6.96904 4.98353 6.80326 4.71151 6.51931C4.43948 6.23536 4.28984 5.85594 4.2948 5.46274C4.29975 5.06955 4.45891 4.69402 4.73801 4.41701C6.68993 2.54147 9.29305 1.49585 12 1.50001C12.3978 1.50001 12.7794 1.65805 13.0607 1.93935C13.342 2.22066 13.5 2.60219 13.5 3.00001C13.5 3.39784 13.342 3.77937 13.0607 4.06067C12.7794 4.34198 12.3978 4.50001 12 4.50001Z"
+                  fill={color} />
+        </g>
+        <defs>
+            <clipPath id="clip0_1310_4">
+                <rect width={width} height={height} fill="white" />
+            </clipPath>
+        </defs>
+    </svg>;
+
 };

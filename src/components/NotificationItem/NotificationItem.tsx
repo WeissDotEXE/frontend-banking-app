@@ -5,6 +5,8 @@ import { Icon } from "components/Icon/Icon";
 import Button from "components/Button/Button";
 import notificationEnum from "../../enums/notificationEnum";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { acceptFriend, deleteFriendNotification } from "redux/friendReducer";
 
 interface NotificationItemProps {
     id: string;
@@ -13,15 +15,16 @@ interface NotificationItemProps {
     message: string;
     type: number;
     refreshData: () => void;
+    senderId: string;
+    friendDocumentId: string | undefined;
 }
 
-const FriendRequestNotification = () => {
-};
 
 const NotificationItem: FC<NotificationItemProps> = (
     props: NotificationItemProps
 ) => {
-    const { id, avatarLink, message, name, type, refreshData } = props;
+    const { id, avatarLink, message, name, type, refreshData, senderId, friendDocumentId } = props;
+    const dispatch = useDispatch();
     const rootCls = cn(
         styles.NotificationItem,
         "grid",
@@ -52,6 +55,13 @@ const NotificationItem: FC<NotificationItemProps> = (
         "pb-4"
     );
 
+    const refreshIconCls = cn(
+        "absolute",
+        "top-0",
+        "right-0",
+        "hover:cursor-pointer"
+    );
+
     const [showMore, setShowMore] = useState(false);
 
     const deleteNotification = async () => {
@@ -67,9 +77,37 @@ const NotificationItem: FC<NotificationItemProps> = (
         }
     };
 
+    const declineFriendRequestHandler = async () => {
+        try {
+            // @ts-ignore
+            dispatch(deleteFriendNotification(id, friendDocumentId));
+            const response = await axios.delete(`${process.env.REACT_APP_BASE_URL}/notification/deleteone/${id}`);
+            if (response.status === 204) {
+                refreshData();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const acceptFriendRequestHandler = async () => {
+        try {
+            console.log(senderId);
+            // @ts-ignore
+            dispatch(acceptFriend(senderId));
+            const response = await axios.delete(`${process.env.REACT_APP_BASE_URL}/notification/deleteone/${id}`);
+            if (response.status === 204) {
+                refreshData();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <>
             <div className={rootCls} data-testid="NotificationItem">
+                <Icon name="refreshIcon" className={refreshIconCls} color={"black"} onClick={refreshData} />
                 <img alt={""} src={avatarLink} className={avatarCls} />
                 <p
                     className={`${!showMore && "truncate"} col-span-3`}
@@ -81,16 +119,13 @@ const NotificationItem: FC<NotificationItemProps> = (
             </div>
             {type === notificationEnum.friendRequest && (
                 <div className={buttonsCls}>
-                    <Button type="button" onClick={() => console.log("accept friend request")}>
+                    {/*@ts-ignore*/}
+                    <Button type="button" onClick={acceptFriendRequestHandler}>
                         Accept
                     </Button>
-                    {/*todo implement accept friend request by sending request to backend*/}
-                    <Button
-                        type="button"
-                        onClick={() => console.log("decline friend request")}
+                    {/*@ts-ignore*/}
+                    <Button type="button" onClick={declineFriendRequestHandler}
                     >
-                        {/*todo implement decline friend request by sending request to backend
-                        */}
                         Decline
                     </Button>
                 </div>
