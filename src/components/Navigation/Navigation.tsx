@@ -6,10 +6,11 @@ import BankingCards from "pages/BankingCards/BankingCards";
 import GenerateCard from "pages/GenerateCard/GenerateCard";
 import User from "pages/User/User";
 import Header from "components/Header/Header";
+import SearchUsersPage from "../../pages/SeachUsers/SearchUsersPage";
 
 const Navigation: FC = () => {
 
-    const token =localStorage.getItem("jwtToken");
+    const token = localStorage.getItem("jwtToken");
 
     return (
         <div>
@@ -39,10 +40,15 @@ const Navigation: FC = () => {
                     path="/user/:id"
                     element={!!token ? <User /> : <Navigate to="/auth" />}
                 />
+
+                <Route path={"/searchUsers/:fullName"}
+                       element={!!token ? <SearchUsersPage /> : <Navigate to={"/auth"} />} />
+
                 <Route
                     path="*"
                     element={!!token ? <Home /> : <Navigate to="/auth" />}
                 />
+
             </Routes>
         </div>
     );

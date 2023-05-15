@@ -30,10 +30,8 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
     const [isLoadingResponse, setIsLoadingResponse] = useState(false);
 
     const {
-        isLogin,
         sendRequest,
         errors,
-        response,
         statusCode,
         gotoLoginPage,
     } = useAuth();
@@ -190,7 +188,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
 
     return (
         <div>
-            <img src={authBackground} className={backgroundCls} />
+            <img src={authBackground} className={backgroundCls} alt={""}/>
             <Card className={rootCls} data-testid="Auth" noPadding>
                 <div className={leftCls}>
                     <RegularSubtitle color={"white-950"} bold className="mb-5">
