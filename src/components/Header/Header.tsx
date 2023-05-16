@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import styles from "./Header.module.scss";
 import cn from "classnames";
 import { Icon } from "components/Icon/Icon";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { UseWindowSize } from "functions/UseWindowSize";
 import { IsMobile } from "functions/Platform";
 import Card from "components/Card/Card";
@@ -29,7 +29,9 @@ const Header: FC<HeaderProps> = () => {
     const [showNotifications, setShowNotifications] = useState(false);
     const [notificationList, setNotificationList] = useState<NotificationType[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [searchedUser, setSearchedUser] = useState("");
     const location = useLocation();
+    const navigate=useNavigate();
 
     const rootCls = cn(
         styles.Header,
@@ -96,6 +98,10 @@ const Header: FC<HeaderProps> = () => {
     }, []);
 
 
+    const searchUserHandler = () => {
+        navigate(`/searchUsers/${searchedUser}`);
+    };
+
     return (
         <div className={rootCls} data-testid="Header">
             <Link to="/">
@@ -111,17 +117,18 @@ const Header: FC<HeaderProps> = () => {
             {IsMobile(width) ? (
                 <Icon name="searchIcon" className={iconCls} />
             ) : (
-                <div className="relative">
+                <form className="relative" onSubmit={searchUserHandler}>
                     <input
                         type="text"
                         className={inputCls}
                         placeholder="Search user"
+                        onChange={(e) => setSearchedUser(e.target.value)}
                     />
                     <Icon
                         name="searchIcon"
                         className="absolute right-5 top-2"
                     />
-                </div>
+                </form>
             )}
             <div className="flex relative">
                 <Link to="/cards">

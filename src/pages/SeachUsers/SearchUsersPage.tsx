@@ -6,6 +6,8 @@ import { RegularSubtitle } from "../../components/Typography/Typography";
 import cn from "classnames";
 import styles from "./SeachUsersPage.module.scss";
 import SearchUserItem from "../../components/SearchUserItem/SearchUserItem";
+import { Icon } from "../../components/Icon/Icon";
+import colors from "tailwindcss/colors";
 
 
 const SearchUsersPage = () => {
@@ -33,7 +35,11 @@ const SearchUsersPage = () => {
 
     return (
         <div>
-            {isLoading ? <div className={"w-full h-full"}>Loading...</div> :
+            {isLoading ?
+                <div className={"w-full h-full flex flex-col items-center justify-center"}>
+                    <Icon className={"animate-spin"} name={"loadingIcon"} color={colors.white}/>
+                    <RegularSubtitle color={"white-950"} bold={true}>Loading...</RegularSubtitle>
+                </div> :
                 <div className={rootCls}>
                     <RegularSubtitle position={"text-start"} color={"white-950"} bold={true}>
                         Search result for {fullName}</RegularSubtitle>
@@ -52,4 +58,3 @@ const SearchUsersPage = () => {
 };
 
 export default SearchUsersPage;
-;
