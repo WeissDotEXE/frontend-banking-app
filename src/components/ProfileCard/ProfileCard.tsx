@@ -6,6 +6,7 @@ import Card from "components/Card/Card";
 import { RegularSubtitle } from "components/Typography/Typography";
 import Button from "components/Button/Button";
 import { userDataInterface } from "../../pages/Home/Home";
+import getLastUserCode from "../../functions/getLastUserCode";
 
 interface ProfileCardProps {
     className?: string;
@@ -41,9 +42,13 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
                 src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"
             />
             <div className="mt-20 ">
-                <RegularSubtitle className="text-3xl font-bold">
-                    {userData && userData.fullName}
-                </RegularSubtitle>
+                <div className={"flex justify-center"}>
+                    <RegularSubtitle className="text-3xl font-bold mr-3">
+                        {userData && userData.fullName}
+                    </RegularSubtitle>
+                    <RegularSubtitle className={"text-gray-500"}>
+                        #{getLastUserCode(userData._id)}
+                    </RegularSubtitle></div>
 
                 <div className="flex justify-center mt-14">
                     <Button
@@ -73,7 +78,7 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
                         Join Date
                     </RegularSubtitle>
                     <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg mb-20">
-                        {userData && userData.joinDate.substring(0,10)}
+                        {userData && userData.joinDate.substring(0, 10)}
                     </RegularSubtitle>
                 </div>
             </div>

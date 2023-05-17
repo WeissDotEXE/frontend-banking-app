@@ -3,8 +3,18 @@ import { userDataInterface } from "../../pages/Home/Home";
 import cn from "classnames";
 import { RegularSubtitle } from "../Typography/Typography";
 import Button from "../Button/Button";
+import getLastUserCode from "../../functions/getLastUserCode";
 
-const SearchUserItem: FC<userDataInterface> = (props: userDataInterface) => {
+interface userDataWithFriends extends userDataInterface {
+    friendship: {
+        _id: string,
+        recipientId?: string,
+        requesterId?: string,
+        status: number
+    };
+}
+
+const SearchUserItem: FC<userDataWithFriends> = (props: userDataWithFriends) => {
 
         const { _id, fullName, email, avatarImg, joinDate } = props;
 
@@ -32,19 +42,21 @@ const SearchUserItem: FC<userDataInterface> = (props: userDataInterface) => {
             "ml-4",
             "text-xl"
         );
-        const buttonsCls=cn(
+        const buttonsCls = cn(
             "flex",
             "justify-between",
             "mr-6"
-        )
+        );
 
         return (
             <div className={rootCls} data-testid="SearchUserItem">
 
                 <div className={"flex items-center"}>
-                    <img src={avatarImg} className={avatarImgCls} alt={""}/>
+                    <img src={avatarImg} className={avatarImgCls} alt={""} />
                     <RegularSubtitle className={"ml-6"}>{fullName}</RegularSubtitle>
-                    <RegularSubtitle className={userCodeCls}>#5423</RegularSubtitle>
+                    <RegularSubtitle className={userCodeCls}>
+                        #{getLastUserCode(_id)}
+                    </RegularSubtitle>
                 </div>
                 <div className={buttonsCls}>
                     <Button type={"button"}>Add Friend</Button>

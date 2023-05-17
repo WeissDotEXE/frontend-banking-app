@@ -5,6 +5,7 @@ import Modal from "components/Modal/Modal";
 import { RegularSubtitle } from "../Typography/Typography";
 import Button from "../Button/Button";
 import axios from "axios";
+import getLastUserCode from "../../functions/getLastUserCode";
 
 interface FriendModalProps {
     fullName: string;
@@ -84,7 +85,10 @@ const FriendModal: FC<FriendModalProps> = (props: FriendModalProps) => {
                     </div>
                 </div> :
                 <div className={friendContentCls}>
-                    <RegularSubtitle>Name: {fullName}</RegularSubtitle>
+                    <RegularSubtitle>{fullName}</RegularSubtitle>
+                    <RegularSubtitle className={"text-gray-500"}>
+                        #{getLastUserCode(_id)}
+                    </RegularSubtitle>
                     <div className={buttonsCls}>
                         <Button type={"button"}>Send Money</Button>
                         <Button type={"button"} onClick={openRemoveContent}>Remove</Button>

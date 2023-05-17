@@ -7,6 +7,8 @@ import notificationEnum from "../../enums/notificationEnum";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { acceptFriend, deleteFriendNotification } from "redux/friendReducer";
+import getLastUserCode from "../../functions/getLastUserCode";
+import { RegularSubtitle } from "../Typography/Typography";
 
 interface NotificationItemProps {
     id: string;
@@ -108,7 +110,12 @@ const NotificationItem: FC<NotificationItemProps> = (
         <>
             <div className={rootCls} data-testid="NotificationItem">
                 <Icon name="refreshIcon" className={refreshIconCls} color={"black"} onClick={refreshData} />
-                <img alt={""} src={avatarLink} className={avatarCls} />
+                <div className={"w-full col-span-2 flex flex-col justify-center text-center items-center"}>
+                    <img alt={""} src={avatarLink} className={avatarCls} />
+                    <RegularSubtitle size={"sm"} className={"text-gray-500"}>
+                        #{getLastUserCode(id)}
+                    </RegularSubtitle>
+                </div>
                 <p
                     className={`${!showMore && "truncate"} col-span-3`}
                     onClick={() => setShowMore(!showMore)}
