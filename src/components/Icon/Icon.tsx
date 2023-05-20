@@ -32,6 +32,7 @@ export type IconNames =
     | "errorIcon"
     | "refreshIcon"
     | "loadingIcon"
+    | "logoutIcon"
 
 type IconProps = {
     color?: string;
@@ -98,6 +99,8 @@ const getIcon = (
             return <RefreshIcon color={color} width={width} height={height} />;
         case "loadingIcon":
             return <LoadingIcon color={color} width={width} height={height} />;
+        case "logoutIcon":
+            return <LogoutIcon color={color} width={width} height={height} />;
     }
 };
 
@@ -509,7 +512,7 @@ const SecureIcon = ({
     );
 };
 
-const SuccessIcon = ({ color = colors.green, width=32, height=32 }: IconProps) => {
+const SuccessIcon = ({ color = colors.green, width = 32, height = 32 }: IconProps) => {
     return (
         <svg
             width={width}
@@ -538,11 +541,11 @@ const SuccessIcon = ({ color = colors.green, width=32, height=32 }: IconProps) =
     );
 };
 
-const WarningIcon = ({ color = colors.yellow, width=40, height=40 }: IconProps) => {
+const WarningIcon = ({ color = colors.yellow, width = 40, height = 40 }: IconProps) => {
     return (
         <svg
             width={width}
-            height={width}
+            height={height}
             viewBox="0 0 40 40"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -556,7 +559,7 @@ const WarningIcon = ({ color = colors.yellow, width=40, height=40 }: IconProps) 
     );
 };
 
-const ErrorIcon = ({ color = colors.red, width=31, height=31 }: IconProps) => {
+const ErrorIcon = ({ color = colors.red, width = 31, height = 31 }: IconProps) => {
     return (
         <svg
             width={width}
@@ -600,5 +603,12 @@ const LoadingIcon = ({ color = colors.black, width = 50, height = 50 }: IconProp
             </clipPath>
         </defs>
     </svg>;
+};
 
+const LogoutIcon = ({ color = colors.black, width = 50, height = 50 }: IconProps) => {
+    return <svg width={width} height={height} viewBox="0 0 24 24" fill={color} xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M5 21C4.45 21 3.979 20.804 3.587 20.412C3.195 20.02 2.99934 19.5493 3 19V5C3 4.45 3.196 3.979 3.588 3.587C3.98 3.195 4.45067 2.99934 5 3H12V5H5V19H12V21H5ZM16 17L14.625 15.55L17.175 13H9V11H17.175L14.625 8.45L16 7L21 12L16 17Z"
+            fill={color} />
+    </svg>;
 };

@@ -10,6 +10,8 @@ import NotificationItem from "components/NotificationItem/NotificationItem";
 import * as process from "process";
 import axios from "axios";
 import { RegularSubtitle } from "../Typography/Typography";
+import colors from "tailwindcss/colors";
+import useAuth from "../../hooks/useAuth";
 
 interface HeaderProps {
 }
@@ -31,7 +33,8 @@ const Header: FC<HeaderProps> = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [searchedUser, setSearchedUser] = useState("");
     const location = useLocation();
-    const navigate=useNavigate();
+    const navigate = useNavigate();
+    const auth=useAuth();
 
     const rootCls = cn(
         styles.Header,
@@ -93,6 +96,7 @@ const Header: FC<HeaderProps> = () => {
         setIsLoading(false);
     };
 
+
     useEffect(() => {
         getNotificationsHandler();
     }, []);
@@ -140,6 +144,7 @@ const Header: FC<HeaderProps> = () => {
                             }`}
                         ></div>
                     </div>
+
                 </Link>
                 <div>
                     <div
@@ -188,11 +193,11 @@ const Header: FC<HeaderProps> = () => {
                                               onClick={getNotificationsHandler} />
                                     </div>
                             }
-
                         </Card>
                     )}
 
                 </div>
+                <Icon name={"logoutIcon"} onClick={auth.logoutUser} className={"cursor-pointer ml-6"} height={42} width={42} color={colors.white}/>
             </div>
         </div>
     );

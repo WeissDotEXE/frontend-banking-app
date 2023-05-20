@@ -1,6 +1,5 @@
 import { useState } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
 import { redirect } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 interface authCredentials {
@@ -55,7 +54,7 @@ const useAuth = () => {
         localStorage.removeItem("persist:root");
         localStorage.removeItem("userId");
         localStorage.removeItem("isLogged");
-        redirect("/auth"); // redirect to home page
+        navigate("/auth"); // redirect to home page
     };
     const gotoLoginPage = () => {
         redirect("/auth");
