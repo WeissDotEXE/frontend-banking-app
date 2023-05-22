@@ -20,6 +20,7 @@ export interface userDataInterface {
     email: string,
     avatarImg: string,
     joinDate: string
+    iban:string
 }
 
 const Home: FC = () => {

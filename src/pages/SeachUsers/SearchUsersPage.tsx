@@ -28,11 +28,12 @@ const SearchUsersPage = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const rootCls = cn(styles.searchUsersPage, "px-20", "mt-10");
-
+    const userId = localStorage.getItem("userId");
     const getUsers = async () => {
         try {
             const response = await axios.get(`${baseLink}/searchusers?fullName=${fullName}`);
-            setUsers(response.data.data);
+            const arrayWithoutUserId = response.data.data.filter((obj: any) => obj._id !== userId);
+            setUsers(arrayWithoutUserId);
             setIsLoading(false);
         } catch (error) {
             console.log(error);
@@ -67,9 +68,12 @@ const SearchUsersPage = () => {
                                                        email={item.email}
                                                        avatarImg={item.avatarImg} joinDate={item.joinDate}
                                                        friendship={item.friendship}
+                                                       iban={item.iban}
                                 />;
                             }
-                        )})
+                        )}
+                        {users && users.length===0 &&
+                            <RegularSubtitle color={"white-950"}>No results</RegularSubtitle>}
                     </div>
                 </div>
             }

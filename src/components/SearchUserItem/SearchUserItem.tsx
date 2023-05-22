@@ -4,6 +4,7 @@ import cn from "classnames";
 import { RegularSubtitle } from "../Typography/Typography";
 import Button from "../Button/Button";
 import getLastUserCode from "../../functions/getLastUserCode";
+import axios from "axios";
 
 interface userDataWithFriends extends userDataInterface {
     friendship: {
@@ -17,6 +18,7 @@ interface userDataWithFriends extends userDataInterface {
 const SearchUserItem: FC<userDataWithFriends> = (props: userDataWithFriends) => {
 
         const { _id, fullName, email, avatarImg, joinDate } = props;
+        const userId = localStorage.getItem("userId");
 
         const rootCls = cn(
             "flex",
@@ -48,6 +50,17 @@ const SearchUserItem: FC<userDataWithFriends> = (props: userDataWithFriends) => 
             "mr-6"
         );
 
+        const sendFriendRequestUrl = `${process.env.REACT_APP_BASE_URL}/friends/sendFriendRequest`;
+        const addFriendHandler = async () => {
+            try {
+                const response = await axios.patch(`${sendFriendRequestUrl}/${userId}`,
+                    { friendId: _id });
+                console.log(response);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
         return (
             <div className={rootCls} data-testid="SearchUserItem">
 
@@ -59,7 +72,7 @@ const SearchUserItem: FC<userDataWithFriends> = (props: userDataWithFriends) => 
                     </RegularSubtitle>
                 </div>
                 <div className={buttonsCls}>
-                    <Button type={"button"}>Add Friend</Button>
+                    <Button type={"button"} onClick={addFriendHandler}>Add Friend</Button>
                     <Button type={"button"}>Send Money</Button>
                 </div>
             </div>

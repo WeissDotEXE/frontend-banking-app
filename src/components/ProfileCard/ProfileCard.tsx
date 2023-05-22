@@ -46,9 +46,10 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
                     <RegularSubtitle className="text-3xl font-bold mr-3">
                         {userData && userData.fullName}
                     </RegularSubtitle>
-                    <RegularSubtitle className={"text-gray-500"}>
+                    {userData && <RegularSubtitle className={"text-gray-500"}>
                         #{getLastUserCode(userData._id)}
-                    </RegularSubtitle></div>
+                    </RegularSubtitle>}
+                </div>
 
                 <div className="flex justify-center mt-14">
                     <Button
@@ -72,7 +73,7 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
                     {/*todo replace with iban from backend
                         generate iban in backend*/}
                     <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg truncate w-2/3">
-                        IBAN HARDCODAT TODO
+                        {userData && userData.iban}
                     </RegularSubtitle>
                     <RegularSubtitle className="text-base lg:text-2xl font-bold">
                         Join Date

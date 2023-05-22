@@ -69,10 +69,10 @@ const FriendsCard: FC<FriendsCardProps> = (props: FriendsCardProps) => {
 
     const friendIdDeceider = (item: friendItem): string => {
         if (item.recipientId._id === localStorage.getItem("userId")) {
-            return "recipientId";
+            return "requesterId";
 
         }
-        return "requesterId";
+        return "recipientId";
     };
 
     return (
