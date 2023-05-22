@@ -33,7 +33,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
         sendRequest,
         errors,
         statusCode,
-        gotoLoginPage,
+        gotoLoginPage
     } = useAuth();
     const { errorNotification, successNotification, warningNotification } =
         useNotify();
@@ -41,10 +41,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
     const rootCls = cn(
         styles.Auth,
         className,
-        "grid",
-        "md:grid-cols-5",
-        "w-10/12 md:w-7/12",
-        "h-4/5",
+        "flex flex-col xl:flex-row",
         "overflow-auto"
     );
 
@@ -59,7 +56,14 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
         "z-0"
     );
 
-    const rightCls = cn(styles.left, "col-span-3", "p-10");
+    const rightCls = cn(styles.left,
+        // "col-span-3",
+        "p-10",
+        "flex",
+        "flex-col",
+        "items-center",
+        "w-full"
+    );
 
     const leftCls = cn(
         styles.right,
@@ -77,7 +81,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
             fullName: "",
             email: "",
             password: "",
-            repeatPassword: "",
+            repeatPassword: ""
         },
         validationSchema: Yup.object({
             // username: Yup.string()
@@ -87,7 +91,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                 .required("Email is required")
                 .email("Invalid email adress"),
             password: Yup.string().required("Password is required").min(6),
-            repeatPassword: Yup.string().min(6),
+            repeatPassword: Yup.string().min(6)
         }),
         onSubmit: async (values: LoginData) => {
             try {
@@ -103,7 +107,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                         fullName: values.fullName,
                         email: values.email,
                         password: values.password,
-                        repeatPassword: values.repeatPassword,
+                        repeatPassword: values.repeatPassword
                     };
                     response = await sendRequest(credentials, "register");
                     console.log(response);
@@ -112,7 +116,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                         fullName: values.fullName,
                         email: values.email,
                         password: values.password,
-                        repeatPassword: values.repeatPassword,
+                        repeatPassword: values.repeatPassword
                     };
                     response = await sendRequest(credentials, "login");
                     console.log(response);
@@ -125,7 +129,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
             } finally {
                 setIsLoadingResponse(false);
             }
-        },
+        }
     });
     const registerFieldList = [
         {
@@ -135,7 +139,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
             name: "fullName",
             value: formik.values.fullName,
             onChange: formik.handleChange,
-            error: formik.errors.fullName,
+            error: formik.errors.fullName
         },
         {
             type: "email",
@@ -144,7 +148,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
             name: "email",
             value: formik.values.email,
             onChange: formik.handleChange,
-            error: formik.errors.email,
+            error: formik.errors.email
         },
         {
             type: "password",
@@ -153,7 +157,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
             name: "password",
             value: formik.values.password,
             onChange: formik.handleChange,
-            error: formik.errors.password,
+            error: formik.errors.password
         },
         {
             type: "password",
@@ -162,8 +166,8 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
             name: "repeatPassword",
             value: formik.values.repeatPassword,
             onChange: formik.handleChange,
-            error: formik.errors.repeatPassword,
-        },
+            error: formik.errors.repeatPassword
+        }
     ];
     const loginFieldList = [
         {
@@ -173,7 +177,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
             name: "email",
             value: formik.values.email,
             onChange: formik.handleChange,
-            error: formik.errors.email,
+            error: formik.errors.email
         },
         {
             type: "password",
@@ -182,13 +186,13 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
             name: "password",
             value: formik.values.password,
             onChange: formik.handleChange,
-            error: formik.errors.password,
-        },
+            error: formik.errors.password
+        }
     ];
 
     return (
         <div>
-            <img src={authBackground} className={backgroundCls} alt={""}/>
+            <img src={authBackground} className={backgroundCls} alt={""} />
             <Card className={rootCls} data-testid="Auth" noPadding>
                 <div className={leftCls}>
                     <RegularSubtitle color={"white-950"} bold className="mb-5">
@@ -203,49 +207,49 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                 <form className={rightCls} onSubmit={formik.handleSubmit}>
                     {isRegister
                         ? registerFieldList.map((item, index) => {
-                              return (
-                                  <div key={index}>
-                                      <Input
-                                          type={item.type}
-                                          label={item.label}
-                                          placeholder={item.placeholder}
-                                          onChange={formik.handleChange}
-                                          name={item.name}
-                                          value={item.value}
-                                      />
-                                      <p className="text-red-600 flex w-full text-center mx-auto">
-                                          {item.error}
-                                      </p>
-                                  </div>
-                              );
-                          })
+                            return (
+                                <div key={index} className={"w-full"}>
+                                    <Input
+                                        type={item.type}
+                                        label={item.label}
+                                        placeholder={item.placeholder}
+                                        onChange={formik.handleChange}
+                                        name={item.name}
+                                        value={item.value}
+                                    />
+                                    <p className="text-red-600 flex w-full text-center mx-auto">
+                                        {item.error}
+                                    </p>
+                                </div>
+                            );
+                        })
                         : loginFieldList.map((item, index) => {
-                              return (
-                                  <div key={index}>
-                                      <Input
-                                          type={item.type}
-                                          label={item.label}
-                                          placeholder={item.placeholder}
-                                          onChange={formik.handleChange}
-                                          name={item.name}
-                                          value={item.value}
-                                      />
-                                      <p className="text-red-600 flex w-full text-center mx-auto">
-                                          {item.error}
-                                      </p>
-                                  </div>
-                              );
-                          })}
+                            return (
+                                <div key={index} className={"w-full"}>
+                                    <Input
+                                        type={item.type}
+                                        label={item.label}
+                                        placeholder={item.placeholder}
+                                        onChange={formik.handleChange}
+                                        name={item.name}
+                                        value={item.value}
+                                    />
+                                    <p className="text-red-600 flex w-full text-center mx-auto">
+                                        {item.error}
+                                    </p>
+                                </div>
+                            );
+                        })}
                     <Button
-                        className={`w-full mt-10 ${isLoadingResponse&& 'bg-pink-disable'}`}
+                        className={`w-full mt-10 ${isLoadingResponse && "bg-pink-disable"}`}
                         type="submit"
                         disable={isLoadingResponse}
                     >
                         {isLoadingResponse
                             ? "Loading..."
                             : isRegister
-                            ? "Register"
-                            : "Log In"}
+                                ? "Register"
+                                : "Log In"}
                     </Button>
                     <div className="flex justify-center text-center mx-auto mt-4">
                         <RegularSubtitle size={"xl"} className="mr-3">
