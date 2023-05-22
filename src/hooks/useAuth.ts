@@ -39,8 +39,8 @@ const useAuth = () => {
             if (res.data) {
                 localStorage.setItem("jwtToken", res.data.token);
                 localStorage.setItem("userId", res.data.data._id);
-                //user will be redirect to feed if no error occure
-                navigate("/");
+                // eslint-disable-next-line no-restricted-globals
+                location.reload()
             }
             return res.data;
         } catch (error: any) {
@@ -54,7 +54,8 @@ const useAuth = () => {
         localStorage.removeItem("persist:root");
         localStorage.removeItem("userId");
         localStorage.removeItem("isLogged");
-        navigate("/auth"); // redirect to home page
+        // eslint-disable-next-line no-restricted-globals
+        location.reload()
     };
     const gotoLoginPage = () => {
         redirect("/auth");
