@@ -1,69 +1,65 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import styles from "./BankingCardItem.module.scss";
 import cn from "classnames";
 import { RegularSubtitle } from "components/Typography/Typography";
 import { Icon } from "components/Icon/Icon";
+import bankingCardTypeEnum from "../../enums/bankingCardTypeEnum";
+import bankingCardColorEnum from "../../enums/bankingCardColorEnum";
+import { BankingCardItemInteface } from "../../pages/BankingCards/BankingCards";
 
-interface BankingCardItemProps {
-    id: string;
-    type: "premium" | "normal";
-    cardNumber: number;
-    name: string;
-    expireDate: string;
-    processing: "visa" | "mastercard";
-    className?: string;
-}
-
-const BankingCardItem: FC<BankingCardItemProps> = (props) => {
-    const { id, cardNumber, name, expireDate, processing, type, className } =
+const BankingCardItem: FC<BankingCardItemInteface> = (props) => {
+    const { id, cardNumber, name, expireDate, color, cardType, className } =
         props;
 
-    const rootCls = cn(
-        styles.BankingCardItem,
-        type === "premium" ? styles.premiumCard : styles.normalCard,
-        className,
+    const cardCls = cn(
+        color === bankingCardColorEnum.white && "bg-white-950",
+        color === bankingCardColorEnum.purple && styles.purpleCard,
+        color === bankingCardColorEnum.orange && styles.orangeCard,
+        "w-80 md:w-2/4 lg:w-2/6",
+        "h-1/4 md:h-1/3",
+        "bg-blue-950",
         "rounded-lg",
-        "w-96",
-        "h-72",
-        "relative",
-        "border-2",
-        "my-8 lg:my-2",
-        "backdrop-blur-sm",
-        type === "normal" && "bg-white-950",
-        "cursor-pointer"
+        "drop-shadow-2xl"
     );
-
-    const [cardNumberFormated, setCardNumberFormated] = useState();
 
     const bottomPartCls = cn(
         styles.bottomPart,
         "absolute",
-        type === "premium"
-            ? "bg-gradient-to-r from-orange-500 via-purple-500 to-blue-500"
-            : "bg-gradient-to-r from-cyan-500 to-blue-500",
+        // cardType === "premium"
+        //     ? "bg-gradient-to-r from-orange-500 via-purple-500 to-blue-500"
+        //     : "bg-gradient-to-r from-cyan-500 to-blue-500",
         "bottom-0",
         "left-0",
         "w-full",
         "h-1/4",
         "rounded-b-lg",
         "flex",
-        "px-4",
+        "px-6",
         "text-white-950",
-        "justify-around",
+        "justify-between",
         "items-center",
-        "shadow-md",
-        "shadow-pink-950"
+        color === bankingCardColorEnum.white ? "text-black" : "text-white-950"
     );
 
+    const insertSpaces = (str: string) => {
+        return str.replace(/(.{4})/g, "$1 ");
+    };
+
     return (
-        <div className={rootCls} data-testid="BankingCards">
+        <div className={cardCls} data-testid="BankingCards">
             <div className="text-gray-950 flex items-center justify-between px-6 mt-10">
-                <div className="col-span-3 flex flex-col ">
+                <div
+                    className={`col-span-3 flex flex-col ${
+                        color === bankingCardColorEnum.white
+                            ? "text-black"
+                            : "text-white-950"
+                    }`}
+                >
                     <RegularSubtitle bold position={"text-left"}>
                         Banking App
                     </RegularSubtitle>
                     <RegularSubtitle position={"text-left"} className="mt-3">
-                        {cardNumber}
+                        {insertSpaces(cardNumber.toString())}
                     </RegularSubtitle>
                 </div>
                 <div className="flex items-center">
@@ -74,7 +70,7 @@ const BankingCardItem: FC<BankingCardItemProps> = (props) => {
                 <RegularSubtitle bold>{name}</RegularSubtitle>
                 <RegularSubtitle>{expireDate}</RegularSubtitle>
 
-                {processing === "mastercard" ? (
+                {cardType === bankingCardTypeEnum.mastercard ? (
                     <Icon name="mastercardIcon" />
                 ) : (
                     <Icon name="visaIcon" />

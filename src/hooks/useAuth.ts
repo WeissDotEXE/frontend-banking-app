@@ -12,7 +12,6 @@ interface authCredentials {
 const useAuth = () => {
     const BASE_LOGIN_URL = process.env.REACT_APP_BASE_URL;
 
-
     const [errors, setErrors] = useState<boolean>(false);
     const [statusCode, setStatusCode] = useState<number>();
     const navigate = useNavigate();
@@ -39,8 +38,9 @@ const useAuth = () => {
             if (res.data) {
                 localStorage.setItem("jwtToken", res.data.token);
                 localStorage.setItem("userId", res.data.data._id);
+                localStorage.setItem("fullName", res.data.fullName);
                 // eslint-disable-next-line no-restricted-globals
-                location.reload()
+                location.reload();
             }
             return res.data;
         } catch (error: any) {
@@ -55,7 +55,7 @@ const useAuth = () => {
         localStorage.removeItem("userId");
         localStorage.removeItem("isLogged");
         // eslint-disable-next-line no-restricted-globals
-        location.reload()
+        location.reload();
     };
     const gotoLoginPage = () => {
         redirect("/auth");

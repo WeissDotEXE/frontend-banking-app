@@ -13,8 +13,7 @@ import { RegularSubtitle } from "../Typography/Typography";
 import colors from "tailwindcss/colors";
 import useAuth from "../../hooks/useAuth";
 
-interface HeaderProps {
-}
+interface HeaderProps {}
 
 interface NotificationType {
     _id: string;
@@ -22,19 +21,21 @@ interface NotificationType {
     avatarImg: string;
     message: string;
     type: number;
-    senderId: string,
-    friendDocumentId?: string | undefined
+    senderId: string;
+    friendDocumentId?: string | undefined;
 }
 
 const Header: FC<HeaderProps> = () => {
     const [width] = UseWindowSize();
     const [showNotifications, setShowNotifications] = useState(false);
-    const [notificationList, setNotificationList] = useState<NotificationType[]>([]);
+    const [notificationList, setNotificationList] = useState<
+        NotificationType[]
+    >([]);
     const [isLoading, setIsLoading] = useState(false);
     const [searchedUser, setSearchedUser] = useState("");
     const location = useLocation();
     const navigate = useNavigate();
-    const auth=useAuth();
+    const auth = useAuth();
 
     const rootCls = cn(
         styles.Header,
@@ -86,21 +87,20 @@ const Header: FC<HeaderProps> = () => {
         notificationList.length === 0 && "flex"
     );
 
-
     const userId = localStorage.getItem("userId");
     const getNotificationsHandler = async () => {
         setIsLoading(true);
-        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/notification/${userId}`);
+        const response = await axios.get(
+            `${process.env.REACT_APP_BASE_URL}/notification/${userId}`
+        );
         console.log(response.data.data);
         setNotificationList(response.data.data);
         setIsLoading(false);
     };
 
-
     useEffect(() => {
         getNotificationsHandler();
     }, []);
-
 
     const searchUserHandler = () => {
         navigate(`/searchUsers/${searchedUser}`);
@@ -144,7 +144,6 @@ const Header: FC<HeaderProps> = () => {
                             }`}
                         ></div>
                     </div>
-
                 </Link>
                 <div>
                     <div
@@ -154,50 +153,79 @@ const Header: FC<HeaderProps> = () => {
                             name="notificationIcon"
                             className={`${iconCls} ml-10 cursor-pointer`}
                         />
-                        {!showNotifications && notificationList.length !== 0 && (
-                            <div
-                                className="w-5  text-white-950 cursor-pointer  bg-red-950 rounded-full absolute bottom-5 right-0">
-                                <p className="font-normal flex justify-center">
-                                    {notificationList.length}
-                                </p>
-                            </div>
-                        )}
+                        {!showNotifications &&
+                            notificationList.length !== 0 && (
+                                <div className="w-5  text-white-950 cursor-pointer  bg-red-950 rounded-full absolute bottom-5 right-0">
+                                    <p className="font-normal flex justify-center">
+                                        {notificationList.length}
+                                    </p>
+                                </div>
+                            )}
                     </div>
                     {/* use map() for rendering future notifications */}
 
                     {showNotifications && (
                         <Card className={dropDownCls}>
-
-                            {isLoading ?
-                                <div className={"h-full w-full flex justify-center items-center align-middle"}>
-                                    <Icon className={"animate-spin"} name={"loadingIcon"} />
-                                </div> : notificationList && notificationList.length !== 0 ? notificationList.map((item, index) => {
-                                        return (
-                                            <NotificationItem
-                                                key={index}
-                                                id={item._id}
-                                                avatarLink={item.avatarImg}
-                                                message={item.message}
-                                                name={item.fullName}
-                                                type={item.type}
-                                                refreshData={getNotificationsHandler}
-                                                senderId={item.senderId}
-                                                friendDocumentId={item?.friendDocumentId}
-                                            />
-                                        );
-                                    }) :
-                                    <div
-                                        className={"flex flex-col justify-center items-center text-center ml-8 w-full"}>
-                                        <RegularSubtitle>No Notification</RegularSubtitle>
-                                        <Icon name="refreshIcon" className={"hover:cursor-pointer"} color={"black"}
-                                              onClick={getNotificationsHandler} />
-                                    </div>
-                            }
+                            {isLoading ? (
+                                <div
+                                    className={
+                                        "h-full w-full flex justify-center items-center align-middle"
+                                    }
+                                >
+                                    <Icon
+                                        className={"animate-spin"}
+                                        name={"loadingIcon"}
+                                    />
+                                </div>
+                            ) : notificationList &&
+                              notificationList.length !== 0 ? (
+                                notificationList.map((item, index) => {
+                                    return (
+                                        <NotificationItem
+                                            key={index}
+                                            id={item._id}
+                                            avatarLink={item.avatarImg}
+                                            message={item.message}
+                                            name={item.fullName}
+                                            type={item.type}
+                                            refreshData={
+                                                getNotificationsHandler
+                                            }
+                                            senderId={item.senderId}
+                                            friendDocumentId={
+                                                item?.friendDocumentId
+                                            }
+                                        />
+                                    );
+                                })
+                            ) : (
+                                <div
+                                    className={
+                                        "flex flex-col justify-center items-center text-center ml-8 w-full"
+                                    }
+                                >
+                                    <RegularSubtitle>
+                                        No Notification
+                                    </RegularSubtitle>
+                                    <Icon
+                                        name="refreshIcon"
+                                        className={"hover:cursor-pointer"}
+                                        color={"black"}
+                                        onClick={getNotificationsHandler}
+                                    />
+                                </div>
+                            )}
                         </Card>
                     )}
-
                 </div>
-                <Icon name={"logoutIcon"} onClick={auth.logoutUser} className={"cursor-pointer ml-6"} height={42} width={42} color={colors.white}/>
+                <Icon
+                    name={"logoutIcon"}
+                    onClick={auth.logoutUser}
+                    className={"cursor-pointer ml-6"}
+                    height={42}
+                    width={42}
+                    color={colors.white}
+                />
             </div>
         </div>
     );

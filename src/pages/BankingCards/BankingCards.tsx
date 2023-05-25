@@ -7,22 +7,28 @@ import Button from "components/Button/Button";
 import background from "assets/images/cardsBackground.svg";
 import { Icon } from "components/Icon/Icon";
 import colors from "colors.module.scss";
+import { useNavigate } from "react-router-dom";
+import bankingCardTypeEnum from "../../enums/bankingCardTypeEnum";
+import bankingCardColorEnum from "../../enums/bankingCardColorEnum";
+
 interface BankingCardsProps {
     className?: string;
 }
 
-interface BankingCardItemList {
+export interface BankingCardItemInteface {
     id: string;
-    type: "premium" | "normal";
+    cardType: bankingCardTypeEnum;
     cardNumber: number;
     name: string;
     expireDate: string;
-    processing: "visa" | "mastercard";
+    color: bankingCardColorEnum;
     className?: string;
 }
 
 const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
-    const [cardList, setCardList] = useState<BankingCardItemList[]>([]);
+    const [cardList, setCardList] = useState<BankingCardItemInteface[]>([]);
+
+    const navigate = useNavigate();
 
     const rootCls = cn(styles.rootCls, "p-4 md:p-10", "w-full");
     const cardsCls = cn(
@@ -35,9 +41,10 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
         <div className={rootCls}>
             <img
                 src={background}
-                className="absolute top-0 left-0 h-full w-full"
+                className="absolute top-0 left-0 h-full w-full z-0"
+                alt={""}
             />
-            <div className="md:flex justify-between mb-10">
+            <div className="relative md:flex justify-between mb-10 z-10">
                 <div className="flex justify-center items-center">
                     <RegularSubtitle
                         position={"text-left"}
@@ -58,8 +65,12 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
                     </RegularSubtitle>
                 </div>
                 {cardList.length < 3 && (
-                    <Button type="button" className="flex items-center">
-                        Generate Card{" "}
+                    <Button
+                        type="button"
+                        className="flex items-center"
+                        onClick={() => navigate("/generatecard")}
+                    >
+                        Generate Card
                         <Icon
                             name="addIcon"
                             className="w-8 ml-4"
@@ -82,12 +93,13 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
                     {cardList.map((item, index) => {
                         return (
                             <BankingCardItem
+                                key={index}
                                 id={item.id}
-                                type={item.type}
+                                color={item.color}
                                 cardNumber={item.cardNumber}
                                 name={item.name}
                                 expireDate={item.expireDate}
-                                processing={item.processing}
+                                cardType={item.cardType}
                             />
                         );
                     })}

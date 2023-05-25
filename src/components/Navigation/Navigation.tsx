@@ -3,13 +3,12 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "pages/Home/Home";
 import Auth from "pages/Auth/Auth";
 import BankingCards from "pages/BankingCards/BankingCards";
-import GenerateCard from "pages/GenerateCard/GenerateCard";
+import GenerateCardPage from "pages/GenerateCardPage/GenerateCardPage";
 import User from "pages/User/User";
 import Header from "components/Header/Header";
 import SearchUsersPage from "../../pages/SeachUsers/SearchUsersPage";
 
 const Navigation: FC = () => {
-
     const token = localStorage.getItem("jwtToken");
 
     return (
@@ -33,7 +32,7 @@ const Navigation: FC = () => {
                 <Route
                     path="/generatecard"
                     element={
-                        !!token ? <GenerateCard /> : <Navigate to="/auth" />
+                        !!token ? <GenerateCardPage /> : <Navigate to="/auth" />
                     }
                 />
                 <Route
@@ -41,14 +40,21 @@ const Navigation: FC = () => {
                     element={!!token ? <User /> : <Navigate to="/auth" />}
                 />
 
-                <Route path={"/searchUsers/:fullName"}
-                       element={!!token ? <SearchUsersPage /> : <Navigate to={"/auth"} />} />
+                <Route
+                    path={"/searchUsers/:fullName"}
+                    element={
+                        !!token ? (
+                            <SearchUsersPage />
+                        ) : (
+                            <Navigate to={"/auth"} />
+                        )
+                    }
+                />
 
                 <Route
                     path="*"
                     element={!!token ? <Home /> : <Navigate to="/auth" />}
                 />
-
             </Routes>
         </div>
     );
