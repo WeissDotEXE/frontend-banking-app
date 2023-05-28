@@ -35,7 +35,6 @@ const BankingCardItem: FC<BankingCardItemInteface> = (props) => {
         "rounded-b-lg",
         "flex",
         "px-6",
-        "text-white-950",
         "justify-between",
         "items-center",
         color === bankingCardColorEnum.white ? "text-black" : "text-white-950"
@@ -47,9 +46,9 @@ const BankingCardItem: FC<BankingCardItemInteface> = (props) => {
 
     return (
         <div className={cardCls} data-testid="BankingCards">
-            <div className="text-gray-950 flex items-center justify-between px-6 mt-10">
+            <div className="text-gray-950 flex items-center px-6 mt-10">
                 <div
-                    className={`col-span-3 flex flex-col ${
+                    className={`flex flex-col w-4/5 ${
                         color === bankingCardColorEnum.white
                             ? "text-black"
                             : "text-white-950"
@@ -58,16 +57,19 @@ const BankingCardItem: FC<BankingCardItemInteface> = (props) => {
                     <RegularSubtitle bold position={"text-left"}>
                         Banking App
                     </RegularSubtitle>
-                    <RegularSubtitle position={"text-left"} className="mt-3">
+                    <RegularSubtitle
+                        position={"text-left"}
+                        className={"mt-3 truncate w-2/3 md:w-full"}
+                    >
                         {insertSpaces(cardNumber.toString())}
                     </RegularSubtitle>
                 </div>
-                <div className="flex items-center">
-                    <Icon name="cardSimIcon" />
-                </div>
+                <Icon name="cardSimIcon" className={""} />
             </div>
             <div className={bottomPartCls}>
-                <RegularSubtitle bold>{name}</RegularSubtitle>
+                <RegularSubtitle bold className={"truncate w-1/2"}>
+                    {name}
+                </RegularSubtitle>
                 <RegularSubtitle>{expireDate}</RegularSubtitle>
 
                 {cardType === bankingCardTypeEnum.mastercard ? (

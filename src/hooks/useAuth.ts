@@ -38,7 +38,7 @@ const useAuth = () => {
             if (res.data) {
                 localStorage.setItem("jwtToken", res.data.token);
                 localStorage.setItem("userId", res.data.data._id);
-                localStorage.setItem("fullName", res.data.fullName);
+                localStorage.setItem("fullName", res.data.data.fullName);
                 // eslint-disable-next-line no-restricted-globals
                 location.reload();
             }
