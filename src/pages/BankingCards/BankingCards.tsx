@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styles from "./BankingCards.module.scss";
 import cn from "classnames";
 import BankingCardItem from "components/BankingCardItem/BankingCardItem";
@@ -10,6 +10,7 @@ import colors from "colors.module.scss";
 import { useNavigate } from "react-router-dom";
 import bankingCardTypeEnum from "../../enums/bankingCardTypeEnum";
 import bankingCardColorEnum from "../../enums/bankingCardColorEnum";
+import axios from "axios";
 
 interface BankingCardsProps {
     className?: string;
@@ -17,9 +18,17 @@ interface BankingCardsProps {
 
 export interface BankingCardItemInteface {
     id: string;
-    cardType: bankingCardTypeEnum;
+    type: bankingCardTypeEnum;
     cardNumber: number;
-    name: string;
+    userId: {
+        _id: string;
+        fullName: string;
+        email: string;
+        avatarImg: string;
+        iban: string;
+        joinDate: string;
+    };
+    cvv: number;
     expireDate: string;
     color: bankingCardColorEnum;
     className?: string;
@@ -30,13 +39,38 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
 
     const navigate = useNavigate();
 
-    const rootCls = cn(styles.rootCls, "p-4 md:p-10", "w-full");
+    const rootCls = cn(
+        styles.rootCls,
+        "p-4 md:p-10",
+        "w-full",
+        "z-0",
+        "relative"
+    );
     const cardsCls = cn(
         styles.cards,
-        "lg:flex grid justify-items-center",
+        "flex flex-col lg:flex-row justify-around items-center lg:items-start",
         "overflow-auto",
-        "lg:flex-nowrap"
+        "lg:flex-nowrap",
+        "h-screen"
     );
+
+    const getUserBankingCardsHandler = async () => {
+        try {
+            const userId = localStorage.getItem("userId");
+            const url = `${process.env.REACT_APP_BASE_URL}/bankingCards/${userId}`;
+            const response = await axios.get(url);
+            if (response.status === 200) {
+                setCardList(response.data.data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        getUserBankingCardsHandler();
+    }, []);
+
     return (
         <div className={rootCls}>
             <img
@@ -45,7 +79,7 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
                 alt={""}
             />
             <div className="relative md:flex justify-between mb-10 z-10">
-                <div className="flex justify-center items-center">
+                <div className="flex-col justify-center items-center">
                     <RegularSubtitle
                         position={"text-left"}
                         bold
@@ -60,11 +94,10 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
                         className="text-3xl"
                         position={"text-left"}
                     >
-                        {cardList.length > 0 &&
-                            `You have {cardList.length} cards`}
+                        {cardList.length > 0 && `${cardList.length} cards`}
                     </RegularSubtitle>
                 </div>
-                {cardList.length < 3 && (
+                {cardList.length < 2 && (
                     <Button
                         type="button"
                         className="flex items-center"
@@ -97,9 +130,10 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
                                 id={item.id}
                                 color={item.color}
                                 cardNumber={item.cardNumber}
-                                name={item.name}
+                                userId={item.userId}
                                 expireDate={item.expireDate}
-                                cardType={item.cardType}
+                                type={item.type}
+                                cvv={item.cvv}
                             />
                         );
                     })}

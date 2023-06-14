@@ -10,10 +10,10 @@ import BankingCardColorEnum from "../../enums/bankingCardColorEnum";
 import bankingCardColorEnum from "../../enums/bankingCardColorEnum";
 import bankingCardTypeEnum from "../../enums/bankingCardTypeEnum";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 interface GenerateCardProps {}
 
 const GenerateCardPage: FC<GenerateCardProps> = () => {
-    const [userData, setUserData] = useState();
     const [cardType, setCardType] = useState<bankingCardTypeEnum>(
         bankingCardTypeEnum.visa
     );
@@ -21,6 +21,7 @@ const GenerateCardPage: FC<GenerateCardProps> = () => {
         bankingCardColorEnum.white
     );
     const userId = localStorage.getItem("userId");
+    const navigate = useNavigate();
 
     const {
         successNotification,
@@ -66,36 +67,49 @@ const GenerateCardPage: FC<GenerateCardProps> = () => {
         "justify-around",
         "mt-8 lg:mt-0"
     );
+
+    const mockUserId = {
+        _id: "646b0fe18ee7d25c297395c3",
+        fullName: "Tache Mihnea Cristian",
+        email: "tmihnea555@gmail.com",
+        avatarImg: "https://www.w3schools.com/howto/img_avatar.png",
+        iban: "JMpuy3rS1UN0ALpG",
+        joinDate: "2023-05-22T06:31:08.843Z",
+    };
+
     const colorOptionCls = cn("h-16", "w-16", "rounded-full");
 
-    const getUserData = async () => {
-        const response = await axios.get(
-            `${process.env.REACT_APP_BASE_URL}/user/${userId}`
-        );
-        setUserData(response.data.data);
+    const generateCardHandler = async () => {
+        try {
+            const bankingCard = {
+                type: cardType,
+                color: cardColor,
+                userId,
+            };
+            console.log(bankingCard);
+            const url = `${process.env.REACT_APP_BASE_URL}/bankingCards/createCard`;
+            const response = await axios.post(url, bankingCard);
+            console.log(response);
+            if (response.status === 201) {
+                navigate("/cards");
+            }
+        } catch (error) {
+            //todo add notification for generating card error
+            console.log(error);
+        }
     };
-
-    const generateCardHandle = async () => {
-        const bankingCard = {
-            type: cardType,
-            color: cardColor,
-        };
-    };
-
-    useEffect(() => {
-        getUserData();
-    }, []);
 
     // @ts-ignore
     return (
         <div className={rootCls}>
             <BankingCardsItem
                 id={""}
-                cardType={cardType}
+                type={cardType}
                 cardNumber={1111222233334444}
-                name={localStorage.getItem("fullName")!}
                 expireDate={"03/20"}
                 color={cardColor}
+                cvv={123}
+                userId={mockUserId}
             />
             <div className={menuCls}>
                 <div className={cardTypeSectionCls}>
@@ -169,7 +183,7 @@ const GenerateCardPage: FC<GenerateCardProps> = () => {
                     <Button
                         type={"button"}
                         className={"flex items-center"}
-                        onClick={() => console.log("generate")}
+                        onClick={generateCardHandler}
                     >
                         <RegularSubtitle>Generate</RegularSubtitle>
                         <Icon name={"secureIcon"} className={"ml-5"} />

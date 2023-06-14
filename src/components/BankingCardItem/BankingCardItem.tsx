@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import styles from "./BankingCardItem.module.scss";
 import cn from "classnames";
 import { RegularSubtitle } from "components/Typography/Typography";
@@ -6,10 +6,13 @@ import { Icon } from "components/Icon/Icon";
 import bankingCardTypeEnum from "../../enums/bankingCardTypeEnum";
 import bankingCardColorEnum from "../../enums/bankingCardColorEnum";
 import { BankingCardItemInteface } from "../../pages/BankingCards/BankingCards";
+import stringToStars from "../../functions/stringToStars";
 
 const BankingCardItem: FC<BankingCardItemInteface> = (props) => {
-    const { id, cardNumber, name, expireDate, color, cardType, className } =
+    const { id, cardNumber, userId, expireDate, color, type, cvv, className } =
         props;
+
+    const [isProtected, setIsProtected] = useState(true);
 
     const cardCls = cn(
         color === bankingCardColorEnum.white && "bg-white-950",
@@ -45,7 +48,13 @@ const BankingCardItem: FC<BankingCardItemInteface> = (props) => {
     };
 
     return (
-        <div className={cardCls} data-testid="BankingCards">
+        <div
+            className={cardCls}
+            onClick={() => {
+                setIsProtected(!isProtected);
+            }}
+            data-testid="BankingCards"
+        >
             <div className="text-gray-950 flex items-center px-6 mt-10">
                 <div
                     className={`flex flex-col w-4/5 ${
@@ -61,18 +70,39 @@ const BankingCardItem: FC<BankingCardItemInteface> = (props) => {
                         position={"text-left"}
                         className={"mt-3 truncate w-2/3 md:w-full"}
                     >
-                        {insertSpaces(cardNumber.toString())}
+                        {isProtected
+                            ? stringToStars(insertSpaces(cardNumber.toString()))
+                            : insertSpaces(cardNumber.toString())}
                     </RegularSubtitle>
                 </div>
                 <Icon name="cardSimIcon" className={""} />
             </div>
+            {!isProtected && (
+                <div className={"flex justify-end mt-6 mr-6"}>
+                    <RegularSubtitle
+                        className={
+                            color === bankingCardColorEnum.white
+                                ? "text-black"
+                                : "text-white-950"
+                        }
+                    >
+                        CVV {cvv}
+                    </RegularSubtitle>
+                </div>
+            )}
             <div className={bottomPartCls}>
                 <RegularSubtitle bold className={"truncate w-1/2"}>
-                    {name}
+                    {isProtected
+                        ? stringToStars(userId!.fullName)
+                        : userId!.fullName}
                 </RegularSubtitle>
-                <RegularSubtitle>{expireDate}</RegularSubtitle>
+                <RegularSubtitle>
+                    {isProtected
+                        ? stringToStars(expireDate.slice(2, 7))
+                        : expireDate.slice(2, 7)}
+                </RegularSubtitle>
 
-                {cardType === bankingCardTypeEnum.mastercard ? (
+                {type === bankingCardTypeEnum.mastercard ? (
                     <Icon name="mastercardIcon" />
                 ) : (
                     <Icon name="visaIcon" />
