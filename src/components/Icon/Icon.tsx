@@ -32,7 +32,10 @@ export type IconNames =
     | "errorIcon"
     | "refreshIcon"
     | "loadingIcon"
-    | "logoutIcon";
+    | "logoutIcon"
+    | "euroIcon"
+    | "dollarIcon"
+    | "ronIcon";
 
 type IconProps = {
     color?: string;
@@ -101,6 +104,12 @@ const getIcon = (
             return <LoadingIcon color={color} width={width} height={height} />;
         case "logoutIcon":
             return <LogoutIcon color={color} width={width} height={height} />;
+        case "euroIcon":
+            return <EuroIcon color={color} width={width} height={height} />;
+        case "dollarIcon":
+            return <DollarIcon color={color} width={width} height={height} />;
+        case "ronIcon":
+            return <RonIcon color={color} width={width} height={height} />;
     }
 };
 
@@ -663,6 +672,138 @@ const LogoutIcon = ({
                 d="M5 21C4.45 21 3.979 20.804 3.587 20.412C3.195 20.02 2.99934 19.5493 3 19V5C3 4.45 3.196 3.979 3.588 3.587C3.98 3.195 4.45067 2.99934 5 3H12V5H5V19H12V21H5ZM16 17L14.625 15.55L17.175 13H9V11H17.175L14.625 8.45L16 7L21 12L16 17Z"
                 fill={color}
             />
+        </svg>
+    );
+};
+
+const EuroIcon = ({
+    color = colors.black,
+    width = 50,
+    height = 50,
+}: IconProps) => {
+    return (
+        <svg
+            width={width}
+            height={height}
+            viewBox="0 0 512 512"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <g clip-path="url(#clip0_1403_2)">
+                <mask
+                    id="mask0_1403_2"
+                    maskUnits="userSpaceOnUse"
+                    x="0"
+                    y="0"
+                    width="512"
+                    height="512"
+                >
+                    <path
+                        d="M256 512C397.385 512 512 397.385 512 256C512 114.615 397.385 0 256 0C114.615 0 0 114.615 0 256C0 397.385 114.615 512 256 512Z"
+                        fill="white"
+                    />
+                </mask>
+                <g mask="url(#mask0_1403_2)">
+                    <path d="M0 0H512V512H0V0Z" fill="#0052B4" />
+                    <path
+                        d="M256 100.2L264.3 125.7H291L269.3 141.4L277.6 167L255.9 151.2L234.2 167L242.5 141.4L220.8 125.7H247.6L256 100.2ZM145.8 145.8L169.8 158L188.7 139L184.5 165.5L208.4 177.7L181.9 181.9L177.7 208.4L165.5 184.4L139 188.7L158 169.7L145.8 145.8ZM100.2 256L125.7 247.7V221L141.4 242.7L167 234.4L151.2 256.1L167 277.8L141.4 269.5L125.7 291.2V264.4L100.2 256ZM145.8 366.2L158 342.2L139 323.3L165.5 327.5L177.7 303.6L181.9 330.1L208.4 334.3L184.4 346.5L188.7 373L169.7 354L145.8 366.2ZM256 411.8L247.7 386.3H221L242.7 370.6L234.4 345L256.1 360.8L277.8 345L269.5 370.6L291.2 386.3H264.4L256 411.8ZM366.2 366.2L342.2 354L323.3 373L327.5 346.5L303.6 334.3L330.1 330.1L334.3 303.6L346.5 327.6L373 323.3L354 342.3L366.2 366.2ZM411.8 256L386.3 264.3V291L370.6 269.3L345 277.6L360.8 255.9L345 234.2L370.6 242.5L386.3 220.8V247.6L411.8 256ZM366.2 145.8L354 169.8L373 188.7L346.5 184.5L334.3 208.4L330.1 181.9L303.6 177.7L327.6 165.5L323.3 139L342.3 158L366.2 145.8Z"
+                        fill="#FFDA44"
+                    />
+                </g>
+            </g>
+            <defs>
+                <clipPath id="clip0_1403_2">
+                    <rect width="512" height="512" fill="white" />
+                </clipPath>
+            </defs>
+        </svg>
+    );
+};
+const DollarIcon = ({
+    color = colors.black,
+    width = 50,
+    height = 50,
+}: IconProps) => {
+    return (
+        <svg
+            width={width}
+            height={height}
+            viewBox="0 0 512 512"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <mask
+                id="mask0_1404_17"
+                maskUnits="userSpaceOnUse"
+                x="0"
+                y="0"
+                width="512"
+                height="512"
+            >
+                <path
+                    d="M256 512C397.385 512 512 397.385 512 256C512 114.615 397.385 0 256 0C114.615 0 0 114.615 0 256C0 397.385 114.615 512 256 512Z"
+                    fill="white"
+                />
+            </mask>
+            <g mask="url(#mask0_1404_17)">
+                <path
+                    d="M256 0H512V64L480 96L512 128V192L480 224L512 256V320L480 352L512 384V448L256 480L0 448V384L32 352L0 320V256L256 0Z"
+                    fill="#EEEEEE"
+                />
+                <path
+                    d="M224 64H512V128H224V64ZM224 192H512V256H256L224 192ZM0 320H512V384H0V320ZM0 448H512V512H0V448Z"
+                    fill="#D80027"
+                />
+                <path d="M0 0H256V256H0V0Z" fill="#0052B4" />
+                <path
+                    d="M187 243L244 202H174L231 243L209 176L187 243ZM106 243L163 202H93L150 243L128 176L106 243ZM25 243L82 202H12L69 243L47 176L25 243ZM187 162L244 121H174L231 162L209 95L187 162ZM106 162L163 121H93L150 162L128 95L106 162ZM25 162L82 121H12L69 162L47 95L25 162ZM187 80L244 39H174L231 80L209 13L187 80ZM106 80L163 39H93L150 80L128 13L106 80ZM25 80L82 39H12L69 80L47 13L25 80Z"
+                    fill="#EEEEEE"
+                />
+            </g>
+        </svg>
+    );
+};
+const RonIcon = ({
+    color = colors.black,
+    width = 50,
+    height = 50,
+}: IconProps) => {
+    return (
+        <svg
+            width={width}
+            height={height}
+            viewBox="0 0 512 512"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <g clip-path="url(#clip0_1404_18)">
+                <mask
+                    id="mask0_1404_18"
+                    maskUnits="userSpaceOnUse"
+                    x="0"
+                    y="0"
+                    width="512"
+                    height="512"
+                >
+                    <path
+                        d="M256 512C397.385 512 512 397.385 512 256C512 114.615 397.385 0 256 0C114.615 0 0 114.615 0 256C0 397.385 114.615 512 256 512Z"
+                        fill="white"
+                    />
+                </mask>
+                <g mask="url(#mask0_1404_18)">
+                    <path
+                        d="M167 0H345L370.9 252.3L345 512H167L137.2 258.6L167 0Z"
+                        fill="#FFDA44"
+                    />
+                    <path d="M0 0H167V512H0V0Z" fill="#0052B4" />
+                    <path d="M345 0H512V512H345V0Z" fill="#D80027" />
+                </g>
+            </g>
+            <defs>
+                <clipPath id="clip0_1404_18">
+                    <rect width="512" height="512" fill="white" />
+                </clipPath>
+            </defs>
         </svg>
     );
 };

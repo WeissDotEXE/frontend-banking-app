@@ -1,6 +1,6 @@
 //here I will fetch account data such as
 //balance in every account user has
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styles from "./BalanceCard.module.scss";
 import cn from "classnames";
 import Card from "components/Card/Card";
@@ -10,27 +10,58 @@ import Button from "components/Button/Button";
 import { useTransition, animated } from "react-spring";
 import AccountItem from "components/AccountItem/AccountItem";
 import { Icon } from "components/Icon/Icon";
+import currencyEnum from "../../enums/currencyEnum";
+import * as process from "process";
+import { useDispatch, useSelector } from "react-redux";
+import { changeBankingAccount } from "../../redux/bankAccountReducer";
 
 interface BalanceCardProps {
     className?: string;
 }
 
+export interface AccountInterface {
+    userId: string;
+    balance: number;
+    currency: currencyEnum;
+    _id: string;
+    onClick?: () => void;
+}
+
 const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
     const { className } = props;
     const rootCls = cn(styles.BalanceCard, className, "relative");
+    const dispatch = useDispatch();
 
     const [showAccounts, setShowAccounts] = useState(false);
-    const transition = useTransition(showAccounts, {
-        from: { y: -40, opacity: 0, duration: 150 },
-        enter: { y: 0, opacity: 1 },
-        leave: { y: -40, opacity: 0, duration: 150 },
-    });
-    const accounsList = [
-        { currency: "romanian leu", code: "gb", balance: 200 },
-        { currency: "romanian leu", code: "gb", balance: 200 },
-        { currency: "romanian leu", code: "gb", balance: 200 },
-        { currency: "romanian leu", code: "gb", balance: 200 },
-    ];
+    const [bankingAccountsList, setBankingAccountsList] = useState<
+        AccountInterface[]
+    >([]);
+
+    const selectedAccount = useSelector(
+        (state: any) => state.bankAccountReducer
+    );
+    const getBankingAccountsHandler = async () => {
+        try {
+            const userId = localStorage.getItem("userId");
+            const url = `${process.env.REACT_APP_BASE_URL}/bankingAccounts/${userId}`;
+            const response = await axios.get(url);
+            console.log(response.data.data);
+            setBankingAccountsList(response.data.data);
+            dispatch(changeBankingAccount(response.data.data[0]));
+        } catch (error) {
+            //todo add notification for error
+            console.log(error);
+        }
+    };
+
+    const changeAccountHandler = (account: AccountInterface) => {
+        dispatch(changeBankingAccount(account));
+        setShowAccounts(false);
+    };
+
+    useEffect(() => {
+        getBankingAccountsHandler();
+    }, []);
 
     return (
         <Card className={rootCls}>
@@ -39,7 +70,10 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
             </RegularSubtitle>
             <div className="flex justify-around items-center w-full">
                 <RegularSubtitle className="text-4xl md:text-6xl" bold>
-                    $60.53
+                    {selectedAccount.balance}{" "}
+                    {selectedAccount.currency === currencyEnum.ron && "RON"}
+                    {selectedAccount.currency === currencyEnum.euro && "€"}
+                    {selectedAccount.currency === currencyEnum.dollar && "$"}
                 </RegularSubtitle>
                 <Icon
                     name="dropDownIcon"
@@ -47,28 +81,25 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
                     onClick={() => setShowAccounts((v) => !v)}
                 />
             </div>
-
-            {transition((style, item) =>
-                item ? (
-                    <animated.div
-                        style={style}
-                        className="bg-white-950 p-6 drop-shadow-lg h-52 overflow-auto"
-                    >
-                        {accounsList.map((item, index) => {
+            {showAccounts && (
+                <div className="bg-white-950 p-6 drop-shadow-lg h-52 overflow-auto">
+                    {bankingAccountsList.map(
+                        (item: AccountInterface, index: number) => {
                             return (
                                 <AccountItem
                                     key={index}
+                                    _id={item._id}
+                                    userId={item.userId}
                                     balance={item.balance}
                                     currency={item.currency}
-                                    code="gb"
+                                    onClick={() => changeAccountHandler(item)}
                                 />
                             );
-                        })}
-                    </animated.div>
-                ) : (
-                    ""
-                )
+                        }
+                    )}
+                </div>
             )}
+
             <div className="flex mt-6 justify-around">
                 <Button
                     bgColor={"pink-950"}

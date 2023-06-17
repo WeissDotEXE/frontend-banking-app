@@ -1,19 +1,13 @@
 import React, { FC } from "react";
 import styles from "./AccountItem.module.scss";
 import cn from "classnames";
-import roFlag from "assets/icons/countries/ro_flag.svg";
-import gbFlag from "assets/icons/countries/gb_flag.svg";
-import euFlag from "assets/icons/countries/eu_flag.svg";
 import { RegularSubtitle } from "components/Typography/Typography";
-interface AccountItemProps {
-    currency: string;
-    code: "ro" | "gb" | "eu";
-    balance: number;
-    className?: string;
-}
+import { AccountInterface } from "../BalanceCard/BalanceCard";
+import currencyEnum from "../../enums/currencyEnum";
+import { Icon } from "../Icon/Icon";
 
-const AccountItem: FC<AccountItemProps> = (props: AccountItemProps) => {
-    const { currency, code, balance, className } = props;
+const AccountItem: FC<AccountInterface> = (props: AccountInterface) => {
+    const { userId, balance, currency, onClick } = props;
 
     const rootCls = cn(
         styles.AccountItem,
@@ -22,17 +16,22 @@ const AccountItem: FC<AccountItemProps> = (props: AccountItemProps) => {
         "p-5",
         "mb-5",
         "border-gray-950",
-        "border-b-2"
+        "border-b-2",
+        "items-center",
+        "cursor-pointer"
     );
 
     return (
-        <div className={rootCls} data-testid="AccountItem">
-            <img src={roFlag} className="w-12 h-12 my-auto" />
+        <div className={rootCls} data-testid="AccountItem" onClick={onClick}>
+            {currency === currencyEnum.ron && <Icon name={"ronIcon"} />}
+            {currency === currencyEnum.euro && <Icon name={"euroIcon"} />}
+            {currency === currencyEnum.dollar && <Icon name={"dollarIcon"} />}
             <div className="grid col-span-4 ">
                 <RegularSubtitle position="text-start" size="xl" bold>
-                    {currency}
+                    {currency === currencyEnum.dollar && "Dollars"}
+                    {currency === currencyEnum.ron && "Ron"}
+                    {currency === currencyEnum.euro && "Euros"}
                 </RegularSubtitle>
-                <RegularSubtitle position="text-start">{code}</RegularSubtitle>
             </div>
             <RegularSubtitle bold size="xl" className="my-auto">
                 {balance}
