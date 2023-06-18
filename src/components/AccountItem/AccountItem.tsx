@@ -7,7 +7,7 @@ import currencyEnum from "../../enums/currencyEnum";
 import { Icon } from "../Icon/Icon";
 
 const AccountItem: FC<AccountInterface> = (props: AccountInterface) => {
-    const { userId, balance, currency, onClick } = props;
+    const { userId, balance, currency, onClick, className } = props;
 
     const rootCls = cn(
         styles.AccountItem,
@@ -18,7 +18,8 @@ const AccountItem: FC<AccountInterface> = (props: AccountInterface) => {
         "border-gray-950",
         "border-b-2",
         "items-center",
-        "cursor-pointer"
+        "cursor-pointer",
+        className
     );
 
     return (

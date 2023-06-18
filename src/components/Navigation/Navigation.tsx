@@ -7,6 +7,8 @@ import GenerateCardPage from "pages/GenerateCardPage/GenerateCardPage";
 import User from "pages/User/User";
 import Header from "components/Header/Header";
 import SearchUsersPage from "../../pages/SeachUsers/SearchUsersPage";
+import AddMoneyPage from "../../pages/AddMoneyPage/AddMoneyPage";
+import SendMoneyPage from "../../pages/SendMoneyPage/SendMoneyPage";
 
 const Navigation: FC = () => {
     const token = localStorage.getItem("jwtToken");
@@ -48,6 +50,18 @@ const Navigation: FC = () => {
                         ) : (
                             <Navigate to={"/auth"} />
                         )
+                    }
+                />
+                <Route
+                    path={"/addMoney/:userId"}
+                    element={
+                        !!token ? <AddMoneyPage /> : <Navigate to={"/auth"} />
+                    }
+                />
+                <Route
+                    path={"/sendMoney/:userId/:receiverId"}
+                    element={
+                        !!token ? <SendMoneyPage /> : <Navigate to={"/auth"} />
                     }
                 />
 

@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import styles from "./Input.module.scss";
 import cn from "classnames";
 import { RegularSubtitle } from "components/Typography/Typography";
-import { Formik } from "formik";
 
 interface InputProps {
     type: "email" | "text" | "password" | "file" | "number" | "select" | any;
@@ -20,6 +19,7 @@ interface InputProps {
         | "pink-950";
     name: string;
     onChange: (e: any) => void;
+    min?: number;
 }
 
 const Input: FC<InputProps> = (props: InputProps) => {
@@ -32,6 +32,7 @@ const Input: FC<InputProps> = (props: InputProps) => {
         onChange,
         name,
         value,
+        min,
         labelColor = "pink-950",
     } = props;
 
@@ -59,6 +60,7 @@ const Input: FC<InputProps> = (props: InputProps) => {
                     name={name}
                     onChange={onChange}
                     value={value}
+                    min={min}
                 />
             ) : (
                 <select

@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import styles from "./Header.module.scss";
 import cn from "classnames";
 import { Icon } from "components/Icon/Icon";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router";
 import { UseWindowSize } from "functions/UseWindowSize";
 import { IsMobile } from "functions/Platform";
 import Card from "components/Card/Card";
@@ -12,6 +12,7 @@ import axios from "axios";
 import { RegularSubtitle } from "../Typography/Typography";
 import colors from "tailwindcss/colors";
 import useAuth from "../../hooks/useAuth";
+import { Link } from "react-router-dom";
 
 interface HeaderProps {}
 

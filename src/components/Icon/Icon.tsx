@@ -676,11 +676,7 @@ const LogoutIcon = ({
     );
 };
 
-const EuroIcon = ({
-    color = colors.black,
-    width = 50,
-    height = 50,
-}: IconProps) => {
+const EuroIcon = ({ width = 50, height = 50 }: IconProps) => {
     return (
         <svg
             width={width}
@@ -689,7 +685,7 @@ const EuroIcon = ({
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >
-            <g clip-path="url(#clip0_1403_2)">
+            <g clipPath="url(#clip0_1403_2)">
                 <mask
                     id="mask0_1403_2"
                     maskUnits="userSpaceOnUse"
@@ -719,11 +715,7 @@ const EuroIcon = ({
         </svg>
     );
 };
-const DollarIcon = ({
-    color = colors.black,
-    width = 50,
-    height = 50,
-}: IconProps) => {
+const DollarIcon = ({ width = 50, height = 50 }: IconProps) => {
     return (
         <svg
             width={width}
@@ -763,11 +755,7 @@ const DollarIcon = ({
         </svg>
     );
 };
-const RonIcon = ({
-    color = colors.black,
-    width = 50,
-    height = 50,
-}: IconProps) => {
+const RonIcon = ({ width = 50, height = 50 }: IconProps) => {
     return (
         <svg
             width={width}
@@ -776,7 +764,7 @@ const RonIcon = ({
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >
-            <g clip-path="url(#clip0_1404_18)">
+            <g clipPath="url(#clip0_1404_18)">
                 <mask
                     id="mask0_1404_18"
                     maskUnits="userSpaceOnUse"

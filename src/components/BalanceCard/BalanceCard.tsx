@@ -7,13 +7,13 @@ import Card from "components/Card/Card";
 import axios from "axios";
 import { RegularSubtitle } from "components/Typography/Typography";
 import Button from "components/Button/Button";
-import { useTransition, animated } from "react-spring";
 import AccountItem from "components/AccountItem/AccountItem";
 import { Icon } from "components/Icon/Icon";
 import currencyEnum from "../../enums/currencyEnum";
 import * as process from "process";
 import { useDispatch, useSelector } from "react-redux";
 import { changeBankingAccount } from "../../redux/bankAccountReducer";
+import { Link } from "react-router-dom";
 
 interface BalanceCardProps {
     className?: string;
@@ -25,6 +25,7 @@ export interface AccountInterface {
     currency: currencyEnum;
     _id: string;
     onClick?: () => void;
+    className?: string;
 }
 
 const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
@@ -82,7 +83,7 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
                 />
             </div>
             {showAccounts && (
-                <div className="bg-white-950 p-6 drop-shadow-lg h-52 overflow-auto">
+                <div className="bg-white-950 p-6 drop-shadow-lg h-72 overflow-auto">
                     {bankingAccountsList.map(
                         (item: AccountInterface, index: number) => {
                             return (
@@ -101,13 +102,15 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
             )}
 
             <div className="flex mt-6 justify-around">
-                <Button
-                    bgColor={"pink-950"}
-                    txtColor={"white-950"}
-                    type="button"
-                >
-                    Add Money
-                </Button>
+                <Link to={`/addMoney/${localStorage.getItem("userId")}`}>
+                    <Button
+                        bgColor={"pink-950"}
+                        txtColor={"white-950"}
+                        type="button"
+                    >
+                        Add Money
+                    </Button>
+                </Link>
                 <Button
                     bgColor={"pink-950"}
                     txtColor={"white-950"}
