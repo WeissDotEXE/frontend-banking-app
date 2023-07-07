@@ -3,21 +3,23 @@ import styles from "./TransactionItem.module.scss";
 import cn from "classnames";
 import { RegularSubtitle } from "components/Typography/Typography";
 import { Icon } from "components/Icon/Icon";
-import { useTransition, animated } from "react-spring";
 import TransactionModal from "components/TransactionModal/TransactionModal";
+import transactionEnum from "../../enums/transactionEnum";
+import currencyEnum from "../../enums/currencyEnum";
 
 interface TransactionItemProps {
     id: string;
-    type: "send" | "deposit" | "receive";
+    type: transactionEnum;
     amount: number;
     date: string;
+    currency: currencyEnum;
     className?: string;
 }
 
 const TransactionItem: FC<TransactionItemProps> = (
     props: TransactionItemProps
 ) => {
-    const { id, type, amount, date, className } = props;
+    const { id, type, amount, date, currency, className } = props;
     const [showModal, setShowModal] = useState(false);
 
     const rootCls = cn(
@@ -46,11 +48,18 @@ const TransactionItem: FC<TransactionItemProps> = (
                     className=" my-auto"
                     color={"white-950"}
                 >
-                    Received
+                    {(type === transactionEnum.deposit && "Deposit") ||
+                        (type === transactionEnum.received && "Received") ||
+                        (type === transactionEnum.send && "Send")}
                 </RegularSubtitle>
                 <RegularSubtitle color={"white-950"}>
-                    {type === "deposit" || type === "receive" ? "+" : "-"}
+                    {(type === transactionEnum.deposit && "+") ||
+                        (type === transactionEnum.received && "+")}
+                    {type === transactionEnum.send && "-"}
                     {amount}
+                    {(currency === currencyEnum.dollar && "DOLLAR") ||
+                        (currency === currencyEnum.euro && "EURO") ||
+                        "RON"}
                 </RegularSubtitle>
             </div>
 
@@ -69,6 +78,7 @@ const TransactionItem: FC<TransactionItemProps> = (
                     key={id}
                     name="John"
                     onClose={() => setShowModal(!showModal)}
+                    currency={currency}
                 />
             )}
         </div>

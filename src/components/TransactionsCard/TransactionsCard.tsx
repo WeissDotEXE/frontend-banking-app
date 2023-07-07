@@ -9,6 +9,8 @@ import Card from "components/Card/Card";
 import axios from "axios";
 import { RegularSubtitle } from "components/Typography/Typography";
 import TransactionItem from "components/TransactionItem/TransactionItem";
+import transactionEnum from "../../enums/transactionEnum";
+import currencyEnum from "../../enums/currencyEnum";
 interface TransactionsCardProps {
     className?: string;
 }
@@ -16,8 +18,9 @@ interface TransactionsCardProps {
 interface transactionItem {
     id: string;
     amount: number;
-    type: "deposit" | "receive";
-    date: string;
+    type: transactionEnum;
+    transactionDate: string;
+    currency: currencyEnum;
 }
 
 const TransactionsCard: FC<TransactionsCardProps> = (
@@ -30,19 +33,21 @@ const TransactionsCard: FC<TransactionsCardProps> = (
         []
     );
 
-    const getTransactionHandler=async()=>{
-        try{
-            const userId=localStorage.getItem("userId");
-            const response=await axios.get(`${process.env.REACT_APP_BASE_URL}/user/transactions/${userId}`);
+    const getTransactionHandler = async () => {
+        try {
+            const userId = localStorage.getItem("userId");
+            const response = await axios.get(
+                `${process.env.REACT_APP_BASE_URL}/user/transactions/${userId}`
+            );
             setTransactionList(response.data.data);
-        }catch (error){
+        } catch (error) {
             console.log(error);
         }
-    }
+    };
 
-    useEffect(()=>{
-       getTransactionHandler()
-    },[])
+    useEffect(() => {
+        getTransactionHandler();
+    }, []);
 
     return (
         <Card className={rootCls}>
@@ -58,7 +63,8 @@ const TransactionsCard: FC<TransactionsCardProps> = (
                                 id={item.id}
                                 amount={item.amount}
                                 type={item.type}
-                                date={item.date}
+                                date={item.transactionDate}
+                                currency={item.currency}
                             />
                         )
                     )
