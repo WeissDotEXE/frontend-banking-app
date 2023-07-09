@@ -11,6 +11,7 @@ import { RegularSubtitle } from "components/Typography/Typography";
 import TransactionItem from "components/TransactionItem/TransactionItem";
 import transactionEnum from "../../enums/transactionEnum";
 import currencyEnum from "../../enums/currencyEnum";
+import receiverRecipientEnum from "../../enums/receiverRecipientEnum";
 interface TransactionsCardProps {
     className?: string;
 }
@@ -20,6 +21,7 @@ interface transactionItem {
     amount: number;
     type: transactionEnum;
     transactionDate: string;
+    fieldFound: receiverRecipientEnum;
     currency: currencyEnum;
 }
 
@@ -33,11 +35,13 @@ const TransactionsCard: FC<TransactionsCardProps> = (
         []
     );
 
+    console.log(transactionList);
+
     const getTransactionHandler = async () => {
         try {
             const userId = localStorage.getItem("userId");
             const response = await axios.get(
-                `${process.env.REACT_APP_BASE_URL}/user/transactions/${userId}`
+                `${process.env.REACT_APP_BASE_URL}/transaction/${userId}`
             );
             setTransactionList(response.data.data);
         } catch (error) {
@@ -55,7 +59,7 @@ const TransactionsCard: FC<TransactionsCardProps> = (
                 Transactions
             </RegularSubtitle>
             <div className="h-96 overflow-auto scrollbar-thin">
-                {transactionList.length > 0 ? (
+                {transactionList && transactionList.length > 0 ? (
                     transactionList.map(
                         (item: transactionItem, index: number) => (
                             <TransactionItem
@@ -65,6 +69,7 @@ const TransactionsCard: FC<TransactionsCardProps> = (
                                 type={item.type}
                                 date={item.transactionDate}
                                 currency={item.currency}
+                                fieldFound={item.fieldFound}
                             />
                         )
                     )

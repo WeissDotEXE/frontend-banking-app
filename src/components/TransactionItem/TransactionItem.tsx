@@ -6,6 +6,7 @@ import { Icon } from "components/Icon/Icon";
 import TransactionModal from "components/TransactionModal/TransactionModal";
 import transactionEnum from "../../enums/transactionEnum";
 import currencyEnum from "../../enums/currencyEnum";
+import receiverRecipientEnum from "../../enums/receiverRecipientEnum";
 
 interface TransactionItemProps {
     id: string;
@@ -13,13 +14,14 @@ interface TransactionItemProps {
     amount: number;
     date: string;
     currency: currencyEnum;
+    fieldFound: receiverRecipientEnum;
     className?: string;
 }
 
 const TransactionItem: FC<TransactionItemProps> = (
     props: TransactionItemProps
 ) => {
-    const { id, type, amount, date, currency, className } = props;
+    const { id, type, amount, date, currency, fieldFound, className } = props;
     const [showModal, setShowModal] = useState(false);
 
     const rootCls = cn(
@@ -48,14 +50,18 @@ const TransactionItem: FC<TransactionItemProps> = (
                     className=" my-auto"
                     color={"white-950"}
                 >
-                    {(type === transactionEnum.deposit && "Deposit") ||
-                        (type === transactionEnum.received && "Received") ||
-                        (type === transactionEnum.send && "Send")}
+                    {type === 0
+                        ? fieldFound === receiverRecipientEnum.receiver
+                            ? "Sent"
+                            : "Received"
+                        : "Deposit"}
                 </RegularSubtitle>
                 <RegularSubtitle color={"white-950"}>
-                    {(type === transactionEnum.deposit && "+") ||
-                        (type === transactionEnum.received && "+")}
-                    {type === transactionEnum.send && "-"}
+                    {type === 0
+                        ? fieldFound === receiverRecipientEnum.recipient
+                            ? "+"
+                            : "-"
+                        : "+"}
                     {amount}
                     {(currency === currencyEnum.dollar && "DOLLAR") ||
                         (currency === currencyEnum.euro && "EURO") ||
