@@ -59,7 +59,7 @@ const Navigation: FC = () => {
                     }
                 />
                 <Route
-                    path={"/sendMoney/:userId/:receiverId"}
+                    path={"/sendMoney/:userId/:friendId"}
                     element={
                         !!token ? <SendMoneyPage /> : <Navigate to={"/auth"} />
                     }

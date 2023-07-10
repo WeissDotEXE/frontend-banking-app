@@ -7,18 +7,22 @@ import currencyEnum from "../../enums/currencyEnum";
 import { Icon } from "../Icon/Icon";
 
 const AccountItem: FC<AccountInterface> = (props: AccountInterface) => {
-    const { userId, balance, currency, onClick, className } = props;
+    const { userId, balance, currency, onClick, isSelected, className } = props;
 
     const rootCls = cn(
         styles.AccountItem,
         "grid",
         "grid-cols-6",
         "p-5",
-        "mb-5",
-        "border-gray-950",
+        "mb-10",
+        "rounded-lg",
+        isSelected && "border-gray-950",
         "border-b-2",
         "items-center",
         "cursor-pointer",
+        "drop-shadow-lg",
+        isSelected ? "bg-gray-200" : "bg-white-950",
+
         className
     );
 

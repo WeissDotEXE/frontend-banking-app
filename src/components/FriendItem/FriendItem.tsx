@@ -4,19 +4,27 @@ import cn from "classnames";
 import { RegularSubtitle } from "components/Typography/Typography";
 import FriendModal from "components/FriendModal/FriendModal";
 
-interface FriendItemProps {
+export interface FriendItemProps {
     _id: string;
     fullName: string;
     avatarImg: string;
     className?: string;
-    refreshData:()=>void;
-    status:number
+    refreshData: () => void;
+    onClick: () => void;
+    showModal?: boolean;
+    status: number;
 }
 
 const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {
-    const { _id, fullName, avatarImg, className,refreshData } = props;
-
-    const [showModal, setShowModal] = useState(false);
+    const {
+        _id,
+        fullName,
+        avatarImg,
+        className,
+        onClick,
+        refreshData,
+        showModal,
+    } = props;
 
     const rootCLs = cn(
         styles.FriendItem,
@@ -28,31 +36,28 @@ const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {
         "cursor-pointer"
     );
 
-    const showDetailsHandler = () => {
-        setShowModal(true);
-    };
-
     return (
         <>
             <div
                 className={rootCLs}
                 data-testid="FriendItGem"
-                onClick={showDetailsHandler}
+                onClick={onClick}
             >
-                <img src={avatarImg} className="rounded-full w-20 md:h-54" alt={""} />
+                <img
+                    src={avatarImg}
+                    className="rounded-full w-20 md:h-54"
+                    alt={""}
+                />
                 <RegularSubtitle size="lg" className="w-20 truncate">
                     {fullName}
                 </RegularSubtitle>
-
             </div>
             {showModal && (
                 <FriendModal
                     avatarImg={avatarImg}
                     _id={_id}
                     fullName={fullName}
-                    onClose={() => {
-                        setShowModal(false);
-                    }}
+                    onClose={onClick}
                     refreshData={refreshData}
                 />
             )}

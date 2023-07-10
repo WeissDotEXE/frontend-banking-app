@@ -25,6 +25,7 @@ export interface AccountInterface {
     currency: currencyEnum;
     _id: string;
     onClick?: () => void;
+    isSelected?: boolean;
     className?: string;
 }
 
@@ -32,6 +33,8 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
     const { className } = props;
     const rootCls = cn(styles.BalanceCard, className, "relative");
     const dispatch = useDispatch();
+
+    const userId = localStorage.getItem("userId");
 
     const [showAccounts, setShowAccounts] = useState(false);
     const [bankingAccountsList, setBankingAccountsList] = useState<
@@ -43,7 +46,6 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
     );
     const getBankingAccountsHandler = async () => {
         try {
-            const userId = localStorage.getItem("userId");
             const url = `${process.env.REACT_APP_BASE_URL}/bankingAccounts/${userId}`;
             const response = await axios.get(url);
             console.log(response.data.data);
@@ -111,13 +113,15 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
                         Add Money
                     </Button>
                 </Link>
-                <Button
-                    bgColor={"pink-950"}
-                    txtColor={"white-950"}
-                    type="button"
-                >
-                    Send Money
-                </Button>
+                <Link to={`/sendMoney/${userId}/`}>
+                    <Button
+                        bgColor={"pink-950"}
+                        txtColor={"white-950"}
+                        type="button"
+                    >
+                        Send Money
+                    </Button>
+                </Link>
             </div>
         </Card>
     );
