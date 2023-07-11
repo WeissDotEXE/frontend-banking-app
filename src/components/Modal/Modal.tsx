@@ -22,8 +22,9 @@ const Modal: FC<ModalProps> = (props: ModalProps) => {
         "left-0",
         "w-full",
         "h-full",
-        "bg-gray-900",
-        "opacity-90"
+        "backdrop-blur-md",
+        "bg-gray-500",
+        "bg-opacity-70"
     );
 
     useEffect(() => {

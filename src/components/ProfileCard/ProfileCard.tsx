@@ -1,5 +1,5 @@
 //this card will fetch data about whatever user is in database
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import styles from "./ProfileCard.module.scss";
 import cn from "classnames";
 import Card from "components/Card/Card";
@@ -7,14 +7,28 @@ import { RegularSubtitle } from "components/Typography/Typography";
 import Button from "components/Button/Button";
 import { userDataInterface } from "../../pages/Home/Home";
 import getLastUserCode from "../../functions/getLastUserCode";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
 
 interface ProfileCardProps {
     className?: string;
     userData: userDataInterface;
+    refetchData: () => void;
+}
+
+export interface ProfileInterface {
+    _id: string;
+    avatarImg: string;
+    email: string;
+    fullName: string;
+    iban: string;
+    joinDate: string;
 }
 
 const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
-    const { className, userData } = props;
+    const { className, userData, refetchData } = props;
+
+    const [showEditProfile, setShowEditProfile] = useState(false);
+
     const rootCls = cn(styles.profileCard, className);
     const avatarCls = cn(
         styles.avatar,
@@ -32,8 +46,6 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
         "mt-10"
     );
 
-    //todo replace data from home response data
-
     return (
         <Card className={rootCls}>
             <img
@@ -46,9 +58,11 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
                     <RegularSubtitle className="text-3xl font-bold mr-3">
                         {userData && userData.fullName}
                     </RegularSubtitle>
-                    {userData && <RegularSubtitle className={"text-gray-500"}>
-                        #{getLastUserCode(userData._id)}
-                    </RegularSubtitle>}
+                    {userData && (
+                        <RegularSubtitle className={"text-gray-500"}>
+                            #{getLastUserCode(userData._id)}
+                        </RegularSubtitle>
+                    )}
                 </div>
 
                 <div className="flex justify-center mt-14">
@@ -56,6 +70,7 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
                         type="button"
                         bgColor={"pink-950"}
                         txtColor={"white-950"}
+                        onClick={() => setShowEditProfile(true)}
                     >
                         Edit Profile
                     </Button>
@@ -82,6 +97,18 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
                         {userData && userData.joinDate.substring(0, 10)}
                     </RegularSubtitle>
                 </div>
+                {showEditProfile && (
+                    <EditProfileModal
+                        _id={userData._id}
+                        fullName={userData.fullName}
+                        iban={userData.iban}
+                        email={userData.email}
+                        avatarImg={userData.avatarImg}
+                        joinDate={userData.joinDate}
+                        onClose={() => setShowEditProfile(false)}
+                        refetchData={refetchData}
+                    />
+                )}
             </div>
         </Card>
     );

@@ -6,7 +6,6 @@ import TransactionsCard from "components/TransactionsCard/TransactionsCard";
 import ProfileCard from "components/ProfileCard/ProfileCard";
 import { RegularSubtitle } from "components/Typography/Typography";
 import FriendsCard from "components/FriendsCard/FriendsCard";
-import TransactionModal from "components/TransactionModal/TransactionModal";
 import { UseWindowSize } from "functions/UseWindowSize";
 import { IsMobile } from "functions/Platform";
 import Button from "components/Button/Button";
@@ -15,12 +14,12 @@ import colors from "colors.module.scss";
 import axios from "axios";
 
 export interface userDataInterface {
-    _id: string,
-    fullName: string,
-    email: string,
-    avatarImg: string,
-    joinDate: string
-    iban:string
+    _id: string;
+    fullName: string;
+    email: string;
+    avatarImg: string;
+    joinDate: string;
+    iban: string;
 }
 
 const Home: FC = () => {
@@ -41,12 +40,13 @@ const Home: FC = () => {
 
     const userId = localStorage.getItem("userId");
 
-
     const getUserData = async () => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user/${userId}`);
+            const response = await axios.get(
+                `${process.env.REACT_APP_BASE_URL}/user/${userId}`
+            );
             console.log(response.data.data);
-            setUserData(response.data.data)
+            setUserData(response.data.data);
         } catch (error) {
             console.log(error);
         }
@@ -59,8 +59,7 @@ const Home: FC = () => {
     return (
         <div className="px-8 lg:px-0">
             <div className="flex items-center justify-around lg:justify-start">
-                <RegularSubtitle
-                    className="text-center truncate lg:text-left text-white-950 font-bold text-4xl lg:text-6xl lg:ml-16 mt-5">
+                <RegularSubtitle className="text-center truncate lg:text-left text-white-950 font-bold text-4xl lg:text-6xl lg:ml-16 mt-5">
                     Hello {userData?.fullName}
                 </RegularSubtitle>
                 {IsMobile(width) && (
@@ -74,7 +73,13 @@ const Home: FC = () => {
                     </Button>
                 )}
             </div>
-            {showProfile && <ProfileCard userData={userData!} className="mt-24" />}
+            {showProfile && (
+                <ProfileCard
+                    userData={userData!}
+                    className="mt-24"
+                    refetchData={getUserData}
+                />
+            )}
             <div className={rootCls} data-testid="Home">
                 <div>
                     <BalanceCard className={leftCardsCls} />
@@ -85,6 +90,7 @@ const Home: FC = () => {
                     <ProfileCard
                         className="lg:fixed lg:right-20 lg:w-2/5"
                         userData={userData!}
+                        refetchData={getUserData}
                     />
                 )}
             </div>
