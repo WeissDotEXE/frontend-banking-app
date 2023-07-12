@@ -39,7 +39,9 @@ const AccountItem: FC<AccountInterface> = (props: AccountInterface) => {
                 </RegularSubtitle>
             </div>
             <RegularSubtitle bold size="xl" className="my-auto">
-                {balance}
+                {balance} {currency === currencyEnum.dollar && "$"}
+                {currency === currencyEnum.ron && "RON"}
+                {currency === currencyEnum.euro && "€"}
             </RegularSubtitle>
         </div>
     );

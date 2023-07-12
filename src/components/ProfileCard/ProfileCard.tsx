@@ -51,7 +51,7 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
             <img
                 alt=""
                 className={avatarCls}
-                src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"
+                src={userData && userData.avatarImg}
             />
             <div className="mt-20 ">
                 <div className={"flex justify-center"}>
@@ -87,7 +87,10 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
                     </RegularSubtitle>
                     {/*todo replace with iban from backend
                         generate iban in backend*/}
-                    <RegularSubtitle className="text-gray-950 my-auto text-base lg:text-lg truncate w-2/3">
+                    <RegularSubtitle
+                        position={"text-start"}
+                        className="text-gray-950 my-auto text-base lg:text-lg truncate w-2/3"
+                    >
                         {userData && userData.iban}
                     </RegularSubtitle>
                     <RegularSubtitle className="text-base lg:text-2xl font-bold">
