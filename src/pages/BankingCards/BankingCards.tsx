@@ -35,7 +35,8 @@ export interface BankingCardItemInteface {
 }
 
 const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
-    const [cardList, setCardList] = useState<BankingCardItemInteface[]>([]);
+    const [bankingCard, setBankingCard] =
+        useState<BankingCardItemInteface | null>(null);
 
     const navigate = useNavigate();
 
@@ -60,7 +61,8 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
             const url = `${process.env.REACT_APP_BASE_URL}/bankingCards/${userId}`;
             const response = await axios.get(url);
             if (response.status === 200) {
-                setCardList(response.data.data);
+                setBankingCard(response.data.data[0]);
+                console.log(bankingCard);
             }
         } catch (error) {
             console.log(error);
@@ -86,18 +88,10 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
                         color={"white-950"}
                         className="text-6xl"
                     >
-                        Your Cards
-                    </RegularSubtitle>
-                    <RegularSubtitle
-                        color={"gray-950"}
-                        bold
-                        className="text-3xl"
-                        position={"text-left"}
-                    >
-                        {cardList.length > 0 && `${cardList.length} cards`}
+                        Your Card
                     </RegularSubtitle>
                 </div>
-                {cardList.length < 2 && (
+                {!bankingCard && (
                     <Button
                         type="button"
                         className="flex items-center"
@@ -113,7 +107,19 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
                 )}
             </div>
 
-            {cardList.length === 0 ? (
+            {!!bankingCard ? (
+                <div className={cardsCls}>
+                    <BankingCardItem
+                        id={bankingCard!.id}
+                        color={bankingCard!.color}
+                        cardNumber={bankingCard!.cardNumber}
+                        userId={bankingCard!.userId}
+                        expireDate={bankingCard!.expireDate}
+                        type={bankingCard!.type}
+                        cvv={bankingCard!.cvv}
+                    />
+                </div>
+            ) : (
                 <RegularSubtitle
                     bold
                     color={"white-950"}
@@ -121,23 +127,6 @@ const BankingCards: FC<BankingCardsProps> = (props: BankingCardsProps) => {
                 >
                     No cards yet. Generate One
                 </RegularSubtitle>
-            ) : (
-                <div className={cardsCls}>
-                    {cardList.map((item, index) => {
-                        return (
-                            <BankingCardItem
-                                key={index}
-                                id={item.id}
-                                color={item.color}
-                                cardNumber={item.cardNumber}
-                                userId={item.userId}
-                                expireDate={item.expireDate}
-                                type={item.type}
-                                cvv={item.cvv}
-                            />
-                        );
-                    })}
-                </div>
             )}
         </div>
     );
