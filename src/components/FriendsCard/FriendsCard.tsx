@@ -71,7 +71,7 @@ const FriendsCard: FC<FriendsCardProps> = (props: FriendsCardProps) => {
                         return (
                             <FriendItem
                                 //@ts-ignore
-                                _id={item[friendIdDeceider(item)]._id}
+                                _id={item._id}
                                 key={index}
                                 //@ts-ignore
                                 fullName={item[friendIdDeceider(item)].fullName}
