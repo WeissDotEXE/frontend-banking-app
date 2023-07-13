@@ -73,7 +73,7 @@ const Home: FC = () => {
                     </Button>
                 )}
             </div>
-            {showProfile && (
+            {IsMobile(width) && showProfile && (
                 <ProfileCard
                     userData={userData!}
                     className="mt-24"

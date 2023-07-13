@@ -104,7 +104,7 @@ const SendMoneyPage: FC<SendMoneyPageProps> = () => {
                 //@ts-ignore
                 amount: parseInt(amount),
                 userBalance: parseInt(selectedAccount.balance, 10),
-                userAccountId: selectedAccount._id,
+                userAccountId: localStorage.getItem("userId"), //todo look here
                 recipientAccountId: selectedFriendAccount._id,
                 currency: parseInt(selectedAccount.currency, 10),
                 recipientBalance: selectedFriendAccount.balance,
