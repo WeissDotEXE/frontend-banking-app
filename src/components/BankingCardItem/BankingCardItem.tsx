@@ -29,9 +29,6 @@ const BankingCardItem: FC<BankingCardItemInteface> = (props) => {
     const bottomPartCls = cn(
         styles.bottomPart,
         "absolute",
-        // cardType === "premium"
-        //     ? "bg-gradient-to-r from-orange-500 via-purple-500 to-blue-500"
-        //     : "bg-gradient-to-r from-cyan-500 to-blue-500",
         "bottom-0",
         "left-0",
         "w-full",

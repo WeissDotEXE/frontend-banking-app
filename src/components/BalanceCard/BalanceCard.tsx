@@ -31,8 +31,6 @@ export interface AccountInterface {
 
 const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
     const { className } = props;
-    const rootCls = cn(styles.BalanceCard, className, "relative");
-    const dispatch = useDispatch();
 
     const userId = localStorage.getItem("userId");
 
@@ -40,10 +38,13 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
     const [bankingAccountsList, setBankingAccountsList] = useState<
         AccountInterface[]
     >([]);
-
     const selectedAccount = useSelector(
         (state: any) => state.bankAccountReducer
     );
+
+    const rootCls = cn(styles.BalanceCard, className, "relative");
+    const dispatch = useDispatch();
+
     const getBankingAccountsHandler = async () => {
         try {
             const url = `${process.env.REACT_APP_BASE_URL}/bankingAccounts/${userId}`;
@@ -102,7 +103,6 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
                     )}
                 </div>
             )}
-
             <div className="flex mt-6 justify-around">
                 <Link to={`/addMoney/${localStorage.getItem("userId")}`}>
                     <Button
@@ -111,15 +111,6 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
                         type="button"
                     >
                         Add Money
-                    </Button>
-                </Link>
-                <Link to={`/sendMoney/${userId}/`}>
-                    <Button
-                        bgColor={"pink-950"}
-                        txtColor={"white-950"}
-                        type="button"
-                    >
-                        Send Money
                     </Button>
                 </Link>
             </div>

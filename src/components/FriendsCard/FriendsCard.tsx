@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchFriends } from "redux/friendReducer";
 import { Icon } from "../Icon/Icon";
 import friendIdDeceider from "../../functions/friendIdDeceider";
+import friendItem from "components/FriendItem/FriendItem";
 
 interface FriendsCardProps {
     className?: string;
@@ -72,6 +73,8 @@ const FriendsCard: FC<FriendsCardProps> = (props: FriendsCardProps) => {
                             <FriendItem
                                 //@ts-ignore
                                 _id={item._id}
+                                //@ts-ignore
+                                userId={item[friendIdDeceider(item)]}
                                 key={index}
                                 //@ts-ignore
                                 fullName={item[friendIdDeceider(item)].fullName}

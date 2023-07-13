@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import styles from "./FriendItem.module.scss";
 import cn from "classnames";
 import { RegularSubtitle } from "components/Typography/Typography";
@@ -13,6 +13,7 @@ export interface FriendItemProps {
     onClick: () => void;
     showModal?: boolean;
     status: number;
+    userId: string;
 }
 
 const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {
@@ -24,6 +25,7 @@ const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {
         onClick,
         refreshData,
         showModal,
+        userId,
     } = props;
 
     const rootCLs = cn(
@@ -35,6 +37,8 @@ const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {
         "mr-6",
         "cursor-pointer"
     );
+
+    console.log(props);
 
     return (
         <>
@@ -55,7 +59,8 @@ const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {
             {showModal && (
                 <FriendModal
                     avatarImg={avatarImg}
-                    _id={_id}
+                    //@ts-ignore
+                    _id={userId._id}
                     fullName={fullName}
                     onClose={onClick}
                     refreshData={refreshData}
