@@ -9,6 +9,8 @@ import Header from "components/Header/Header";
 import SearchUsersPage from "../../pages/SeachUsers/SearchUsersPage";
 import AddMoneyPage from "../../pages/AddMoneyPage/AddMoneyPage";
 import SendMoneyPage from "../../pages/SendMoneyPage/SendMoneyPage";
+import ResetPasswordPage from "../../pages/ResetPasswordPage/ResetPasswordPage";
+import ForgotPasswordPage from "../../pages/ForgotPasswordPage/ForgotPasswordPage";
 
 const Navigation: FC = () => {
     const token = localStorage.getItem("jwtToken");
@@ -63,6 +65,16 @@ const Navigation: FC = () => {
                     element={
                         !!token ? <SendMoneyPage /> : <Navigate to={"/auth"} />
                     }
+                />
+
+                <Route
+                    path={"/resetPassword/:token"}
+                    element={token ? <Home /> : <ResetPasswordPage />}
+                />
+
+                <Route
+                    path={"/forgotPassword"}
+                    element={token ? <Home /> : <ForgotPasswordPage />}
                 />
 
                 <Route
