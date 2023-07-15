@@ -104,11 +104,14 @@ const SendMoneyPage: FC<SendMoneyPageProps> = () => {
                 //@ts-ignore
                 amount: parseInt(amount),
                 userBalance: parseInt(selectedAccount.balance, 10),
-                userAccountId: localStorage.getItem("userId"), //todo look here
-                recipientAccountId: selectedFriendAccount._id,
+                userId: localStorage.getItem("userId"),
+                receiverId: selectedFriendAccount.userId,
+                userAccountId: selectedAccount._id,
+                receiverAccountId: selectedFriendAccount._id,
                 currency: parseInt(selectedAccount.currency, 10),
-                recipientBalance: selectedFriendAccount.balance,
+                receiverBalance: selectedFriendAccount.balance,
             });
+            console.log(patchObj);
             // //function for selecting friend account with same currency
             // let selectedFriendAccount: AccountInterface = friendAccounts.filter(
             //     (account) => account.currency === selectedAccount.currency

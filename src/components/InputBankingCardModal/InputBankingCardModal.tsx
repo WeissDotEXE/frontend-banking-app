@@ -30,8 +30,8 @@ const InputBankingCardModal: FC<InputBankingCardModalProps> = (
 ) => {
     const { onClose, bankingCard, patchObj } = props;
 
-    const [numberState, setNumberState] = useState();
-    const [cvvState, setCvvState] = useState();
+    const [numberState, setNumberState] = useState("");
+    const [cvvState, setCvvState] = useState("");
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
@@ -59,7 +59,6 @@ const InputBankingCardModal: FC<InputBankingCardModalProps> = (
         try {
             setIsLoading(true);
             setTimeout(() => {}, 2500);
-            console.log(parseInt(String(bankingCard.cardNumber)), numberState);
             if (
                 String(bankingCard.cardNumber) === numberState &&
                 String(bankingCard.cvv) === cvvState
