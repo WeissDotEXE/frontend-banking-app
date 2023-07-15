@@ -49,10 +49,11 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
     return (
         <Card className={rootCls}>
             <img
-                alt=""
+                alt={""}
                 className={avatarCls}
                 src={userData && userData.avatarImg}
             />
+
             <div className="mt-20 ">
                 <div className={"flex justify-center"}>
                     <RegularSubtitle className="text-3xl font-bold mr-3">

@@ -7,7 +7,6 @@ import Input from "../Input/Input";
 import Button from "../Button/Button";
 import axios from "axios";
 import * as process from "process";
-import { Buffer } from "buffer";
 
 interface EditProfileModalProps extends ProfileInterface {
     onClose: () => void;
@@ -20,41 +19,65 @@ const EditProfileModal: FC<EditProfileModalProps> = (
     const { _id, avatarImg, email, fullName, refetchData, onClose } = props;
 
     const [fullNameState, setFullNameState] = useState(fullName);
-    const [avatarImgState, setAvatarImgState] = useState<
-        string | ArrayBuffer | null
-    >(avatarImg);
+    const [avatarImgState, setAvatarImgState] = useState<File | null>(null);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(avatarImg);
     const [emailState, setEmailState] = useState(email);
     const [loadingUpload, setLoadingUpload] = useState(false);
+
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const changeFullNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setFullNameState(e.target.value);
     };
 
     const changeAvatarHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        //@ts-ignore
-        setAvatarImgState(e.target.files[0]);
+        if (e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0];
+            setAvatarImgState(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreviewUrl(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
     };
 
     const changeEmailHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setAvatarImgState(e.target.value);
+        setEmailState(e.target.value); // fixed here
     };
 
-    const fileInputRef = useRef(null);
     const handleClick = () => {
-        // @ts-ignore
-        fileInputRef.current.click();
+        fileInputRef.current?.click();
     };
+
+    const BASE_URL_SIMPLE = process.env.REACT_APP_BASE_URL_SIMPLE;
 
     const uploadImageHandler = async () => {
         try {
-            setLoadingUpload(true);
-            const response = await axios.post(
-                `${process.env.REACT_APP_BASE_URL}/imageUpload/`,
-                { image: avatarImgState }
-            );
-            if (response.status === 200) {
-                setAvatarImgState(response.data.filename);
-                setLoadingUpload(false);
+            if (avatarImgState) {
+                setLoadingUpload(true);
+                const formData = new FormData();
+                formData.append("image", avatarImgState);
+
+                const response = await axios.post(
+                    `${process.env.REACT_APP_BASE_URL}/image/upload`,
+                    formData,
+                    {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                    }
+                );
+
+                if (response.status === 200) {
+                    console.log(
+                        `${BASE_URL_SIMPLE}/upload/${response.data.data.filename}`
+                    );
+                    setPreviewUrl(
+                        `${BASE_URL_SIMPLE}/uploads/${response.data.data.filename}`
+                    );
+                    setLoadingUpload(false);
+                }
             }
         } catch (error) {
             console.log(error);
@@ -67,7 +90,7 @@ const EditProfileModal: FC<EditProfileModalProps> = (
             const URL = `${process.env.REACT_APP_BASE_URL}/user/editprofile/${_id}`;
             const response = await axios.patch(URL, {
                 fullName: fullNameState,
-                avatarImg: "image-1689171193655.jpeg",
+                avatarImg: previewUrl,
                 email: emailState,
             });
 
@@ -99,23 +122,22 @@ const EditProfileModal: FC<EditProfileModalProps> = (
                 name={"email"}
                 onChange={changeEmailHandler}
             />
-            <div className={"flex justify-around items-center"}>
-                <img
-                    // @ts-ignore
-                    src={avatarImgState}
-                    alt="Image Preview"
-                    onClick={handleClick}
-                    className={
-                        "cursor-pointer rounded-full w-44 h-44 object-cover my-8"
-                    }
-                />
+            <div className={"flex justify-around items-center my-10"}>
                 <input
                     type="file"
                     accept="image/*"
                     ref={fileInputRef}
                     onChange={changeAvatarHandler}
-                    className={"hidden"}
+                    style={{ display: "none" }}
                 />
+                {previewUrl && (
+                    <img
+                        src={previewUrl}
+                        alt="Preview"
+                        onClick={handleClick}
+                        className={"w-40 h-40 rounded-full object-cover"}
+                    />
+                )}
                 <Button
                     type={"button"}
                     onClick={uploadImageHandler}

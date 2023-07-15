@@ -49,7 +49,7 @@ const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {
             >
                 <img
                     src={avatarImg}
-                    className="rounded-full w-20 md:h-54"
+                    className="rounded-full w-20 h-20 md:h-54"
                     alt={""}
                 />
                 <RegularSubtitle size="lg" className="w-20 truncate">
