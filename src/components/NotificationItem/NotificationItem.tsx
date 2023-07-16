@@ -13,7 +13,7 @@ import { RegularSubtitle } from "../Typography/Typography";
 interface NotificationItemProps {
     id: string;
     name: string;
-    avatarLink: string;
+    avatarImg: string;
     message: string;
     type: number;
     refreshData: () => void;
@@ -21,11 +21,19 @@ interface NotificationItemProps {
     friendDocumentId: string | undefined;
 }
 
-
 const NotificationItem: FC<NotificationItemProps> = (
     props: NotificationItemProps
 ) => {
-    const { id, avatarLink, message, name, type, refreshData, senderId, friendDocumentId } = props;
+    const {
+        id,
+        avatarImg,
+        message,
+        name,
+        type,
+        refreshData,
+        senderId,
+        friendDocumentId,
+    } = props;
     const dispatch = useDispatch();
     const rootCls = cn(
         styles.NotificationItem,
@@ -70,7 +78,9 @@ const NotificationItem: FC<NotificationItemProps> = (
         try {
             //delete notification
             console.log(id);
-            const response = await axios.delete(`${process.env.REACT_APP_BASE_URL}/notification/deleteone/${id}`);
+            const response = await axios.delete(
+                `${process.env.REACT_APP_BASE_URL}/notification/deleteone/${id}`
+            );
             if (response.status === 204) {
                 refreshData();
             }
@@ -83,7 +93,9 @@ const NotificationItem: FC<NotificationItemProps> = (
         try {
             // @ts-ignore
             dispatch(deleteFriendNotification(id, friendDocumentId));
-            const response = await axios.delete(`${process.env.REACT_APP_BASE_URL}/notification/deleteone/${id}`);
+            const response = await axios.delete(
+                `${process.env.REACT_APP_BASE_URL}/notification/deleteone/${id}`
+            );
             if (response.status === 204) {
                 refreshData();
             }
@@ -97,7 +109,9 @@ const NotificationItem: FC<NotificationItemProps> = (
             console.log(senderId);
             // @ts-ignore
             dispatch(acceptFriend(senderId));
-            const response = await axios.delete(`${process.env.REACT_APP_BASE_URL}/notification/deleteone/${id}`);
+            const response = await axios.delete(
+                `${process.env.REACT_APP_BASE_URL}/notification/deleteone/${id}`
+            );
             if (response.status === 204) {
                 refreshData();
             }
@@ -105,13 +119,23 @@ const NotificationItem: FC<NotificationItemProps> = (
             console.log(error);
         }
     };
+    console.log(props);
 
     return (
         <>
             <div className={rootCls} data-testid="NotificationItem">
-                <Icon name="refreshIcon" className={refreshIconCls} color={"black"} onClick={refreshData} />
-                <div className={"w-full col-span-2 flex flex-col justify-center text-center items-center"}>
-                    <img alt={""} src={avatarLink} className={avatarCls} />
+                <Icon
+                    name="refreshIcon"
+                    className={refreshIconCls}
+                    color={"black"}
+                    onClick={refreshData}
+                />
+                <div
+                    className={
+                        "w-full col-span-2 flex flex-col justify-center text-center items-center"
+                    }
+                >
+                    <img alt={""} src={avatarImg} className={avatarCls} />
                     <RegularSubtitle size={"sm"} className={"text-gray-500"}>
                         #{getLastUserCode(id)}
                     </RegularSubtitle>
@@ -122,7 +146,11 @@ const NotificationItem: FC<NotificationItemProps> = (
                 >
                     {name} {message}
                 </p>
-                <Icon name="closeIcon" className="col-span-1 cursor-pointer" onClick={deleteNotification} />
+                <Icon
+                    name="closeIcon"
+                    className="col-span-1 cursor-pointer"
+                    onClick={deleteNotification}
+                />
             </div>
             {type === notificationEnum.friendRequest && (
                 <div className={buttonsCls}>
@@ -131,8 +159,7 @@ const NotificationItem: FC<NotificationItemProps> = (
                         Accept
                     </Button>
                     {/*@ts-ignore*/}
-                    <Button type="button" onClick={declineFriendRequestHandler}
-                    >
+                    <Button type="button" onClick={declineFriendRequestHandler}>
                         Decline
                     </Button>
                 </div>

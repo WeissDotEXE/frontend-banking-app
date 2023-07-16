@@ -23,7 +23,10 @@ interface NotificationType {
     avatarImg: string;
     message: string;
     type: number;
-    senderId: string;
+    senderId: {
+        avatarImg: string;
+        _id: string;
+    };
     friendDocumentId?: string | undefined;
 }
 
@@ -166,7 +169,7 @@ const Header: FC<HeaderProps> = () => {
                             />
                             {!showNotifications &&
                                 notificationList.length !== 0 && (
-                                    <div className="w-5  text-white-950 cursor-pointer  bg-red-950 rounded-full absolute bottom-5 right-0">
+                                    <div className="w-5  text-white-950 cursor-pointer  bg-red-950 rounded-full absolute bottom-5 right-16">
                                         <p className="font-normal flex justify-center">
                                             {notificationList.length}
                                         </p>
@@ -195,14 +198,16 @@ const Header: FC<HeaderProps> = () => {
                                             <NotificationItem
                                                 key={index}
                                                 id={item._id}
-                                                avatarLink={item.avatarImg}
+                                                avatarImg={
+                                                    item.senderId.avatarImg
+                                                }
                                                 message={item.message}
                                                 name={item.fullName}
                                                 type={item.type}
                                                 refreshData={
                                                     getNotificationsHandler
                                                 }
-                                                senderId={item.senderId}
+                                                senderId={item.senderId._id}
                                                 friendDocumentId={
                                                     item?.friendDocumentId
                                                 }
