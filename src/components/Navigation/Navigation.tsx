@@ -11,6 +11,7 @@ import AddMoneyPage from "../../pages/AddMoneyPage/AddMoneyPage";
 import SendMoneyPage from "../../pages/SendMoneyPage/SendMoneyPage";
 import ResetPasswordPage from "../../pages/ResetPasswordPage/ResetPasswordPage";
 import ForgotPasswordPage from "../../pages/ForgotPasswordPage/ForgotPasswordPage";
+import WelcomePage from "../../pages/WelcomePage/WelcomePage";
 
 const Navigation: FC = () => {
     const token = localStorage.getItem("jwtToken");
@@ -21,7 +22,7 @@ const Navigation: FC = () => {
             <Routes>
                 <Route
                     path="/"
-                    element={!!token ? <Home /> : <Navigate to="/auth" />}
+                    element={!!token ? <Home /> : <Navigate to="/welcome" />}
                 />
                 <Route
                     path="/auth"
@@ -30,18 +31,22 @@ const Navigation: FC = () => {
                 <Route
                     path="/cards"
                     element={
-                        !!token ? <BankingCards /> : <Navigate to="/auth" />
+                        !!token ? <BankingCards /> : <Navigate to="/welcome" />
                     }
                 />
                 <Route
                     path="/generatecard"
                     element={
-                        !!token ? <GenerateCardPage /> : <Navigate to="/auth" />
+                        !!token ? (
+                            <GenerateCardPage />
+                        ) : (
+                            <Navigate to="/welcome" />
+                        )
                     }
                 />
                 <Route
                     path="/user/:id"
-                    element={!!token ? <User /> : <Navigate to="/auth" />}
+                    element={!!token ? <User /> : <Navigate to="/welcome" />}
                 />
 
                 <Route
@@ -50,20 +55,28 @@ const Navigation: FC = () => {
                         !!token ? (
                             <SearchUsersPage />
                         ) : (
-                            <Navigate to={"/auth"} />
+                            <Navigate to={"/welcome"} />
                         )
                     }
                 />
                 <Route
                     path={"/addMoney/:userId"}
                     element={
-                        !!token ? <AddMoneyPage /> : <Navigate to={"/auth"} />
+                        !!token ? (
+                            <AddMoneyPage />
+                        ) : (
+                            <Navigate to={"/welcome"} />
+                        )
                     }
                 />
                 <Route
                     path={"/sendMoney/:userId/:friendId"}
                     element={
-                        !!token ? <SendMoneyPage /> : <Navigate to={"/auth"} />
+                        !!token ? (
+                            <SendMoneyPage />
+                        ) : (
+                            <Navigate to={"/welcome"} />
+                        )
                     }
                 />
 
@@ -77,9 +90,11 @@ const Navigation: FC = () => {
                     element={token ? <Home /> : <ForgotPasswordPage />}
                 />
 
+                <Route path={"/welcome"} element={<WelcomePage />} />
+
                 <Route
                     path="*"
-                    element={!!token ? <Home /> : <Navigate to="/auth" />}
+                    element={!!token ? <Home /> : <Navigate to="/welcome" />}
                 />
             </Routes>
         </div>
