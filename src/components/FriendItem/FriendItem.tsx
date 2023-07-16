@@ -59,8 +59,9 @@ const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {
             {showModal && (
                 <FriendModal
                     avatarImg={avatarImg}
+                    _id={_id}
                     //@ts-ignore
-                    _id={userId._id}
+                    userId={userId._id}
                     fullName={fullName}
                     onClose={onClick}
                     refreshData={refreshData}

@@ -9,16 +9,25 @@ import getLastUserCode from "../../functions/getLastUserCode";
 import { Link } from "react-router-dom";
 
 interface FriendModalProps {
+    _id: string;
     fullName: string;
     avatarImg: string;
-    _id: string;
+    userId: string;
     onClose: () => void;
     className?: string;
     refreshData: () => void;
 }
 
 const FriendModal: FC<FriendModalProps> = (props: FriendModalProps) => {
-    const { fullName, avatarImg, _id, onClose, className, refreshData } = props;
+    const {
+        fullName,
+        avatarImg,
+        userId,
+        onClose,
+        className,
+        refreshData,
+        _id,
+    } = props;
 
     const [showRemove, setShowRemove] = useState(false);
 
@@ -90,13 +99,13 @@ const FriendModal: FC<FriendModalProps> = (props: FriendModalProps) => {
                 <div className={friendContentCls}>
                     <RegularSubtitle>{fullName}</RegularSubtitle>
                     <RegularSubtitle className={"text-gray-500"}>
-                        #{getLastUserCode(_id)}
+                        #{getLastUserCode(userId)}
                     </RegularSubtitle>
                     <div className={buttonsCls}>
                         <Link
                             to={`/sendMoney/${localStorage.getItem(
                                 "userId"
-                            )}/${_id}`}
+                            )}/${userId}`}
                         >
                             <Button type={"button"}>Send Money</Button>
                         </Link>

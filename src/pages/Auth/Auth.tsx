@@ -220,19 +220,21 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                           })
                         : loginFieldList.map((item, index) => {
                               return (
-                                  <div key={index} className={"w-full"}>
-                                      <Input
-                                          type={item.type}
-                                          label={item.label}
-                                          placeholder={item.placeholder}
-                                          onChange={formik.handleChange}
-                                          name={item.name}
-                                          value={item.value}
-                                      />
-                                      <p className="text-red-600 flex w-full text-center mx-auto">
-                                          {item.error}
-                                      </p>
-                                  </div>
+                                  <>
+                                      <div key={index} className={"w-full"}>
+                                          <Input
+                                              type={item.type}
+                                              label={item.label}
+                                              placeholder={item.placeholder}
+                                              onChange={formik.handleChange}
+                                              name={item.name}
+                                              value={item.value}
+                                          />
+                                          <p className="text-red-600 flex w-full text-center mx-auto">
+                                              {item.error}
+                                          </p>
+                                      </div>
+                                  </>
                               );
                           })}
                     <Button
