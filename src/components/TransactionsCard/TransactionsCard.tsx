@@ -17,7 +17,7 @@ interface TransactionsCardProps {
 }
 
 interface transactionItem {
-    id: string;
+    _id: string;
     amount: number;
     type: transactionEnum;
     transactionDate: string;
@@ -64,7 +64,7 @@ const TransactionsCard: FC<TransactionsCardProps> = (
                         (item: transactionItem, index: number) => (
                             <TransactionItem
                                 key={index}
-                                id={item.id}
+                                id={item._id}
                                 amount={item.amount}
                                 type={item.type}
                                 date={item.transactionDate}

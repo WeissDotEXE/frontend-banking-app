@@ -7,19 +7,35 @@ import Modal from "components/Modal/Modal";
 import { Icon } from "components/Icon/Icon";
 import transactionEnum from "../../enums/transactionEnum";
 import currencyEnum from "../../enums/currencyEnum";
+import axios from "axios";
+//@ts-ignore
+import { saveAs } from "file-saver";
+import receiverRecipientEnum from "../../enums/receiverRecipientEnum";
 
 interface TransactionModalProps {
+    id: string;
     date: string;
     amount: number;
     type: transactionEnum;
     name: string;
     currency: currencyEnum;
+    fieldFound: any;
     className?: string;
     onClose: () => void;
 }
 
 const TransactionModal: FC<TransactionModalProps> = (props) => {
-    const { date, amount, type, name, currency, className, onClose } = props;
+    const {
+        id,
+        date,
+        amount,
+        type,
+        name,
+        currency,
+        fieldFound,
+        className,
+        onClose,
+    } = props;
 
     const rootCls = cn(styles.TransactionModal);
 
@@ -29,9 +45,11 @@ const TransactionModal: FC<TransactionModalProps> = (props) => {
         {
             title: "Type",
             data:
-                (type === transactionEnum.received && "Received") ||
-                (type === transactionEnum.send && "Sent") ||
-                (transactionEnum.deposit && "Deposit"),
+                type !== transactionEnum.deposit
+                    ? fieldFound === receiverRecipientEnum.receiver
+                        ? "Sent"
+                        : "Received"
+                    : "Deposit",
         },
         { title: "Date", data: date.slice(0, 10) },
         {
@@ -50,6 +68,35 @@ const TransactionModal: FC<TransactionModalProps> = (props) => {
                 "RON",
         },
     ];
+
+    const generatePDF = async () => {
+        const transactionData = {
+            id,
+            amount,
+            currency:
+                (currency === currencyEnum.euro && "Euro") ||
+                (currency === currencyEnum.dollar && "Dollar") ||
+                (currency === currencyEnum.ron && "Ron"),
+            date,
+        };
+        try {
+            const response = await axios.post(
+                `${process.env.REACT_APP_BASE_URL}/generatePdf`,
+                transactionData,
+                {
+                    responseType: "blob", // Important
+                }
+            );
+
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
+            });
+
+            saveAs(pdfBlob, "transaction.pdf");
+        } catch (error) {
+            console.error("Failed to generate PDF", error);
+        }
+    };
 
     return (
         <Modal onClose={onClose} className={rootCls}>
@@ -73,7 +120,11 @@ const TransactionModal: FC<TransactionModalProps> = (props) => {
                 })}
             </div>
             <div className="flex justify-center">
-                <Button type="button" className="flex items-center">
+                <Button
+                    type="button"
+                    className="flex items-center"
+                    onClick={generatePDF}
+                >
                     Download Invoice
                     <Icon name="downloadIcon" className="ml-4" />
                 </Button>

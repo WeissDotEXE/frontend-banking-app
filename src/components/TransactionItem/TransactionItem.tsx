@@ -78,11 +78,13 @@ const TransactionItem: FC<TransactionItemProps> = (
 
             {showModal && (
                 <TransactionModal
+                    id={id}
                     type={type}
                     amount={amount}
                     date={date}
                     key={id}
                     name="John"
+                    fieldFound={fieldFound}
                     onClose={() => setShowModal(!showModal)}
                     currency={currency}
                 />
