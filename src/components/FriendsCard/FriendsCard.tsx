@@ -34,7 +34,7 @@ export interface friendItem {
 const FriendsCard: FC<FriendsCardProps> = (props: FriendsCardProps) => {
     const { className } = props;
 
-    const rootCls = cn(styles.FriendsCard, className);
+    const rootCls = cn(styles.FriendsCard, className, "relative");
 
     const dispatch = useDispatch();
     const friends = useSelector((state: any) => state.friendReducer.friends);
@@ -56,6 +56,17 @@ const FriendsCard: FC<FriendsCardProps> = (props: FriendsCardProps) => {
             <RegularSubtitle bold color={"black"} className="mb-10">
                 Friends
             </RegularSubtitle>
+            <div
+                className={"absolute right-10 top-8"}
+                //@ts-ignore
+                onClick={() => dispatch(fetchFriends())}
+            >
+                <Icon
+                    name="refreshIcon"
+                    className={"hover:cursor-pointer"}
+                    color={"black"}
+                />
+            </div>
 
             {loading ? (
                 <div

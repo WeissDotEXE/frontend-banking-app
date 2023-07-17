@@ -23,6 +23,7 @@ const EditProfileModal: FC<EditProfileModalProps> = (
     const [previewUrl, setPreviewUrl] = useState<string | null>(avatarImg);
     const [emailState, setEmailState] = useState(email);
     const [loadingUpload, setLoadingUpload] = useState(false);
+    const [statusMessage, setStatusMessage] = useState("");
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -76,6 +77,7 @@ const EditProfileModal: FC<EditProfileModalProps> = (
                     setPreviewUrl(
                         `${BASE_URL_SIMPLE}/uploads/${response.data.data.filename}`
                     );
+                    setStatusMessage("Image uploaded");
                     setLoadingUpload(false);
                 }
             }
@@ -138,14 +140,20 @@ const EditProfileModal: FC<EditProfileModalProps> = (
                         className={"w-40 h-40 rounded-full object-cover"}
                     />
                 )}
-                <Button
-                    type={"button"}
-                    onClick={uploadImageHandler}
-                    disable={loadingUpload}
-                >
-                    Upload
-                </Button>
+                <div>
+                    <Button
+                        type={"button"}
+                        onClick={uploadImageHandler}
+                        disable={loadingUpload}
+                    >
+                        Upload
+                    </Button>
+                    <RegularSubtitle className={"text-green-600 text-lg"}>
+                        {statusMessage}
+                    </RegularSubtitle>
+                </div>
             </div>
+
             <div className={"flex justify-center"}>
                 <Button type={"button"} onClick={submitHandler}>
                     Submit

@@ -36,7 +36,8 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
         "absolute",
         "w-44",
         "h-44",
-        "drop-shadow-xl"
+        "drop-shadow-xl",
+        "object-cover"
     );
     const informationsCls = cn(
         styles.informations,

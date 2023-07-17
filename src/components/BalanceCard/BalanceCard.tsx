@@ -72,6 +72,17 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
             <RegularSubtitle bold className="mb-2">
                 Balance
             </RegularSubtitle>
+            <div
+                className={"absolute right-10 top-8"}
+                //@ts-ignore
+                onClick={getBankingAccountsHandler}
+            >
+                <Icon
+                    name="refreshIcon"
+                    className={"hover:cursor-pointer"}
+                    color={"black"}
+                />
+            </div>
             <div className="flex justify-around items-center w-full">
                 <RegularSubtitle className="text-4xl md:text-6xl" bold>
                     {selectedAccount.balance}{" "}

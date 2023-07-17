@@ -12,6 +12,7 @@ import TransactionItem from "components/TransactionItem/TransactionItem";
 import transactionEnum from "../../enums/transactionEnum";
 import currencyEnum from "../../enums/currencyEnum";
 import receiverRecipientEnum from "../../enums/receiverRecipientEnum";
+import { Icon } from "../Icon/Icon";
 interface TransactionsCardProps {
     className?: string;
 }
@@ -29,7 +30,7 @@ const TransactionsCard: FC<TransactionsCardProps> = (
     props: TransactionsCardProps
 ) => {
     const { className } = props;
-    const rootCls = cn(styles.TransactionCard, className);
+    const rootCls = cn(styles.TransactionCard, className, "relative");
 
     const [transactionList, setTransactionList] = useState<transactionItem[]>(
         []
@@ -58,6 +59,17 @@ const TransactionsCard: FC<TransactionsCardProps> = (
             <RegularSubtitle bold className="my-4">
                 Transactions
             </RegularSubtitle>
+            <div
+                className={"absolute right-10 top-8"}
+                onClick={getTransactionHandler}
+            >
+                <Icon
+                    name="refreshIcon"
+                    className={"hover:cursor-pointer"}
+                    color={"black"}
+                    onClick={getTransactionHandler}
+                />
+            </div>
             <div className="h-96 overflow-auto scrollbar-thin">
                 {transactionList && transactionList.length > 0 ? (
                     transactionList.map(

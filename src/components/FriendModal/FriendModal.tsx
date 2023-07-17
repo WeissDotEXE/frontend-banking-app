@@ -43,7 +43,9 @@ const FriendModal: FC<FriendModalProps> = (props: FriendModalProps) => {
         "-top-28",
         "left-0",
         "rounded-full",
-        "w-44"
+        "w-44",
+        "h-44",
+        "object-cover"
     );
 
     const friendContentCls = cn("mt-20");

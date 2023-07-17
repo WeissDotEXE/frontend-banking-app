@@ -177,7 +177,9 @@ const SendMoneyPage: FC<SendMoneyPageProps> = () => {
                     >
                         <img
                             src={friendData?.avatarImg}
-                            className={"rounded-full drop-shadow-xl w-36"}
+                            className={
+                                "rounded-full drop-shadow-xl w-36 h-36 object-cover"
+                            }
                             alt={""}
                         />
                         <RegularSubtitle>
