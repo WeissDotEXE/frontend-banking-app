@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { ChangeEvent, FC, useState } from "react";
 import Modal from "../Modal/Modal";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
@@ -30,8 +30,10 @@ const InputBankingCardModal: FC<InputBankingCardModalProps> = (
 ) => {
     const { onClose, bankingCard, patchObj } = props;
 
-    const [numberState, setNumberState] = useState("");
-    const [cvvState, setCvvState] = useState("");
+    const [bankingCardData, setBankingCardData] = useState({
+        number: "",
+        cvv: "",
+    });
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
@@ -60,8 +62,8 @@ const InputBankingCardModal: FC<InputBankingCardModalProps> = (
             setIsLoading(true);
             setTimeout(() => {}, 2500);
             if (
-                String(bankingCard.cardNumber) === numberState &&
-                String(bankingCard.cvv) === cvvState
+                String(bankingCard.cardNumber) === bankingCardData.number &&
+                String(bankingCard.cvv) === bankingCardData.cvv
             ) {
                 onClose();
                 const response = await axios.patch(
@@ -80,6 +82,13 @@ const InputBankingCardModal: FC<InputBankingCardModalProps> = (
         }
     };
 
+    const changeBankingCardDataHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setBankingCardData((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value,
+        }));
+    };
+
     return (
         <>
             {isLoading && (
@@ -93,17 +102,17 @@ const InputBankingCardModal: FC<InputBankingCardModalProps> = (
                     type={"number"}
                     placeholder={"Card Number"}
                     label={"Card Number"}
-                    value={numberState}
                     name={"number"}
-                    onChange={(e) => setNumberState(e.target.value)}
+                    value={bankingCardData.number}
+                    onChange={changeBankingCardDataHandler}
                 />
                 <Input
                     type={"cvv"}
                     placeholder={"CVV"}
                     label={"CVV"}
-                    value={cvvState}
-                    name={"number"}
-                    onChange={(e) => setCvvState(e.target.value)}
+                    name={"cvv"}
+                    value={bankingCardData.cvv}
+                    onChange={changeBankingCardDataHandler}
                 />
                 <div className={"flex justify-center"}>
                     <Button

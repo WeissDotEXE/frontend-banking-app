@@ -18,33 +18,34 @@ const EditProfileModal: FC<EditProfileModalProps> = (
 ) => {
     const { _id, avatarImg, email, fullName, refetchData, onClose } = props;
 
-    const [fullNameState, setFullNameState] = useState(fullName);
     const [avatarImgState, setAvatarImgState] = useState<File | null>(null);
-    const [previewUrl, setPreviewUrl] = useState<string | null>(avatarImg);
-    const [emailState, setEmailState] = useState(email);
+    const [userData, setUserData] = useState({
+        fullName,
+        avatarImg,
+        email,
+    });
     const [loadingUpload, setLoadingUpload] = useState(false);
     const [statusMessage, setStatusMessage] = useState("");
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const changeFullNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setFullNameState(e.target.value);
+    //function for changing values for name & email
+    const changeUserDataHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
-
     const changeAvatarHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
             setAvatarImgState(file);
             const reader = new FileReader();
             reader.onloadend = () => {
-                setPreviewUrl(reader.result as string);
+                setUserData((prev) => ({
+                    ...prev,
+                    avatarImg: reader.result as string,
+                }));
             };
             reader.readAsDataURL(file);
         }
-    };
-
-    const changeEmailHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setEmailState(e.target.value); // fixed here
     };
 
     const handleClick = () => {
@@ -74,9 +75,10 @@ const EditProfileModal: FC<EditProfileModalProps> = (
                     console.log(
                         `${BASE_URL_SIMPLE}/upload/${response.data.data.filename}`
                     );
-                    setPreviewUrl(
-                        `${BASE_URL_SIMPLE}/uploads/${response.data.data.filename}`
-                    );
+                    setUserData((prev) => ({
+                        ...prev,
+                        avatarImg: `${BASE_URL_SIMPLE}/uploads/${response.data.data.filename}`,
+                    }));
                     setStatusMessage("Image uploaded");
                     setLoadingUpload(false);
                 }
@@ -90,11 +92,7 @@ const EditProfileModal: FC<EditProfileModalProps> = (
     const submitHandler = async () => {
         try {
             const URL = `${process.env.REACT_APP_BASE_URL}/user/editprofile/${_id}`;
-            const response = await axios.patch(URL, {
-                fullName: fullNameState,
-                avatarImg: previewUrl,
-                email: emailState,
-            });
+            const response = await axios.patch(URL, userData);
 
             if (response.status === 200) {
                 refetchData();
@@ -112,17 +110,17 @@ const EditProfileModal: FC<EditProfileModalProps> = (
                 type={"text"}
                 placeholder={"fullName"}
                 label={"Full Name"}
-                value={fullNameState}
+                value={userData.fullName}
                 name={"fullName"}
-                onChange={changeFullNameHandler}
+                onChange={changeUserDataHandler}
             />
             <Input
                 type={"text"}
                 placeholder={"email"}
                 label={"Email"}
-                value={emailState}
+                value={userData.email}
                 name={"email"}
-                onChange={changeEmailHandler}
+                onChange={changeUserDataHandler}
             />
             <div className={"flex justify-around items-center my-10"}>
                 <input
@@ -132,9 +130,9 @@ const EditProfileModal: FC<EditProfileModalProps> = (
                     onChange={changeAvatarHandler}
                     style={{ display: "none" }}
                 />
-                {previewUrl && (
+                {userData.avatarImg && (
                     <img
-                        src={previewUrl}
+                        src={userData.avatarImg}
                         alt="Preview"
                         onClick={handleClick}
                         className={"w-40 h-40 rounded-full object-cover"}
