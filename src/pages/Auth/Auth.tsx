@@ -35,15 +35,18 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
     const rootCls = cn(
         styles.Auth,
         className,
-        "flex flex-col xl:flex-row",
-        "overflow-auto"
+        "flex flex-col xl:flex-row w-2/3",
+        "overflow-auto",
+        "mt-0 md:mt-0",
+        "w-3/4",
+        "h-3/4"
     );
 
     const backgroundCls = cn(
         styles.background,
         "absolute",
         "w-full",
-        "h-screen",
+        "h-full",
         "top-0",
         "left-0",
         "object-cover",
@@ -53,11 +56,14 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
     const rightCls = cn(
         styles.left,
         // "col-span-3",
+        "mt-6 md:mt-4",
         "p-10",
         "flex",
         "flex-col",
         "items-center",
-        "w-full"
+        "justify-center",
+        "w-full",
+        "h-full"
     );
 
     const leftCls = cn(
@@ -190,10 +196,18 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
             <img src={authBackground} className={backgroundCls} alt={""} />
             <Card className={rootCls} data-testid="Auth" noPadding>
                 <div className={leftCls}>
-                    <RegularSubtitle color={"white-950"} bold className="mb-5">
+                    <RegularSubtitle
+                        color={"white-950"}
+                        bold
+                        className={"mb-5 text-xl md:text-4xl"}
+                    >
                         Welcome!
                     </RegularSubtitle>
-                    <RegularSubtitle bold color={"white-950"} className="mb-5">
+                    <RegularSubtitle
+                        bold
+                        color={"white-950"}
+                        className={"text-lg md:text-3xl"}
+                    >
                         {isRegister
                             ? "Create an account to start using banking app."
                             : "Fill up the credentials and use Banking App"}
@@ -250,7 +264,7 @@ const Auth: FC<AuthProps> = (props: AuthProps) => {
                             ? "Register"
                             : "Log In"}
                     </Button>
-                    <div className="flex justify-center text-center mx-auto mt-4">
+                    <div className="flex justify-center text-center mx-auto my-2">
                         <RegularSubtitle size={"xl"} className="mr-3">
                             {isRegister
                                 ? "Have an account?"
