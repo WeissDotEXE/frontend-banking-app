@@ -26,6 +26,7 @@ const EditProfileModal: FC<EditProfileModalProps> = (
     });
     const [loadingUpload, setLoadingUpload] = useState(false);
     const [statusMessage, setStatusMessage] = useState("");
+    const [hasUploaded, setHasUploaded] = useState(false);
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -79,6 +80,7 @@ const EditProfileModal: FC<EditProfileModalProps> = (
                         ...prev,
                         avatarImg: `${BASE_URL_SIMPLE}/uploads/${response.data.data.filename}`,
                     }));
+                    setHasUploaded(true);
                     setStatusMessage("Image uploaded");
                     setLoadingUpload(false);
                 }
@@ -103,8 +105,34 @@ const EditProfileModal: FC<EditProfileModalProps> = (
         }
     };
 
+    const closeHandler = async () => {
+        // Find the position of "image" in the string
+        const indexOfResultUserData = userData.avatarImg.indexOf("image");
+        let resultUserData;
+
+        // Check if "image" is found in the string
+        if (indexOfResultUserData !== -1) {
+            resultUserData = userData.avatarImg.substring(
+                indexOfResultUserData
+            );
+        }
+        if (hasUploaded) {
+            try {
+                const URL = `${process.env.REACT_APP_BASE_URL}/image/delete/${resultUserData}`;
+                const response = await axios.delete(URL);
+                if (response.status === 200) {
+                    onClose();
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            onClose();
+        }
+    };
+
     return (
-        <Modal onClose={onClose}>
+        <Modal onClose={closeHandler}>
             <RegularSubtitle>Edit Profile</RegularSubtitle>
             <Input
                 type={"text"}
