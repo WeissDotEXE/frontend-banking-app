@@ -54,7 +54,7 @@ const Input: FC<InputProps> = (props: InputProps) => {
             </RegularSubtitle>
             {type !== "select" ? (
                 <input
-                    className="text-pink-950 bg-gray-300 p-4 w-full outline-pink-950 rounded-md"
+                    className="text-pink-950 p-4 w-2/3 focus:w-full ease-out duration-150 focus:outline-none border-b-2 border-pink-950"
                     type={type}
                     placeholder={placeholder}
                     name={name}

@@ -9,10 +9,9 @@ import axios from "axios";
 import { changeBankingAccount } from "../../redux/bankAccountReducer";
 import Button from "../../components/Button/Button";
 import { Icon } from "../../components/Icon/Icon";
-import Input from "../../components/Input/Input";
 import currencyEnum from "../../enums/currencyEnum";
-import AccountItem from "../../components/AccountItem/AccountItem";
 import { useNavigate } from "react-router-dom";
+import Input from "../../components/Input/Input";
 
 interface AddMoneyPageProps {}
 
@@ -27,15 +26,30 @@ const AddMoneyPage: FC<AddMoneyPageProps> = () => {
     const [amount, setAmount] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(false);
 
-    const rootCls = cn(styles.AddMoneyPage, "p-10");
+    const predefinedAmountValues = [100, 200, 500, 1000, 1500, 2000];
+
+    const rootCls = cn(
+        styles.AddMoneyPage,
+        "p-0",
+        "2xl:w-1/2",
+        "w-full",
+        "relative"
+    );
     const navigate = useNavigate();
-    const contentCls = cn("flex", "justify-around", "items-center");
+    const contentCls = cn(
+        "flex",
+        "justify-around",
+        "items-center",
+        "z-10",
+        "relative",
+        "mt-4"
+    );
 
     const loadingCls = cn(
         "backdrop-blur-md",
         "absolute",
         "w-full",
-        "h-screen",
+        "h-full",
         "top-0",
         "left-0",
         "z-20",
@@ -63,6 +77,7 @@ const AddMoneyPage: FC<AddMoneyPageProps> = () => {
     const changeAmountHandler = (event: ChangeEvent<HTMLInputElement>) => {
         // @ts-ignore
         setAmount(event.target.value);
+        console.log(amount);
     };
 
     const changeAccountHandler = (item: AccountInterface) => {
@@ -89,7 +104,7 @@ const AddMoneyPage: FC<AddMoneyPageProps> = () => {
                 setIsLoading(true);
                 setTimeout(() => {
                     navigate("/");
-                }, 5000);
+                }, 3000);
             }
 
             console.log(amount);
@@ -110,63 +125,98 @@ const AddMoneyPage: FC<AddMoneyPageProps> = () => {
                     <Icon name={"loadingIcon"} className={"animate-spin"} />
                 </div>
             )}
-            <Card className={rootCls}>
-                <RegularSubtitle>Add Money</RegularSubtitle>
+            <div
+                className={"flex justify-center items-center w-full h-full p-5"}
+            >
+                <Card className={rootCls}>
+                    <div
+                        className={
+                            "absolute w-full top-0 left-0 bg-pink-950 h-2/4 rounded-t-xl z-0"
+                        }
+                    ></div>
+                    <div
+                        className={
+                            "relative right-2 z-10 text-white-950 flex-col w-full justify-center text-center"
+                        }
+                    >
+                        <RegularSubtitle bold={true}>
+                            {selectedAccount.balance}
+                        </RegularSubtitle>
+                        <RegularSubtitle>Money In Your Account</RegularSubtitle>
+                    </div>
 
-                <div className={contentCls}>
-                    <div className={"flex-col justify-center"}>
-                        <RegularSubtitle>Select Account</RegularSubtitle>
+                    <div className={contentCls}>
                         {bankingAccountsList.map((item, index) => {
                             return (
-                                <AccountItem
+                                <div
                                     key={index}
-                                    userId={item.userId}
-                                    balance={item.balance}
-                                    currency={item.currency}
-                                    _id={item._id}
+                                    className={` rounded-2xl border-2 border-gray-200 px-10 py-5 ${
+                                        selectedAccount.currency ===
+                                        item.currency
+                                            ? "text-white-950 bg-pink-950 border-white-950 drop-shadow-2xl"
+                                            : "bg-white-950"
+                                    }`}
                                     onClick={() => changeAccountHandler(item)}
-                                    isSelected={
-                                        selectedAccount._id === item._id
-                                    }
-                                />
+                                >
+                                    {item.currency === currencyEnum.euro &&
+                                        "EURO"}
+                                    {item.currency === currencyEnum.dollar &&
+                                        "DOLLAR"}
+                                    {item.currency === currencyEnum.ron &&
+                                        "RON"}
+                                </div>
                             );
                         })}
                     </div>
-
-                    <div>
-                        <div className={"flex-col items-center"}>
-                            <Input
-                                type={"number"}
-                                placeholder={"Amount"}
-                                label={"Amount"}
-                                value={amount}
-                                name={"amount"}
-                                min={0}
-                                onChange={changeAmountHandler}
-                            />
-                            {selectedAccount.currency === currencyEnum.ron && (
-                                <RegularSubtitle>Rons</RegularSubtitle>
-                            )}
-                            {selectedAccount.currency === currencyEnum.euro && (
-                                <RegularSubtitle>Euros</RegularSubtitle>
-                            )}
-                            {selectedAccount.currency ===
-                                currencyEnum.dollar && (
-                                <RegularSubtitle>Dollars</RegularSubtitle>
-                            )}
+                    <div
+                        className={
+                            "bg-white-950 drop-shadow-xl rounded- p-10 mt-10 rounded-xl"
+                        }
+                    >
+                        <Input
+                            type={"number"}
+                            placeholder={"Enter Amount"}
+                            label={"Add Money"}
+                            value={amount}
+                            name={"amount"}
+                            onChange={changeAmountHandler}
+                            className={"justify-center items-center"}
+                        />
+                        <div
+                            className={
+                                "flex flex-col md:flex-row justify-around h-96 md:h-full pt-48 md:pt-0 overflow-y-auto"
+                            }
+                        >
+                            {predefinedAmountValues.map((item, index) => {
+                                return (
+                                    <div
+                                        key={index}
+                                        className={`${
+                                            Number(amount) === Number(item) &&
+                                            "bg-pink-950 text-white-950"
+                                        } border-2 border-gray-400 rounded-lg p-5 mt-6 `}
+                                        onClick={() => setAmount(item)}
+                                    >
+                                        <RegularSubtitle size={"xl"}>
+                                            {item}
+                                        </RegularSubtitle>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
-                </div>
-                <div className={"flex justify-center"}>
-                    <Button
-                        type={"button"}
-                        className={"flex justify-between items-center my-6"}
-                        onClick={addMoneyHandler}
-                    >
-                        Add Money <Icon name={"secureIcon"} />
-                    </Button>
-                </div>
-            </Card>
+                    <div className={"flex justify-center"}>
+                        <Button
+                            type={"button"}
+                            className={"flex justify-between items-center my-6"}
+                            onClick={addMoneyHandler}
+                        >
+                            Proceed to add{" "}
+                            <Icon name={"secureIcon"} className={"ml-3"} />
+                        </Button>
+                    </div>
+                </Card>
+            </div>
         </>
     );
 };
