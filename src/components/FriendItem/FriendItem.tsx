@@ -38,8 +38,6 @@ const FriendItem: FC<FriendItemProps> = (props: FriendItemProps) => {
         "cursor-pointer"
     );
 
-    console.log(props);
-
     return (
         <>
             <div

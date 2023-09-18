@@ -57,7 +57,6 @@ const FriendModal: FC<FriendModalProps> = (props: FriendModalProps) => {
             const response = await axios.delete(
                 `${process.env.REACT_APP_BASE_URL}/friends/deleteFriend/${_id}`
             );
-            console.log(response);
             if (response.status === 204) {
                 //todo add notification when user is deleted from friend list
                 refreshData();

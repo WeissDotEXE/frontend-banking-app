@@ -2,6 +2,7 @@ import React from "react";
 
 import Navigation from "components/Navigation/Navigation";
 import axios from "axios";
+import { Toaster } from "react-hot-toast";
 
 function App() {
     const token = localStorage.getItem("jwtToken");
@@ -10,7 +11,7 @@ function App() {
         async (config) => {
             if (token) {
                 config.headers = {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`,
                 };
             }
 
@@ -23,25 +24,31 @@ function App() {
     );
 
     //handle errors for future response
-    axios.interceptors.response.use(function (response) {
-        // Any status code that lie within the range of 2xx cause this function to trigger
-        // Do something with response data
-        return response;
-    }, function (error) {
-        // Any status codes that falls outside the range of 2xx cause this function to trigger
-        // Do something with response error
-        if(error.response.status===400 && error.response.data.message.name==="JsonWebTokenError"){
-            localStorage.removeItem("jwtToken");
-            localStorage.removeItem("userId");
+    axios.interceptors.response.use(
+        function (response) {
+            // Any status code that lie within the range of 2xx cause this function to trigger
+            // Do something with response data
+            return response;
+        },
+        function (error) {
+            // Any status codes that falls outside the range of 2xx cause this function to trigger
+            // Do something with response error
+            if (
+                error.response.status === 400 &&
+                error.response.data.message.name === "JsonWebTokenError"
+            ) {
+                localStorage.removeItem("jwtToken");
+                localStorage.removeItem("userId");
+            }
+            return Promise.reject(error);
         }
-        return Promise.reject(error);
-    });
-
+    );
 
     // isTokenValid()
 
     return (
         <div className="mt-20">
+            <Toaster />
             <Navigation />
         </div>
     );

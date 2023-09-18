@@ -37,7 +37,7 @@ const Header: FC<HeaderProps> = () => {
         NotificationType[]
     >([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [searchedUser, setSearchedUser] = useState("");
+    const [searchedUser, setSearchedUser] = useState<string | null>(null);
     const [showSearchInput, setShowSearchInput] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
@@ -47,20 +47,21 @@ const Header: FC<HeaderProps> = () => {
         styles.Header,
         "w-full",
         "flex",
-        "justify-between",
+        "justify-around md:justify-between",
         "bg-blue-940",
         "py-3",
         "my-auto",
-        "px-20",
+        "md:px-20",
         "fixed",
         "z-10",
-        "top-0"
+        "top-0",
+        "items-center"
     );
     const iconCls = cn(
         styles.icon,
         "w-10",
         "h-10",
-        "justify-center",
+        // "justify-center",
         "items-center"
     );
 
@@ -99,7 +100,6 @@ const Header: FC<HeaderProps> = () => {
         const response = await axios.get(
             `${process.env.REACT_APP_BASE_URL}/notification/${userId}`
         );
-        console.log(response.data.data);
         setNotificationList(response.data.data);
         setIsLoading(false);
     };
@@ -109,14 +109,18 @@ const Header: FC<HeaderProps> = () => {
     }, []);
 
     const searchUserHandler = () => {
-        navigate(`/searchUsers/${searchedUser}`);
+        if (searchedUser !== null) navigate(`/searchUsers/${searchedUser}`);
     };
 
     return (
         <>
             <div className={rootCls} data-testid="Header">
                 <Link to="/">
-                    <Icon name="homeIcon" className={iconCls} />
+                    <Icon
+                        name="homeIcon"
+                        className={iconCls}
+                        onClick={() => setShowNotifications(false)}
+                    />
                     <div className="flex mt-1 justify-center">
                         <div
                             className={` h-2 w-2 rounded-full ${
@@ -132,22 +136,30 @@ const Header: FC<HeaderProps> = () => {
                         onClick={() => setShowSearchInput((v) => !v)}
                     />
                 ) : (
-                    <form className="relative" onSubmit={searchUserHandler}>
-                        <input
-                            type="text"
-                            className={inputCls}
-                            placeholder="Search user"
-                            onChange={(e) => setSearchedUser(e.target.value)}
-                        />
-                        <Icon
-                            name="searchIcon"
-                            className="absolute right-5 top-2"
-                        />
-                    </form>
+                    <div className={"mb-2"}>
+                        <form className="relative" onSubmit={searchUserHandler}>
+                            <input
+                                type="text"
+                                className={inputCls}
+                                placeholder="Search user"
+                                onChange={(e) =>
+                                    setSearchedUser(e.target.value)
+                                }
+                            />
+                            <Icon
+                                name="searchIcon"
+                                className="absolute right-5 top-2"
+                            />
+                        </form>
+                    </div>
                 )}
-                <div className="flex relative">
+                <div className="flex relative w-52 justify-around">
                     <Link to="/cards">
-                        <Icon name="cardIcon" className={iconCls} />
+                        <Icon
+                            name="cardIcon"
+                            className={iconCls}
+                            onClick={() => setShowNotifications(false)}
+                        />
                         <div className="flex mt-1 justify-center">
                             <div
                                 className={` h-2 w-2 rounded-full ${
@@ -165,7 +177,7 @@ const Header: FC<HeaderProps> = () => {
                         >
                             <Icon
                                 name="notificationIcon"
-                                className={`${iconCls} ml-10 cursor-pointer`}
+                                className={`${iconCls} md:ml-10 cursor-pointer`}
                             />
                             {!showNotifications &&
                                 notificationList.length !== 0 && (
@@ -237,7 +249,7 @@ const Header: FC<HeaderProps> = () => {
                     <Icon
                         name={"logoutIcon"}
                         onClick={auth.logoutUser}
-                        className={"cursor-pointer ml-6"}
+                        className={"cursor-pointer md:ml-6"}
                         height={42}
                         width={42}
                         color={colors.white}
@@ -255,7 +267,11 @@ const Header: FC<HeaderProps> = () => {
                         placeholder="Search user"
                         onChange={(e) => setSearchedUser(e.target.value)}
                     />
-                    <Button type={"submit"} className={"mt-3"}>
+                    <Button
+                        type={"submit"}
+                        className={"mt-3"}
+                        disable={!searchedUser}
+                    >
                         Search
                     </Button>
                 </form>

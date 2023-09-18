@@ -56,7 +56,7 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
             />
 
             <div className="mt-20 ">
-                <div className={"flex justify-center"}>
+                <div className={"flex md:flex-row flex-col justify-center"}>
                     <RegularSubtitle className="text-3xl font-bold mr-3">
                         {userData && userData.fullName}
                     </RegularSubtitle>

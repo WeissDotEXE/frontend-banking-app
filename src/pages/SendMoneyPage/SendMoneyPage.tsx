@@ -92,10 +92,13 @@ const SendMoneyPage: FC<SendMoneyPageProps> = () => {
 
     const toCardInput = async () => {
         try {
-            if (amount === 0) {
+            if (amount === 0 || !amount) {
                 setError("Type amount");
                 return;
+            } else {
+                setError("");
             }
+
             //function for selecting friend account with same currency
             let selectedFriendAccount: AccountInterface = friendAccounts.filter(
                 (account) => account.currency === selectedAccount.currency
@@ -112,10 +115,6 @@ const SendMoneyPage: FC<SendMoneyPageProps> = () => {
                 receiverBalance: selectedFriendAccount.balance,
             });
             console.log(patchObj);
-            // //function for selecting friend account with same currency
-            // let selectedFriendAccount: AccountInterface = friendAccounts.filter(
-            //     (account) => account.currency === selectedAccount.currency
-            // )[0];
 
             setShowCardInput(true);
         } catch (error) {}

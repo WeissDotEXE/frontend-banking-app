@@ -36,8 +36,6 @@ const TransactionsCard: FC<TransactionsCardProps> = (
         []
     );
 
-    console.log(transactionList);
-
     const getTransactionHandler = async () => {
         try {
             const userId = localStorage.getItem("userId");

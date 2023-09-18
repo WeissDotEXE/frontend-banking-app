@@ -44,7 +44,6 @@ const FriendsCard: FC<FriendsCardProps> = (props: FriendsCardProps) => {
     useEffect(() => {
         // @ts-ignore
         dispatch(fetchFriends());
-        console.log(friends);
     }, [dispatch]);
 
     const showDetailsHandler = () => {
@@ -53,7 +52,7 @@ const FriendsCard: FC<FriendsCardProps> = (props: FriendsCardProps) => {
 
     return (
         <Card className={rootCls} data-testid="FriendsCard">
-            <RegularSubtitle bold color={"black"} className="mb-10">
+            <RegularSubtitle bold color={"black"} className="my-4">
                 Friends
             </RegularSubtitle>
             <div

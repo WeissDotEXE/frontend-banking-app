@@ -49,7 +49,6 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
         try {
             const url = `${process.env.REACT_APP_BASE_URL}/bankingAccounts/${userId}`;
             const response = await axios.get(url);
-            console.log(response.data.data);
             setBankingAccountsList(response.data.data);
             dispatch(changeBankingAccount(response.data.data[0]));
         } catch (error) {
@@ -69,7 +68,7 @@ const BalanceCard: FC<BalanceCardProps> = (props: BalanceCardProps) => {
 
     return (
         <Card className={rootCls}>
-            <RegularSubtitle bold className="mb-2">
+            <RegularSubtitle bold className="my-4">
                 Balance
             </RegularSubtitle>
             <div

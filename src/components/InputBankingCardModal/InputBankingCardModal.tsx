@@ -89,6 +89,24 @@ const InputBankingCardModal: FC<InputBankingCardModalProps> = (
         }));
     };
 
+    if (!bankingCard)
+        return (
+            <Modal className={modalCls} onClose={onClose}>
+                <RegularSubtitle>
+                    You have to generate a banking card before sending money
+                </RegularSubtitle>
+                <div className={"w-full flex justify-center items-center my-4"}>
+                    {" "}
+                    <Button
+                        type={"button"}
+                        onClick={() => navigate("/generatecard")}
+                    >
+                        Generate Card
+                    </Button>
+                </div>
+            </Modal>
+        );
+
     return (
         <>
             {isLoading && (
